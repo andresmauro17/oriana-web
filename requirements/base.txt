@@ -3,3 +3,6 @@ django==2.2.9
 
 # dotenv
 python-dotenv
+
+#mysqlclient
+mysqlclient==2.0.1
