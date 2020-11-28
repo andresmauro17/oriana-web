@@ -1,0 +1,5 @@
+# Django
+django==2.2.9
+
+# dotenv
+python-dotenv
