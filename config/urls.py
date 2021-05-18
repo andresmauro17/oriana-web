@@ -16,6 +16,20 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from django.conf import settings
+
+from apps.sensors.views import vue_test
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('vue-test/', vue_test)
 ]
+
+
+print("--------------------------")
+print("LOCAL_CDN:",settings.LOCAL_CDN)
+print("STATIC_URL:",settings.STATIC_URL)
+print("STATIC_ROOT:",settings.STATIC_ROOT)
+print("MEDIA_URL:",settings.MEDIA_URL)
+print("MEDIA_ROOT:",settings.MEDIA_ROOT)
+print("STATICFILES_DIRS:",settings.STATICFILES_DIRS)
