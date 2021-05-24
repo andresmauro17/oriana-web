@@ -2,13 +2,12 @@
 {% load static %}
 
 {% block app %}
+<dashboard-layout v-slot:content> 
+    {% block content %}{% endblock %}
+</dashboard-layout>
 
         {% comment %} {% include 'layout/top-message.html' %}
         {% include 'layout/header-component.html'%} {% endcomment %}
-
-
-        {% block content %}{% endblock %}
-        
         {% comment %} {% include 'layout/footer-component.html'%} {% endcomment %}
         
 {% endblock app %}
