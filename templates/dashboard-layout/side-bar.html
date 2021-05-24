@@ -1,0 +1,33 @@
+<side-bar 
+    :logo="appSettings.STATIC_URL + 'img/brand/green.png'"
+>
+    <template v-slot:links-after>
+        <ul class="navbar-nav mb-md-3">
+          <li class="nav-item">
+            <a
+              class="active router-link-exact-active nav-link"
+              href="https://demos.creative-tim.com/vue-argon-dashboard-pro/documentation"
+              target="_blank"
+            >
+              <i class="ni ni-shop text-primary"></i>
+              <span class="nav-link-text">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="router-link-exact-active nav-link"
+              href="https://demos.creative-tim.com/vue-argon-dashboard-pro/documentation"
+              target="_blank"
+            >
+              <i class="ni ni-calendar-grid-58 text-red"></i>
+              <span class="nav-link-text">Calendar</span>
+            </a>
+          </li>
+          
+        </ul>
+        <hr class="my-3" />
+        <h6 class="navbar-heading p-0 text-muted">Documentation</h6>
+
+
+      </template>
+</side-bar>

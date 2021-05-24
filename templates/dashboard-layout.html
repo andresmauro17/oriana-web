@@ -3,6 +3,7 @@
 
 {% block app %}
 <dashboard-layout v-slot:content> 
+    {% include "dashboard-layout/side-bar.html" %}
     {% block content %}{% endblock %}
 </dashboard-layout>
 

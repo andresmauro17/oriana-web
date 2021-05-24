@@ -1,7 +1,11 @@
 <template>
   <div class="wrapper">
+    <!-- <notifications></notifications> -->
+    <side-bar>
+      <template v-slot:links></template>
+    </side-bar>
     <div class="main-content">
-      <dashboard-navbar :type="'light'"></dashboard-navbar>
+      <dashboard-navbar ></dashboard-navbar>
 
       <div @click="$sidebar.displaySidebar(false)">
         <slot name="content"></slot>
@@ -13,6 +17,7 @@
 
 <script>
 /* eslint-disable no-new */
+import { mapState } from "vuex";
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 
@@ -38,6 +43,9 @@ export default {
   components: {
     DashboardNavbar,
     // ContentFooter,
+  },
+  computed: {
+    ...mapState(["appSettings"]),
   },
   methods: {
     initScrollbar() {
