@@ -16,16 +16,21 @@
 */
 
 import { createApp } from "vue";
+import { createStore } from "vuex";
 import App from "./App.js";
 import ArgonDashboard from "./plugins/argon-dashboard";
 import "element-plus/lib/theme-chalk/index.css";
 
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
+import storejs from "./store";
 
 const options = { containerClassName: "ct-notification" };
 
+const store = createStore(storejs);
+
 const appInstance = createApp(App);
+appInstance.use(store);
 appInstance.use(Toast, options);
 appInstance.use(ArgonDashboard);
 appInstance.mount("#app");
