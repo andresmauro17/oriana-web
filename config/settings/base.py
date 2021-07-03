@@ -40,8 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'channels',
     'django_celery_beat',
     'django_celery_results',
+    'apps.mqtt_app',
     'apps.dashboard',
     'apps.sensors',
     'apps.observations',
@@ -59,6 +61,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'config.urls'
+ASGI_APPLICATION = "config.asgi.application"
 
 TEMPLATES = [
     {

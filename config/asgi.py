@@ -9,8 +9,17 @@ https://docs.djangoproject.com/en/3.1/howto/deployment/asgi/
 
 import os
 
-from django.core.asgi import get_asgi_application
+import django
+from channels.http import AsgiHandler
+from channels.routing import ProtocolTypeRouter, ChannelNameRouter
+from apps.mqtt_app.consumers import MqttConsumer
+# os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings')
+django.setup()
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'oriana.settings')
-
-application = get_asgi_application()
+application = ProtocolTypeRouter({
+  "http": AsgiHandler(),
+  # Just HTTP for now. (We can add other protocols later.)
+  "channel": ChannelNameRouter({
+        "mqtt": MqttConsumer
+    }),
+})
