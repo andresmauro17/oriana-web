@@ -19,10 +19,12 @@ from django.urls import include, path
 from django.conf import settings
 
 from apps.sensors.views import vue_test
+from apps.sensors.views import test_celery
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('vue-test/', vue_test),
+    path('celery-test/', test_celery),
     path('', include('apps.dashboard.urls'), name='dashboard'),
 ]
 

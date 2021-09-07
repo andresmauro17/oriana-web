@@ -6,3 +6,15 @@ python-dotenv
 
 #mysqlclient
 mysqlclient==2.0.1
+
+#celery
+celery==5.1.2
+
+#celery-beat
+django-celery-beat==2.2.1
+
+#celery results
+django-celery-results==2.2.0
+
+#redis
+redis==3.5.3

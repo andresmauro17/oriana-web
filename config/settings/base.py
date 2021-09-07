@@ -40,12 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_celery_beat',
-    'django_celery_results',
     'apps.dashboard',
     'apps.sensors',
-    'apps.observations',
-    'apps.iteractions'
+    # 'apps.observations',
+    # 'apps.iteractions'
 ]
 
 MIDDLEWARE = [
@@ -127,6 +125,21 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+
+# Celery
+INSTALLED_APPS += ['django_celery_beat']
+INSTALLED_APPS += ['django_celery_results']
+INSTALLED_APPS += ['apps.taskapp.celery.CeleryAppConfig']
+if USE_TZ:
+    CELERY_TIMEZONE = TIME_ZONE
+CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', 'redis://localhost:6379')
+CELERY_RESULT_BACKEND = CELERY_BROKER_URL
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERYD_TASK_TIME_LIMIT = 5 * 60
+CELERYD_TASK_SOFT_TIME_LIMIT = 60
 
 
 # Static files (CSS, JavaScript, Images)
