@@ -7,17 +7,18 @@ def on_connect(client, userdata, flags, rc):
 
 def on_message(client, userdata, message):
     print("--------------------------")
+    print(dir(client))
     print('topic: ', message.topic)
     var = str(message.payload.decode('utf-8'))
     print('payload: ', message.payload )
-    try:
+    # try:
         # CON STRING DUMPS AND LOADS
-        data = json.dumps(var)
-        data = json.loads(data)
-        print(data)
-    except Exception as e:
-        print(e)
-    print('qos: ', message.qos)
+        # data = json.dumps(var)
+        # data = json.loads(data)
+        # print(data)
+    # except Exception as e:
+        # print(e)
+    # print('qos: ', message.qos)
 
 client = mqtt.Client()
 client.on_connect = on_connect
