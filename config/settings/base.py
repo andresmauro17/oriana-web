@@ -30,6 +30,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Users and authentication
+
+AUTH_USER_MODEL = 'users.User'
 
 # Application definition
 
@@ -40,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'apps.users.apps.UsersAppConfig',
     'apps.dashboard',
     'apps.sensors',
 ]
@@ -56,7 +60,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'config.urls'
 ASGI_APPLICATION = "config.asgi.application"
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
