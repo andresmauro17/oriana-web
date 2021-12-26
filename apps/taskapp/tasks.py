@@ -1,9 +1,10 @@
 # Celery
-from celery.decorators import task
+# from celery.decorators import task
+from apps.taskapp.celery import app
 
 import time
 
-@task(name='test_task', max_retries=3)
+@app.task(name='test_task', max_retries=3)
 def test_task():
     for i in range(5):
         time.sleep(1)

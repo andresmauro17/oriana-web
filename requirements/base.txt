@@ -1,14 +1,17 @@
 # Django
-django==2.2.9
+django==3.2.10
+
+#Rest framework
+djangorestframework==3.13.1
 
 # dotenv
-python-dotenv
+python-dotenv==0.19.2
 
 #mysqlclient
-mysqlclient==2.0.1
+mysqlclient==2.1.0
 
 #celery
-celery==5.1.2
+celery==5.2.2
 
 #celery-beat
 django-celery-beat==2.2.1
@@ -17,4 +20,7 @@ django-celery-beat==2.2.1
 django-celery-results==2.2.0
 
 #redis
-redis==3.5.3
+redis==4.1.0
+
+#django extensions
+django-extensions==3.1.5
