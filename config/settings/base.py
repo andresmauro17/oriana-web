@@ -128,6 +128,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+LOGIN_URL='/login'
 
 # Celery
 INSTALLED_APPS += ['django_celery_beat']
