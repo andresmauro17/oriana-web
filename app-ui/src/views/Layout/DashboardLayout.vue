@@ -5,7 +5,7 @@
       <template v-slot:links></template>
     </side-bar>
     <div class="main-content">
-      <dashboard-navbar ></dashboard-navbar>
+      <dashboard-navbar></dashboard-navbar>
 
       <div @click="$sidebar.displaySidebar(false)">
         <slot name="content"></slot>

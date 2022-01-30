@@ -1,4 +1,5 @@
 import Badge from "../components/Badge";
+import BaseAlert from "../components/BaseAlert";
 import BaseButton from "../components/BaseButton";
 import BaseCheckbox from "../components/Inputs/BaseCheckbox";
 import BaseDropdown from "../components/BaseDropdown";
@@ -16,6 +17,7 @@ import { ElTooltip, ElPopover, ElLoading } from "element-plus";
 const GlobalComponents = {
   install(app) {
     app.component("badge", Badge);
+    app.component("base-alert", BaseAlert);
     app.component("base-button", BaseButton);
     app.component("base-checkbox", BaseCheckbox);
     app.component("base-dropdown", BaseDropdown);

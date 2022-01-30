@@ -42,6 +42,9 @@
             </div>
             <div class="card-body px-lg-5 py-lg-5">
               <Form @submit="onSubmit" :validation-schema="schema">
+                <base-alert v-if="showAlert" type="danger">
+                  {{ alertText }}
+                </base-alert>
                 <base-input
                   alternative
                   name="email"
@@ -71,7 +74,7 @@
               </Form>
             </div>
           </div>
-          <div class="row mt-3">
+          <!-- <div class="row mt-3">
             <div class="col-6">
               <a to="/dashboard">
                 <small>olvido su contraseña?</small>
@@ -82,16 +85,17 @@
                 <small>crear nueva cuenta</small>
               </a>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
+import { ref } from "vue";
 import { Form } from "vee-validate";
 import * as Yup from "yup";
-
+import loginService from "@/services/auth/loginService.js";
 export default {
   components: {
     Form,
@@ -106,19 +110,43 @@ export default {
     };
   },
   setup() {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    let nextParam = urlParams.get("next");
+    let alertText = ref("");
+    let showAlert = ref(false);
+
     function onSubmit(values) {
-      alert(JSON.stringify(values, null, 2));
+      // alert(JSON.stringify(values, null, 2));
+      loginService
+        .login(values.email, values.password)
+        .then((res) => {
+          console.log("el status es");
+          console.log(res.status);
+          if (res.status == 201) {
+            window.location = nextParam ? nextParam : "/";
+          }
+        })
+        .catch((error) => {
+          if (error.response.status === 401) {
+            console.log(error.response);
+            alertText.value = error.response.data.error;
+            showAlert.value = true;
+          }
+        });
     }
 
     const schema = Yup.object().shape({
       fullName: Yup.string().required().label("The Full Name"),
       email: Yup.string().email().required().label("The Email"),
-      password: Yup.string().min(5).required().label("The Password"),
+      password: Yup.string().min(2).required().label("The Password"),
     });
 
     return {
       onSubmit,
       schema,
+      alertText,
+      showAlert,
     };
   },
 };

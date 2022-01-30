@@ -2,7 +2,7 @@ import DashboardLayout from "../views/Layout/DashboardLayout.vue";
 import AuthLayout from "../views/Layout/AuthLayout.vue";
 import TestingComponent from "../views/testingComponent.vue";
 import Dashboard from "../views/Dashboard/dashboard.vue";
-import Login from "../views/Auth/Login.vue"
+import Login from "../views/Auth/Login.vue";
 
 const testingComponent = {
   install(app) {
