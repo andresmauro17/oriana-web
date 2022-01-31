@@ -14,6 +14,7 @@ class User(CustomBaseModel, AbstractUser):
     Extend from Django's Abstract User, change the username field
     to email and add some extra fields.
     """
+    id = models.AutoField(primary_key=True)
     email = models.EmailField(
         'email address',
         unique=True,

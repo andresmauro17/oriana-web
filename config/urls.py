@@ -30,10 +30,10 @@ urlpatterns = [
 ]
 
 
-print("--------------------------")
-print("LOCAL_CDN:",settings.LOCAL_CDN)
-print("STATIC_URL:",settings.STATIC_URL)
-print("STATIC_ROOT:",settings.STATIC_ROOT)
-print("MEDIA_URL:",settings.MEDIA_URL)
-print("MEDIA_ROOT:",settings.MEDIA_ROOT)
-print("STATICFILES_DIRS:",settings.STATICFILES_DIRS)
+# print("--------------------------")
+# print("LOCAL_CDN:",settings.LOCAL_CDN)
+# print("STATIC_URL:",settings.STATIC_URL)
+# print("STATIC_ROOT:",settings.STATIC_ROOT)
+# print("MEDIA_URL:",settings.MEDIA_URL)
+# print("MEDIA_ROOT:",settings.MEDIA_ROOT)
+# print("STATICFILES_DIRS:",settings.STATICFILES_DIRS)

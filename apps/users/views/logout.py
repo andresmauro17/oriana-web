@@ -4,6 +4,5 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def logout_view(request):
-    print("logginout")
     logout_django(request)
     return redirect('users:login')

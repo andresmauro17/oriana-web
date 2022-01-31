@@ -8,6 +8,7 @@ class Sensor(models.Model):
         This model is the sensors that take the data
 
     """
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
 
     VARIABLE_CHOICES = (

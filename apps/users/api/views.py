@@ -10,9 +10,6 @@ from django.contrib.auth import authenticate, login
 
 @api_view(["POST"])
 def login_view(request):
-    print('*' * 10)
-    print(request.data)
-    print('*' * 10)
     email=request.data['email']
     password=request.data['password']
     user = authenticate(request, email=email, password=password )
