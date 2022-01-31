@@ -4,63 +4,8 @@
     class="navbar-top border-bottom navbar-expand"
     :class="{ 'bg-info navbar-dark': type === 'default' }"
   >
-    <!-- Search form -->
-    <form
-      class="navbar-search form-inline mr-sm-3"
-      :class="{
-        'navbar-search-light': type === 'default',
-        'navbar-search-dark': type === 'light',
-      }"
-      id="navbar-search-main"
-    >
-      <div class="form-group mb-0">
-        <div class="input-group input-group-alternative input-group-merge">
-          <div class="input-group-prepend">
-            <span class="input-group-text"><i class="fas fa-search"></i></span>
-          </div>
-          <input class="form-control" placeholder="Search" type="text" />
-        </div>
-      </div>
-      <button
-        type="button"
-        class="close"
-        data-action="search-close"
-        data-target="#navbar-search-main"
-        aria-label="Close"
-      >
-        <span aria-hidden="true">×</span>
-      </button>
-    </form>
     <!-- Navbar links -->
     <ul class="navbar-nav align-items-center ml-md-auto">
-      <li class="nav-item d-xl-none">
-        <!-- Sidenav toggler -->
-        <div
-          class="pr-3 sidenav-toggler"
-          :class="{
-            active: $sidebar.showSidebar,
-            'sidenav-toggler-dark': type === 'default',
-            'sidenav-toggler-light': type === 'light',
-          }"
-          @click="toggleSidebar"
-        >
-          <div class="sidenav-toggler-inner">
-            <i class="sidenav-toggler-line"></i>
-            <i class="sidenav-toggler-line"></i>
-            <i class="sidenav-toggler-line"></i>
-          </div>
-        </div>
-      </li>
-      <li class="nav-item d-sm-none">
-        <a
-          class="nav-link"
-          href="#"
-          data-action="search-show"
-          data-target="#navbar-search-main"
-        >
-          <i class="ni ni-zoom-split-in"></i>
-        </a>
-      </li>
       <base-dropdown
         class="nav-item"
         tag="li"
@@ -207,61 +152,6 @@
           class="dropdown-item text-center text-primary font-weight-bold py-3"
           >View all</a
         >
-      </base-dropdown>
-      <base-dropdown
-        menu-classes="dropdown-menu-lg dropdown-menu-dark bg-default dropdown-menu-right"
-        class="nav-item"
-        tag="li"
-        title-tag="a"
-        title-classes="nav-link"
-        icon="ni ni-ungroup"
-      >
-        <div class="row shortcuts px-4">
-          <a href="#!" class="col-4 shortcut-item">
-            <span class="shortcut-media avatar rounded-circle bg-gradient-red">
-              <i class="ni ni-calendar-grid-58"></i>
-            </span>
-            <small>Calendar</small>
-          </a>
-          <a href="#!" class="col-4 shortcut-item">
-            <span
-              class="shortcut-media avatar rounded-circle bg-gradient-orange"
-            >
-              <i class="ni ni-email-83"></i>
-            </span>
-            <small>Email</small>
-          </a>
-          <a href="#!" class="col-4 shortcut-item">
-            <span class="shortcut-media avatar rounded-circle bg-gradient-info">
-              <i class="ni ni-credit-card"></i>
-            </span>
-            <small>Payments</small>
-          </a>
-          <a href="#!" class="col-4 shortcut-item">
-            <span
-              class="shortcut-media avatar rounded-circle bg-gradient-green"
-            >
-              <i class="ni ni-books"></i>
-            </span>
-            <small>Reports</small>
-          </a>
-          <a href="#!" class="col-4 shortcut-item">
-            <span
-              class="shortcut-media avatar rounded-circle bg-gradient-purple"
-            >
-              <i class="ni ni-pin-3"></i>
-            </span>
-            <small>Maps</small>
-          </a>
-          <a href="#!" class="col-4 shortcut-item">
-            <span
-              class="shortcut-media avatar rounded-circle bg-gradient-yellow"
-            >
-              <i class="ni ni-basket"></i>
-            </span>
-            <small>Shop</small>
-          </a>
-        </div>
       </base-dropdown>
     </ul>
     <ul class="navbar-nav align-items-center ml-auto ml-md-0">

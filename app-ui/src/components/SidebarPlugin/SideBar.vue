@@ -63,8 +63,7 @@ export default {
     },
     logo: {
       type: String,
-      default:
-        "https://demos.creative-tim.com/vue-argon-dashboard-pro/img/brand/green.png",
+      default: "static/img/gthux/brand.png",
       description: "Sidebar app logo",
     },
     sidebarLinks: {
@@ -103,3 +102,11 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.navbar-brand-img,
+.navbar-brand > img {
+  max-width: 100%;
+  max-height: 5rem;
+}
+</style>
