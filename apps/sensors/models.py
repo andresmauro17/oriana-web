@@ -1,9 +1,10 @@
 # Django
 from django.db import models
 
-from apps.utils.models import AppModel
+# Utilities
+from config.utils.models import CustomBaseModel
 
-class Sensor(models.Model):
+class Sensor(CustomBaseModel):
     """ Sensor Model.
         This model is the sensors that take the data
 
