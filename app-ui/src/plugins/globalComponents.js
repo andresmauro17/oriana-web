@@ -11,6 +11,7 @@ import BaseProgress from "../components/BaseProgress";
 import BaseRadio from "../components/Inputs/BaseRadio";
 import BaseSwitch from "../components/BaseSwitch";
 import Card from "../components/Cards/Card";
+import Modal from "../components/Modal";
 import StatsCard from "../components/Cards/StatsCard";
 import { ElTooltip, ElPopover, ElLoading } from "element-plus";
 
@@ -29,6 +30,7 @@ const GlobalComponents = {
     app.component("base-radio", BaseRadio);
     app.component("base-switch", BaseSwitch);
     app.component("card", Card);
+    app.component("modal", Modal);
     app.component("stats-card", StatsCard);
     app.use(ElTooltip);
     app.use(ElPopover);
