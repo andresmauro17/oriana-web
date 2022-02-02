@@ -37,6 +37,9 @@ class Organization(CustomBaseModel):
         settings.AUTH_USER_MODEL, related_name='organizations', through='Membership'
     )
 
+    def __str__(self):
+        return self.name
+
 class Membership(CustomBaseModel):
     """
     A user's organizations membership

@@ -30,3 +30,6 @@ class Company(CustomBaseModel):
     comercial_name = models.CharField(max_length=100, blank=True, null=True)
     id_number = models.CharField(max_length=100, blank=True, null=True)
     logo = models.ImageField(upload_to=upload_image_path, blank=True, null=True)
+
+    def __str__(self):
+        return self.comercial_name
