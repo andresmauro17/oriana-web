@@ -2,8 +2,7 @@ from django.contrib import admin
 
 from apps.organizations.models.organization import Organization
 from apps.organizations.models import Organization
-from apps.organizations.models import Membership
-
+from apps.organizations.models import Company
 
 class MembershipInline(admin.TabularInline):
     model = Organization.members.through
@@ -25,3 +24,12 @@ class OrganizationAdmin(admin.ModelAdmin):
     inlines = [
         MembershipInline,
     ]
+
+@admin.register(Company)
+class CompanyAdmin(admin.ModelAdmin):
+    list_display = ['id','name','comercial_name','id_number','owner']
+    autocomplete_fields = ['owner']
+    list_editable = []
+    list_filter = ['name']
+    search_fields = ['id', 'name']
+    ordering = ['name','-id']
