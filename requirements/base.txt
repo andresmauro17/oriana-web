@@ -27,3 +27,6 @@ django-extensions==3.1.5
 
 # Pahomqtt
 paho-mqtt==1.6.1  
+
+# Pillow
+Pillow==9.0.0
