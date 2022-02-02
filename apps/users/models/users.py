@@ -6,6 +6,10 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import BaseUserManager
 from django.core.validators import RegexValidator
 
+# Models
+from apps.organizations.models import Site
+from apps.organizations.models import Organization
+
 # Utilities
 from config.utils.models import CustomBaseModel
 
@@ -95,6 +99,10 @@ class User(CustomBaseModel, AbstractUser):
             'Set to true when the user have verified its email address.'
         )
     )
+
+    current_organization = models.ForeignKey(Organization, blank=True, null=True, on_delete=models.SET_NULL)
+    current_site = models.ForeignKey(Site, blank=True, null=True, on_delete=models.SET_NULL)
+
 
     def __str__(self):
         return self.email
