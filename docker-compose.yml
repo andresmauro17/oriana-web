@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  django: &django
+    build:
+      context: .
+      dockerfile: ./compose/local/django/Dockerfile
+    image: oriana_django
+    depends_on:
+      - node
+    env_file:
+      - ./.env
+    ports:
+      - "8000:8000"
+    expose:
+      - "3306"
+    command: python manage.py runserver 0.0.0.0:8000
+
+  node:
+    build: 
+      context: .
+      dockerfile: ./compose/local/node/Dockerfile
+    volumes:
+      - ./app-ui:/usr/src
+    image: oriana_ui
+    command: npm run serve

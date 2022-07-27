@@ -1,0 +1,13 @@
+.*
+!.venv
+!.pylintrc
+
+
+*.log
+.dockerignore
+.git
+.gitignore
+build/*
+compose/*
+app-ui/npm-debug.log*
+README.md

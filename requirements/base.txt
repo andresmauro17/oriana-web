@@ -11,7 +11,7 @@ python-dotenv==0.19.2
 mysqlclient==2.1.0
 
 #celery
-celery==5.2.2
+celery
 
 #celery-beat
 django-celery-beat==2.2.1
@@ -29,4 +29,4 @@ django-extensions==3.1.5
 paho-mqtt==1.6.1  
 
 # Pillow
-Pillow==9.0.0
+Pillow
