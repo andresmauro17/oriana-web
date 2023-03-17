@@ -26,7 +26,7 @@ urlpatterns = [
     path('vue-test/', vue_test),
     path('celery-test/', test_celery),
     path('',include(('apps.users.urls', 'users'), namespace='users')),
-    path('', include('apps.dashboard.urls'), name='dashboard'),
+    path('', include('app_dashboard.urls'), name='app_dashboard'),
 ]
 
 
