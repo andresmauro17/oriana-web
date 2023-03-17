@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.contrib import admin
 
 # local import
-from apps.sensors.models import Sensor
+from app_sensors.models import Sensor
 
 @admin.register(Sensor)
 class SensorAdmin(admin.ModelAdmin):

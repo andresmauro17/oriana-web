@@ -18,8 +18,8 @@ from django.urls import include, path
 
 from django.conf import settings
 
-from apps.sensors.views import vue_test
-from apps.sensors.views import test_celery
+from app_sensors.views import vue_test
+from app_sensors.views import test_celery
 
 urlpatterns = [
     path('admin/', admin.site.urls),

@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'apps.users.apps.UsersAppConfig',
     'app_dashboard.apps.DashboardAppConfig',
-    'apps.sensors.apps.SensorsConfig',
+    'app_sensors.apps.AppSensorsConfig',
     'app_organizations.apps.AppOrganizationAppConfig'
 ]
 
