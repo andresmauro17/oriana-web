@@ -135,7 +135,7 @@ LOGIN_URL='/login'
 # Celery
 INSTALLED_APPS += ['django_celery_beat']
 INSTALLED_APPS += ['django_celery_results']
-INSTALLED_APPS += ['apps.taskapp.celery.CeleryAppConfig']
+INSTALLED_APPS += ['app_tasks.celery.CeleryAppConfig']
 if USE_TZ:
     CELERY_TIMEZONE = TIME_ZONE
 CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', 'redis://localhost:6379')

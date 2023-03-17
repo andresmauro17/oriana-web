@@ -1,6 +1,6 @@
 # Celery
 # from celery.decorators import task
-from apps.taskapp.celery import app
+from app_tasks.celery import app
 
 import time
 

@@ -28,7 +28,7 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 
 
 class CeleryAppConfig(AppConfig):
-    name = 'apps.taskapp'
+    name = 'app_tasks'
     verbose_name = 'Celery Config'
 
     def ready(self):

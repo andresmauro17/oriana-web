@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 
 # Tasks
-from apps.taskapp.tasks import test_task
+from app_tasks.tasks import test_task
 
 # Create your views here.
 # @login_required
