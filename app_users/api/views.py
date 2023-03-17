@@ -9,8 +9,8 @@ from rest_framework import status
 from django.contrib.auth import authenticate, login
 
 #local imports
-from apps.users.api.serializers import CurrentUserSerializer
-from apps.users.models import User
+from app_users.api.serializers import CurrentUserSerializer
+from app_users.models import User
 
 @api_view(["POST"])
 def login_view(request):

@@ -5,7 +5,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 # Models
-from apps.users.models import User
+from app_users.models import User
 class CustomUserAdmin(UserAdmin):
     """ User Model Admin """
     list_display = ['email','username','last_name','is_staff','is_client','is_verified', 'current_site', 'current_organization']

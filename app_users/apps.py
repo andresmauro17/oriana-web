@@ -4,8 +4,8 @@
 from django.apps import AppConfig
 
 
-class UsersAppConfig(AppConfig):
+class AppUsersAppConfig(AppConfig):
     """Users app config."""
 
-    name = 'apps.users'
-    verbose_name = 'Users'
+    name = 'app_users'
+    verbose_name = 'app_users'
