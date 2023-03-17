@@ -5,7 +5,7 @@ from django.db import models
 from config.utils.models import CustomBaseModel
 
 # Models
-from apps.organizations.models import Site
+from app_organizations.models import Site
 
 class Sensor(CustomBaseModel):
     """ Sensor Model.

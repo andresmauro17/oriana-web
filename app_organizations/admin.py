@@ -1,9 +1,9 @@
 from django.contrib import admin
 
-from apps.organizations.models.organization import Organization
-from apps.organizations.models import Organization
-from apps.organizations.models import Company
-from apps.organizations.models import Site
+from app_organizations.models.organization import Organization
+from app_organizations.models import Organization
+from app_organizations.models import Company
+from app_organizations.models import Site
 
 class MembershipInline(admin.TabularInline):
     model = Organization.members.through

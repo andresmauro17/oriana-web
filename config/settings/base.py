@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'apps.users.apps.UsersAppConfig',
     'app_dashboard.apps.DashboardAppConfig',
     'apps.sensors.apps.SensorsConfig',
-    'apps.organizations.apps.OrganizationAppConfig'
+    'app_organizations.apps.AppOrganizationAppConfig'
 ]
 
 MIDDLEWARE = [

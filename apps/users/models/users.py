@@ -7,8 +7,8 @@ from django.contrib.auth.models import BaseUserManager
 from django.core.validators import RegexValidator
 
 # Models
-from apps.organizations.models import Site
-from apps.organizations.models import Organization
+from app_organizations.models import Site
+from app_organizations.models import Organization
 
 # Utilities
 from config.utils.models import CustomBaseModel

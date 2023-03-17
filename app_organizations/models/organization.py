@@ -9,7 +9,7 @@ from django.conf import settings
 
 # Utilities
 from config.utils.models import CustomBaseModel
-from apps.organizations.utils.roles import Roles
+from app_organizations.utils.roles import Roles
 
 def get_filename_ext(filepath):
     base_name = os.path.basename(filepath)

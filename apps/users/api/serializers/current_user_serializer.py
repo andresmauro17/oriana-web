@@ -1,6 +1,6 @@
 # Rest Framework
 from rest_framework import serializers
-from apps.organizations.api.serializers import organization_serializer
+from app_organizations.api.serializers import organization_serializer
 
 # Local imports
 from apps.users.models import User

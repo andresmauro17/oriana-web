@@ -5,7 +5,7 @@ from django.db import models
 from config.utils.models import CustomBaseModel
 
 # Django models
-from apps.organizations.models import Organization
+from app_organizations.models import Organization
 
 class Site(CustomBaseModel):
     id = models.AutoField(primary_key=True)
