@@ -28,7 +28,7 @@ class OrganizationAdmin(admin.ModelAdmin):
     list_display = ['id','name','owner','company_name']
     autocomplete_fields = ['owner']
     list_editable = []
-    list_filter = ['name','owner','company']
+    list_filter = ['name','owner']
     search_fields = ['id', 'name']
     ordering = ['name','-id',]
     inlines = [
