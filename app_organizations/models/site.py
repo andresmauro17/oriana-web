@@ -13,6 +13,5 @@ class Site(CustomBaseModel):
     organization = models.ForeignKey(Organization, on_delete = models.CASCADE)
 
     def __str__(self):
-        return self.name 
-    # def __str__(self):
-    #     return self.name + "|" + self.organization.name
+        # return self.name + "|" + self.organization.name
+        return f'{self.organization.name} {self.organization.city}| {self.name}'

@@ -32,13 +32,15 @@ class Organization(CustomBaseModel):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     logo = models.ImageField(upload_to=upload_image_path, blank=True, null=True)
+    city = models.CharField(max_length=100)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL,related_name='organization', blank=True, null=True, on_delete=models.SET_NULL)
     members = models.ManyToManyField(
         settings.AUTH_USER_MODEL, related_name='organizations', through='Membership'
     )
 
+
     def __str__(self):
-        return self.name
+        return f'{self.name}'
 
 class Membership(CustomBaseModel):
     """
