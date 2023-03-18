@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'app_users.apps.AppUsersAppConfig',
     'app_dashboard.apps.DashboardAppConfig',
     'app_sensors.apps.AppSensorsConfig',
+    'app_data.apps.AppDataConfig',
     'app_organizations.apps.AppOrganizationAppConfig'
 ]
 
