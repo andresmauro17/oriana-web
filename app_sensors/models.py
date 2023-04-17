@@ -25,7 +25,7 @@ class Sensor(CustomBaseModel):
     device_type = models.CharField(max_length=100, choices=VARIABLE_CHOICES)
 
     # most brands will have some sort of id you'll want to track
-    manufacturer_id = models.CharField(max_length=100, unique=True)
+    unique_id = models.CharField(max_length=100, unique=True)
     max_threshold = models.DecimalField(max_digits=4, decimal_places=2)
     min_threshold = models.DecimalField(max_digits=4, decimal_places=2)
     is_active = models.BooleanField(default=True)
@@ -35,15 +35,6 @@ class Sensor(CustomBaseModel):
 
     def __str__(self):
         return '{}'.format(self.id)
-
-    def save(self, *args, **kwargs):
-        # Check if this model has already been saved
-        if self.pk is not None:
-            original = MyModel.objects.get(pk=self.pk)
-            if (self.field1 != original.field1) or (self.field2 != original.field2):
-                self.was_modified = True
-
-        super(MyModel, self).save(*args, **kwargs)
 
 class SensorUserAlarm(models.Model):
     """Alarms cofiguration model"""
