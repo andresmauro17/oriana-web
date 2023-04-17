@@ -2,7 +2,7 @@
 FROM node:14
 
 # copie el package json en usr/src
-COPY ["app-ui/package.json", "app-ui/package-lock.json", "/usr/src/"]
+COPY ["app-ui/package.json", "/usr/src/"]
 
 # haga un cd /usr/src
 WORKDIR /usr/src
