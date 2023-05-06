@@ -1,0 +1,58 @@
+version: "3"
+
+services:
+  node:
+    build: 
+      context: .
+      dockerfile: ./compose/local/node/Dockerfile
+    volumes:
+      - ./app-ui:/usr/src
+    image: oriana_ui
+    command: npm run serve
+
+  django: &django
+    build:
+      context: .
+      dockerfile: ./compose/local/django/Dockerfile
+    image: oriana_django
+    depends_on:
+      - node
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    env_file:
+      - ./.env
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    expose:
+      - "3306"
+    command: python manage.py runserver 0.0.0.0:8000
+
+
+  redis:
+    image: redis:3.2
+
+  celeryworker:
+    <<: *django
+    image: oriana_celeryworker
+    depends_on:
+      - redis
+    ports: []
+    command: /start-celeryworker
+
+  celerybeat:
+    <<: *django
+    image: oriana_celerybeat
+    depends_on:
+      - redis
+    ports: []
+    command: /start-celerybeat
+
+  flower:
+    <<: *django
+    image: oriana_flower
+    ports:
+      - "5555:5555"
+      - "6379:6379"
+    command: /start-flower

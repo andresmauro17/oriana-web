@@ -29,3 +29,18 @@ We are using django, vue2 and webpack for assets.
 
 6. run the project
         python manage.py runserver
+
+
+
+{
+  "agent": {
+    "sensorid":"fffff00011",
+    "typeofmessage":"storedata",
+    "data":{
+      "value":32,
+      "energy":1,
+      "date":"23-03-29",
+      "time":"03:24"
+    }
+  }
+}
