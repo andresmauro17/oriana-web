@@ -13,7 +13,7 @@ services:
   django: &django
     build:
       context: .
-      dockerfile: ./compose/local/django/Dockerfile
+      dockerfile: ./compose/production/django/Dockerfile
     image: oriana_django
     depends_on:
       - node
