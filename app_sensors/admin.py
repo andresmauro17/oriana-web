@@ -4,8 +4,11 @@ from django.contrib import admin
 from django.contrib import admin
 
 # local import
-from app_sensors.models import Sensor
-from app_sensors.models import SensorUserAlarm
+from .models import Sensor
+from .models import SensorUserAlarm
+
+# other apps
+from app_data.admin import DataInline
 
 class SensorInline(admin.TabularInline):
     model = Sensor
@@ -33,4 +36,4 @@ class SensorAdmin(admin.ModelAdmin):
     list_filter = ['device_type', 'site']
     search_fields = []
     ordering = []
-    inlines = [ SensorUserAlarmInline ]
+    inlines = [ SensorUserAlarmInline, DataInline ]

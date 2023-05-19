@@ -13,8 +13,8 @@ class Data(CustomBaseModel):
     sensor = models.ForeignKey(Sensor, related_name='data', on_delete=models.CASCADE, db_index=True)
     value = models.DecimalField(max_digits=5, decimal_places=2)
     energy = models.BooleanField(null=True, blank=True)
-    date = models.DateField(blank=True, null=True)
-    time = models.TimeField(blank=True, null=True)
+    date_time = models.DateTimeField()
+
 
     # $table->increments('idDatos');
     # $table->integer('nevera_idNevera')->unsigned();
