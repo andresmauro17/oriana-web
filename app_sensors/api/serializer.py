@@ -9,3 +9,8 @@ class CurrentDataSerializer(serializers.Serializer):
     value = serializers.DecimalField(max_digits=5, decimal_places=2)
     energy = serializers.BooleanField()
     datetime = serializers.DateTimeField()
+
+class SensorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Sensor
+        fields = '__all__'

@@ -22,7 +22,7 @@ class Sensor(CustomBaseModel):
         ('TEMPERATURE', 'Temperatura'),
         ('HUMIDITY','Humedad'),
     )
-    device_type = models.CharField(max_length=100, choices=VARIABLE_CHOICES)
+    sensor_type = models.CharField(max_length=100, choices=VARIABLE_CHOICES)
 
     # most brands will have some sort of id you'll want to track
     unique_id = models.CharField(max_length=100, unique=True)
@@ -32,6 +32,7 @@ class Sensor(CustomBaseModel):
     was_modified = models.BooleanField(default=False)
     alarms = models.ManyToManyField(User, through='SensorUserAlarm')
     site = models.ForeignKey(Site, blank=True, null=True,related_name='sensor', on_delete=models.SET_NULL)
+    device_id = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
         return '{}'.format(self.id)
