@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'app_dashboard.apps.DashboardAppConfig',
     'app_sensors.apps.AppSensorsConfig',
     'app_data.apps.AppDataConfig',
-    'app_organizations.apps.AppOrganizationAppConfig'
+    'app_organizations.apps.AppOrganizationAppConfig',
+    'app_emqx.apps.AppEmqxConfig'
 ]
 
 MIDDLEWARE = [
