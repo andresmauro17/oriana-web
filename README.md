@@ -30,7 +30,9 @@ We are using django, vue2 and webpack for assets.
 6. run the project
         python manage.py runserver
 
-
+# some commands 
+1. create rules in emqx using api from django
+        docker-compose run --rm django python manage.py createemqxrules
 
 {
   "agent": {
