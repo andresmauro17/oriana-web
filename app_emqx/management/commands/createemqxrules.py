@@ -21,7 +21,7 @@ class Command(BaseCommand):
             "type": "webhook",
             "name": webhook_name,
             "method": "post",
-            "url": f'{os.getenv("WEBHOOKS_HOST")}/$topic',
+            "url": f'{os.getenv("WEBHOOKS_HOST")}/'+"${topic}",
             "headers": {
                 "Accept": "application/json",
                 "content-type": "application/json",
