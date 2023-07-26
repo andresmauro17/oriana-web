@@ -93,7 +93,7 @@
       </template>
     </side-bar>
     <div class="main-content">
-      <DashboardNavbar />
+      <DashboardNavbar></DashboardNavbar>
 
       <div @click="$sidebar.displaySidebar(false)">
         <slot name="content"></slot>
@@ -102,7 +102,7 @@
     </div>
 
     <!-- switch modal -->
-    <modal v-model:show="showSwitchModal">
+    <modal :show="showSwitchModal" @update:show="showSwitchModal = $event">
       <template v-slot:header>
         <h6 class="modal-title">
           Usted tiene <strong class="text-primary">2</strong> organizaciones.
@@ -152,14 +152,15 @@
 </template>
 
 <script setup>
+// eslint-disable-next-line no-unused-vars
 import DashboardNavbar from "./DashboardNavbar.vue";
 // import ContentFooter from "./ContentFooter.vue";
 
-import { onMounted, ref, computed } from "vue";
-import { useStore } from "vuex";
+import { onMounted, ref } from "vue";
+// import { useStore } from "vuex";
 
-const store = useStore();
-const appSettings = computed(() => store.state.appSettings);
+// const store = useStore();
+// const appSettings = computed(() => store.state.appSettings);
 
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
@@ -179,6 +180,7 @@ const themeInitScrollbar = (className) => {
   }
 };
 
+// eslint-disable-next-line no-unused-vars
 const showSwitchModal = ref(false);
 const initScrollbar = () => {
   let isWindows = navigator.platform.startsWith("Win");

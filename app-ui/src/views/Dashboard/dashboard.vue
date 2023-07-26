@@ -21,13 +21,12 @@
           <base-button size="sm" type="neutral">Filters</base-button>
         </div>
       </div>
-      
     </base-header>
     <div class="container-fluid mt--6">
       <div class="row">
-          <div class="col-xl-4">
-            <indicator />
-          </div>
+        <div class="col-xl-4">
+          <indicator />
+        </div>
       </div>
     </div>
   </div>
