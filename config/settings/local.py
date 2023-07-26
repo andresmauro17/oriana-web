@@ -1,5 +1,7 @@
 from .base import *
 
+ALLOWED_HOSTS = ['host.docker.internal', 'localhost']
+
 #Rest Framework
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
