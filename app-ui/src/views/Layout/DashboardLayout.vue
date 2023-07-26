@@ -3,7 +3,11 @@
     <!-- <notifications></notifications> -->
     <side-bar>
       <template v-slot:links>
-        <a href="#" @click="showSwitchModal = true" class="sidebar-menu-item nav-link">
+        <a
+          href="#"
+          @click="showSwitchModal = true"
+          class="sidebar-menu-item nav-link"
+        >
           <i class="ni ni-shop text-primary"></i>
           <span class="nav-link-text"> Organizaciones </span>
           <i class="fas fa-sort text-primary text-right"></i>
@@ -89,7 +93,7 @@
       </template>
     </side-bar>
     <div class="main-content">
-      <dashboard-navbar></dashboard-navbar>
+      <DashboardNavbar />
 
       <div @click="$sidebar.displaySidebar(false)">
         <slot name="content"></slot>
@@ -100,7 +104,9 @@
     <!-- switch modal -->
     <modal v-model:show="showSwitchModal">
       <template v-slot:header>
-        <h6 class="modal-title">Usted tiene <strong class="text-primary">2</strong> organizaciones.</h6>
+        <h6 class="modal-title">
+          Usted tiene <strong class="text-primary">2</strong> organizaciones.
+        </h6>
       </template>
       <div class="list-group list-group-flush">
         <a href="#!" class="list-group-item list-group-item-action">
@@ -145,9 +151,16 @@
   </div>
 </template>
 
-<script>
-/* eslint-disable no-new */
-import { mapState } from "vuex";
+<script setup>
+import DashboardNavbar from "./DashboardNavbar.vue";
+// import ContentFooter from "./ContentFooter.vue";
+
+import { onMounted, ref, computed } from "vue";
+import { useStore } from "vuex";
+
+const store = useStore();
+const appSettings = computed(() => store.state.appSettings);
+
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 
@@ -155,7 +168,7 @@ function hasElement(className) {
   return document.getElementsByClassName(className).length > 0;
 }
 
-function initScrollbar(className) {
+const themeInitScrollbar = (className) => {
   if (hasElement(className)) {
     new PerfectScrollbar(`.${className}`);
   } else {
@@ -164,39 +177,21 @@ function initScrollbar(className) {
       initScrollbar(className);
     }, 100);
   }
-}
-
-import DashboardNavbar from "./DashboardNavbar.vue";
-// import ContentFooter from "./ContentFooter.vue";
-
-export default {
-  components: {
-    DashboardNavbar,
-    // ContentFooter,
-  },
-  computed: {
-    ...mapState(["appSettings"]),
-  },
-  data() {
-    return {
-      showSwitchModal: false,
-    }
-  },
-  methods: {
-    initScrollbar() {
-      let isWindows = navigator.platform.startsWith("Win");
-      if (isWindows) {
-        initScrollbar("sidenav");
-      }
-    },
-  },
-  mounted() {
-    this.initScrollbar();
-  },
 };
+
+const showSwitchModal = ref(false);
+const initScrollbar = () => {
+  let isWindows = navigator.platform.startsWith("Win");
+  if (isWindows) {
+    themeInitScrollbar("sidenav");
+  }
+};
+
+onMounted(() => {
+  initScrollbar();
+});
 </script>
 <style lang="scss">
-
 // .dropdown-menu {
 //   z-index: 10000;
 // }
