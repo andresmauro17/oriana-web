@@ -123,8 +123,9 @@ export default {
   computed: {
     ...mapState(["appSettings"]),
     routeName() {
-      const { name } = this.$route;
-      return this.capitalizeFirstLetter(name);
+      // const { name } = this.$route;
+      // return this.capitalizeFirstLetter(name);
+      return "";
     },
   },
   data() {

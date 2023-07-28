@@ -106,7 +106,8 @@ export default {
   },
   computed: {
     baseComponent() {
-      return this.isMenu || this.link.isRoute ? "li" : "router-link";
+      // return this.isMenu || this.link.isRoute ? "li" : "router-link";
+      return "li";
     },
     linkPrefix() {
       if (this.link.name) {
@@ -119,14 +120,14 @@ export default {
       return this.children.length > 0 || this.menu === true;
     },
     isActive() {
-      if (this.$route && this.$route.path) {
-        let matchingRoute = this.children.find((c) =>
-          this.$route.path.startsWith(c.link.path)
-        );
-        if (matchingRoute !== undefined) {
-          return true;
-        }
-      }
+      // if (this.$route && this.$route.path) {
+      //   let matchingRoute = this.children.find(() => false
+      //     // this.$route.path.startsWith(c.link.path)
+      //   );
+      //   if (matchingRoute !== undefined) {
+      //     return true;
+      //   }
+      // }
       return false;
     },
   },
