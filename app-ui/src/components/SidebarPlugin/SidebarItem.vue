@@ -142,11 +142,11 @@ export default {
       tabs.splice(index, 1);
     },
     elementType(link, isParent = true) {
-      if (link.isRoute === false) {
-        return isParent ? "li" : "a";
-      } else {
-        return "router-link";
-      }
+      // if (link.isRoute === false) {
+      return isParent ? "li" : "a";
+      // } else {
+      //   return "router-link";
+      // }
     },
     linkAbbreviation(name) {
       const matches = name.match(/\b(\w)/g);

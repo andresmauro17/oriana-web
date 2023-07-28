@@ -30,30 +30,30 @@
           <sidebar-item :link="{ name: 'Urgencias', path: '/login' }" />
           <sidebar-item :link="{ name: 'Segundo piso', path: '/register' }" />
         </sidebar-item>
-        <sidebar-item
+        <!-- <sidebar-item
           :link="{
             name: 'Alarmas',
             icon: 'ni ni-ui-04 text-info',
             path: '/charts',
           }"
         >
-        </sidebar-item>
-        <sidebar-item
+        </sidebar-item> -->
+        <!-- <sidebar-item
           :link="{
             name: 'Reportes',
             icon: 'ni ni-chart-pie-35 text-info',
             path: '/charts',
           }"
         >
-        </sidebar-item>
-        <sidebar-item
+        </sidebar-item> -->
+        <!-- <sidebar-item
           :link="{
             name: 'Eventos',
             icon: 'ni ni-calendar-grid-58 text-red',
             path: '/calendar',
           }"
         >
-        </sidebar-item>
+        </sidebar-item> -->
       </template>
       <template v-slot:links-after>
         <hr class="my-3" />
