@@ -16,16 +16,12 @@
 </head>
 
 <body>
-  <div>
-    <!-- Navbar -->
-    <div class="container mx-auto px-4 py-2 sm:px-6 lg:px-8">
-      {% block breadcrumb %}
-      {% endblock breadcrumb %}
-        <h1>hello</h1>
-      <!-- Content goes here -->
-      {% block content %}
-      {% endblock content %}
-    </div>
+  <div id="app"></div>
+    {% block breadcrumb %}
+    {% endblock breadcrumb %}
+    <!-- Content goes here -->
+    {% block content %}
+    {% endblock content %}
 
   </div>
   {% include 'layout/includes/js.html' %}
