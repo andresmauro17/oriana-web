@@ -9,7 +9,7 @@ from app_tasks.tasks import test_task
 # Create your views here.
 # @login_required
 def vue_test(request):
-    return render(request, 'sensors/sensors.html')
+    return render(request, 'sensors/vue-test.html')
 
 # @login_required
 def test_celery(request):
