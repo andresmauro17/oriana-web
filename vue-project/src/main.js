@@ -4,8 +4,10 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import App from './App.vue'
 
-const app = createApp(App)
+import ArgonDashboard from "./argon-dashboard";
 
+const app = createApp(App)
 app.use(createPinia())
+app.use(ArgonDashboard);
 
 app.mount('#app')
