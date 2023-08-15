@@ -16,14 +16,23 @@
 </head>
 
 <body>
-  <div id="app"></div>
+  <noscript>
+    <strong>We're sorry but doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+  </noscript>
+  <div id="app">
+    antes
     {% block breadcrumb %}
     {% endblock breadcrumb %}
     <!-- Content goes here -->
+    <main-layout>
+      <template #content>
+        dentro
+      </template>
+    </main-layout>
     {% block content %}
     {% endblock content %}
-
   </div>
+
   {% include 'layout/includes/js.html' %}
   {% block script %}
   {% endblock script %}
