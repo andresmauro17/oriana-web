@@ -1,9 +1,12 @@
-{% extends "auth-layout.html" %}
+{% extends "AuthLayout.html" %}
+{% comment %} {% extends "auth-layout.html" %} {% endcomment %}
+
+{% block viewtitle %}
+<title>Gthux Login</title>
+{% endblock viewtitle %}
 
 {% block content %}
-
-    <login />
-
+    <login-view />
 {% endblock content%}
 
 
