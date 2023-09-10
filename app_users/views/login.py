@@ -12,5 +12,5 @@ def login_view(request):
             login(request, user)
             return redirect('posts:feed')
         else:
-            return render(request,'users/login.html',{'error':'invalid username or password'})
+            return render(request,'users/login.html',{'error':'Usuario o clave inválida. ¡Inténtalo de nuevo!'})
     return render(request,'users/login.html')

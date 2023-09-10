@@ -1,135 +1,124 @@
 <template>
-  <div class="container top-0 position-sticky z-index-sticky">
-    <div class="row">
-      <div class="col-12">
-        <!-- <navbar
-          is-blur="blur  border-radius-lg my-3 py-2 start-0 end-0 mx-4 shadow"
-          btn-background="bg-gradient-success"
-          :dark-mode="true"
-        /> -->
+  <main class="main-content mt-0">
+    <div
+      class="page-header align-items-start min-vh-50 pt-7 pb-9 bg-gradient-info"
+    >
+      <span class="mask bg-gradient opacity-6"></span>
+      
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-5 text-center mx-auto">
+            <h1 class="text-white mb-2 mt-5">Bienvenido a Gthux!</h1>
+            <p class="text-lead text-white">
+              Sistema de monitoreo continuo para ambientes criticos.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <main class="mt-0 main-content">
-    <section>
-      <div class="page-header min-vh-100">
-        <div class="container">
-          <div class="row">
-            <div
-              class="mx-auto col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0"
-            >
-              <div class="card card-plain">
-                <div class="pb-0 card-header text-start">
-                  <h4 class="font-weight-bolder">Sign In</h4>
-                  <p class="mb-0">Enter your email and password to sign in</p>
-                </div>
-                <div class="card-body">
-                  <form role="form">
-                    <div class="mb-3">
-                      <argon-input
-                        id="email"
-                        type="email"
-                        placeholder="Email"
-                        name="email"
-                        size="lg"
-                      />
-                    </div>
-                    <div class="mb-3">
-                      <argon-input
-                        id="password"
-                        type="password"
-                        placeholder="Password"
-                        name="password"
-                        size="lg"
-                      />
-                    </div>
-                    <argon-switch id="rememberMe" name="rememberMe">
-                      Remember me
-                    </argon-switch>
-                    <div class="text-center">
-                      <argon-button
-                        class="mt-4"
-                        variant="gradient"
-                        color="success"
-                        full-width
-                        size="lg"
-                        >Sign in</argon-button
-                      >
-                    </div>
-                  </form>
-                </div>
-                <div class="px-1 pt-0 text-center card-footer px-lg-2">
-                  <p class="mx-auto mb-4 text-sm">
-                    Don't have an account?
-                    <router-link
-                      :to="{ name: 'Signup Illustration' }"
-                      class="text-success text-gradient font-weight-bold"
-                      >Sign up</router-link
-                    >
-                  </p>
-                </div>
-              </div>
+    <div class="container">
+      <div class="row mt-lg-n10 mt-md-n11 mt-n10 justify-content-center">
+        <div class="col-xl-4 col-lg-5 col-md-7 mx-auto">
+          
+          <div class="card mt-5">
+            <div class="card-header pb-0 text-start">
+              <h3 class="font-weight-bolder">Ingresar al sistema</h3>
+              <p class="mb-0">Ingrese su correo electronico y contraseña</p>
             </div>
-            <div
-              class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column"
-            >
-              <div
-                class="position-relative h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center overflow-hidden"
-                :style="{
-                  backgroundImage:
-                    'url(' +
-                    'https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/signin-ill.jpg' +
-                    ')',
-                    backgroundSize: 'cover'
-                }"
-              >
-                <span class="mask bg-gradient-success opacity-6"></span>
-
-                <h4
-                  class="mt-5 text-white font-weight-bolder position-relative"
-                >
-                  "Attention is the new currency"
-                </h4>
-                <p class="text-white position-relative">
-                  The more effortless the writing looks, the more effort the
-                  writer actually put into the process.
-                </p>
+            <div class="card-body">
+              <form role="form" class="text-start" @submit.prevent="onSubmit">
+                <label>Correo electronico</label>
+                <argon-input
+                  id="email"
+                  type="email"
+                  placeholder="Email"
+                  aria-label="Email"
+                  @input="email = $event.target.value"
+                  :error="showAlert"
+                />
+                <label>Contraseña</label>
+                <argon-input
+                  id="password"
+                  type="password"
+                  placeholder="Password"
+                  aria-label="Password"
+                  @input="password = $event.target.value"
+                  :error="showAlert"
+                />
+                <!-- <argon-switch id="rememberMe" name="rememberMe">
+                  Remember me
+                </argon-switch> -->
+                <div class="text-center">
+                <ArgonBadge v-if="showAlert" color="danger" size="lg">{{alertText}}</ArgonBadge>
               </div>
+
+                <div class="text-center"><button class="btn mb-0 btn-info btn-md w-100 null mt-4 mb-0">Ingresar</button></div>
+              </form>
+            </div>
+            <div class="card-footer text-center pt-0 px-lg-2 px-1">
+              <p class="text-sm mx-auto">
+                Olvido su contraseña
+                <a href="#" class="text-info font-weight-bold"> Recordar</a>
+              </p>
+              <p class="mb-4 text-sm mx-auto">
+                No tienes una cuenta?
+                <a href="#" class="text-info font-weight-bold"> Crear</a>
+              </p>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
   </main>
 </template>
 
 <script>
-// import Navbar from "@/examples/PageLayout/Navbar.vue";
-import ArgonInput from "@/components/ArgonInput.vue";
-import ArgonSwitch from "@/components/ArgonSwitch.vue";
-import ArgonButton from "@/components/ArgonButton.vue";
-const body = document.getElementsByTagName("body")[0];
-import { mapMutations } from "vuex";
 export default {
   name: "SigninIllustration",
-  components: {
-    // Navbar,
-    ArgonInput,
-    ArgonSwitch,
-    ArgonButton,
-  },
-  created() {
-    this.$store.state.hideConfigButton = true;
-    this.toggleDefaultLayout();
-    body.classList.remove("bg-gray-100");
-  },
-  beforeUnmount() {
-    this.$store.state.hideConfigButton = false;
-    this.toggleDefaultLayout();
-    body.classList.add("bg-gray-100");
-  },
-  methods: {
-    ...mapMutations(["toggleDefaultLayout"]),
-  },
 };
+
+</script>
+
+<script setup>
+import { ref } from "vue";
+import loginService from "@/services/auth/loginService.js";
+
+import ArgonInput from "@/components/ArgonInput.vue";
+import ArgonAlert from "@/components/ArgonAlert.vue";
+import ArgonBadge from "@/components/ArgonBadge.vue";
+
+
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+let nextParam = urlParams.get("next");
+let alertText = ref("");
+let showAlert = ref(false);
+
+const email = ref(''); // Initialize email as an empty string
+const password = ref(''); // Initialize password as an empty string
+
+
+const onSubmit = ()=>{
+  console.log('Email:', email.value);
+  console.log('Password:', password.value);
+  loginService
+    .login(email.value, password.value)
+    .then((res) => {
+      console.log("el status es");
+      console.log(res.status);
+      if (res.status == 201) {
+        window.location = nextParam ? nextParam : "/";
+      }
+    })
+    .catch((error) => {
+      if (error.response.status === 401) {
+        console.log(error.response);
+        alertText.value = error.response.data.error;
+        showAlert.value = true;
+      }
+    });
+}
+
+
+
 </script>
