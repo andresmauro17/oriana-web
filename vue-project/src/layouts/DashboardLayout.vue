@@ -1,14 +1,15 @@
 <template>
   <div>
-    <!-- hola dashboardlayout -->
-    <div class="min-height-300 bg-primary position-absolute w-100">
-      
-    </div>
+    <div class="min-height-300 position-absolute w-100"></div>
     <SidebarComponent />
-    <slot name="content"></slot>
+    <main class="main-content position-relative max-height-vh-100 h-100">
+      <NavbarComoponent />
+      <slot name="content"></slot>
+    </main>
   </div>
 </template>
 
 <script setup>
 import SidebarComponent from './DashboardLayout/SidebarComponent.vue';
+import NavbarComoponent from './DashboardLayout/NavbarComoponent.vue';
 </script>

@@ -1,7 +1,8 @@
 <template>
+  <!--  border-radius-xl ms-4 my-3 -->
   <aside
     id="sidenav-main"
-    class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 ms-4"
+    class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0  fixed-start"
     :class="` ${sidebarType}`"
   >
     <div class="sidenav-header">
@@ -10,12 +11,13 @@
         class="top-0 p-3 cursor-pointer fas fa-times text-secondary opacity-5 position-absolute end-0 d-none d-xl-none"
         aria-hidden="true"
       ></i>
-      <a class="m-0 navbar-brand" href="/">
+      <a class="m-0 navbar-brand text-center" href="/">
         <img
-          src="@/assets/img/logos/gthux/brand.png"
+          src="@/assets/img/logos/gthux/onlylogo.png"
           class="navbar-brand-img h-100"
           alt="main_logo"
         />
+        G-thux
       </a>
     </div>
     <hr class="mt-0 horizontal dark" />
@@ -98,7 +100,7 @@
             class="text-xs ps-4 ms-2 text-uppercase font-weight-bolder opacity-6"
             :class="'ms-2'"
           >
-            Documentacion
+            Docs
           </h6>
         </li>
         <li class="nav-item">
