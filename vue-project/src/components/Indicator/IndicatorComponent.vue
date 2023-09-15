@@ -1,18 +1,19 @@
 <template>
   <div class="card">
     <!-- Card header -->
-    <div class="card-header">
-      <div class="row">
-        <div class="col-8">
+    <div class="card-header py-3 d-flex align-items-center border-bottom">
+        <div class="d-flex align-items-center">
           <!-- Surtitle -->
           <!-- <h6 class="surtitle">5/23 projects</h6> -->
           <!-- Title -->
-          <h5 class="h3 mb-0">Nevera Biologicos</h5>
+          <h5 class="text-capitalize">Nevera Biologicos</h5>
         </div>
-        <div class="col-4 text-right">
-          <a href="#!" class="btn btn-sm btn-neutral">Config</a>
+        <div class="text-end ms-auto">
+          <a href="#!" class="mb-0 btn btn-xs bg-neutral">
+            <i class="fas fa-cog "></i> 
+            Config
+          </a>
         </div>
-      </div>
     </div>
     <!-- Card body -->
     <div class="card-body card-body-indicator">
@@ -26,6 +27,7 @@
           </p>
         </div>
       </div>
+      <p class="mt-3 mb-0 text-center" >31-12-12 00:00:00</p>
     </div>
   </div>
 </template>

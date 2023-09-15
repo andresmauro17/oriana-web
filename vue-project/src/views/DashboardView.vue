@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container-fluid mt--6">
+    <div class="container-fluid mt--6 min-height-600">
       <div class="row align-items-center py-4">
         <div class="col-12">
             <nav aria-label="breadcrumb" class=" d-md-inline-block ml-md-4">
@@ -17,7 +17,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-xl-4">
+        <div class="col-xl-4 mb-4">
           <IndicatorComponent />
         </div>
       </div>
