@@ -4,8 +4,7 @@
       <div class="row align-items-center justify-content-lg-between">
         <div class="mb-4 col-lg-6 mb-lg-0">
           <div
-            class="text-sm text-center copyright text-muted"
-            :class="$store.state.isRTL ? 'text-lg-end' : 'text-lg-start'"
+            class="text-sm text-center copyright text-lg-start text-muted"
           >
             ©
             {{ new Date().getFullYear() }}, made with

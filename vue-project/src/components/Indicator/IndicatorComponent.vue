@@ -32,14 +32,7 @@
   </div>
 </template>
 
-<script>
-export default {
-  setup() {
-    console.log("hi from indication");
-
-    return {};
-  },
-};
+<script setup>
 </script>
 
 <style lang="scss" scoped>
