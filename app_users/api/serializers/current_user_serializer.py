@@ -6,7 +6,7 @@ from app_organizations.api.serializers import organization_serializer
 from app_users.models import User
 
 class CurrentUserSerializer(serializers.ModelSerializer):
-    # Organizations = 
+    Organizations = "hola"
     class Meta:
         model = User
         exclude = ('password',)

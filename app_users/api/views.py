@@ -26,11 +26,9 @@ def login_view(request):
         return Response({'error':'usuario o clave invalida'}, status=status.HTTP_401_UNAUTHORIZED)
 
 
-@api_view(["POST","GET"])
+@api_view(["GET"])
 def user_current_view(request):
     # current_user = User.objects.filter(id=request.user.id)
     current_user = request.user
-    print(current_user)
     serializer = CurrentUserSerializer(current_user)
-    data = {"respuesta":"satisfactoria"}
-    return Response(serializer.data,status=status.HTTP_201_CREATED)
+    return Response(serializer.data,status=status.HTTP_200_OK)

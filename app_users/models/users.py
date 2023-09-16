@@ -70,6 +70,7 @@ class User(CustomBaseModel, AbstractUser):
             'unique': 'A user with that email already exists.'
         }
     )
+    profile_image = models.ImageField(upload_to='profile_images/photo', blank=True, null=True)
 
     phone_regex = RegexValidator(
         regex=r'\+?1?\d{9,15}$',
@@ -94,7 +95,7 @@ class User(CustomBaseModel, AbstractUser):
 
     is_verified = models.BooleanField(
         'verified',
-        default=True,
+        default=False,
         help_text=(
             'Set to true when the user have verified its email address.'
         )
