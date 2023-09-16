@@ -2,9 +2,7 @@ import { defineStore } from 'pinia'
 import userservices from "@/services/userservices.js"
 export default defineStore('profile', {
   state: () => ({
-    currentuser:{
-      username:"actual",
-    }
+    currentuser:{}
   }),
   actions:{
     getCurrentUser(){

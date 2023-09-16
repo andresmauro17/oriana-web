@@ -43,8 +43,8 @@
           </li>
 
           <!-- avatar -->
-          <li class="nav-item dropdown ps-3 d-flex align-items-center">
-            <ArgonAvatar img="https://demos.creative-tim.com/vue-soft-ui-dashboard-pro/img/team-1.66f62826.jpg" alt="Avatar" size="sm" circular href="javascript:;" id="dropdownAvatar" data-bs-toggle="dropdown" aria-expanded="false" />
+          <li v-if="profileStore.currentuser" class="nav-item dropdown ps-3 d-flex align-items-center">
+            <ArgonAvatar :img="profileStore.currentuser.profile_image" alt="Avatar" size="sm" circular href="javascript:;" id="dropdownAvatar" data-bs-toggle="dropdown" aria-expanded="false" />
             <ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n4" aria-labelledby="dropdownAvatar">
               <li class="mb-2">
                 <h6 class=" dropdown-item text-overflow m-0">{{profileStore.currentuser.username}}</h6>

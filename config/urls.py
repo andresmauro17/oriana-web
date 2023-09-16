@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import include, path
 
 from django.conf import settings
+from django.conf.urls.static import static
 
 from app_sensors.views import vue_test
 from app_sensors.views import test_celery
@@ -28,7 +29,7 @@ urlpatterns = [
     path('',include(('app_users.urls', 'users'), namespace='users')),
     path('',include(('app_sensors.urls', 'sensors'), namespace='sensors')),
     path('', include('app_dashboard.urls'), name='app_dashboard'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
 # print("--------------------------")
