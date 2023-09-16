@@ -6,6 +6,7 @@ const App = {
     const profileStore = useProfileStore();
     const init = () => {
       profileStore.getCurrentUser();
+      profileStore.getOrganizations();
     };
     onMounted(() => {
       console.log("heyyyy 😎")

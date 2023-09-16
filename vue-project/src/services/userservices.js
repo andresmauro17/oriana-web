@@ -7,6 +7,10 @@ UserService.getCurrentUser = function () {
   return api.get("/users/current").then((res) => res);
 };
 
+UserService.getOrganizations = function () {
+  return api.get("/organizations/").then((res) => res);
+};
+
 
 
 export default UserService;

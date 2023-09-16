@@ -138,29 +138,18 @@
             Usted tiene <strong class="text-primary">2</strong> organizaciones.
           </h6>
         </template>
-        <div class="list-group list-group-flush">
-          <a href="#!" class="list-group-item list-group-item-action">
-            <div class="row align-items-center">
-              <div class="col ml--2">
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <h4 class="mb-0 text-sm">Medex Cali</h4>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-          <a href="#!" class="list-group-item list-group-item-action">
+        <div class="list-group list-group-flush" v-if="profileStore.organizations">
+          <a href="#!" class="list-group-item list-group-item-action" v-for="organization in profileStore.organizations" :key="organization.id" >
             <div class="row align-items-center">
               <div class="col ml--2">
                 <div class="d-flex justify-content-between align-items-center">
                   <div>
                     <h4 class="mb-0 text-sm">
-                      <i class="ni ni-check-bold text-success"></i> Medex
-                      Barranquilla
+                      <i class="ni ni-check-bold text-success" v-if="organization.id == profileStore.currentuser.current_organization"></i>
+                      {{organization.name}}
                     </h4>
                   </div>
-                  <div class="text-right">
+                  <div class="text-right" v-if="organization.id == profileStore.currentuser.current_organization">
                     <i class="ni ni-settings text-primary"></i>
                   </div>
                 </div>
@@ -182,12 +171,15 @@
 <script setup>
 import { ref } from "vue";
 import Modal from "@/components/Modals/Modal.vue"
+import useProfileStore from "@/stores/profile.js"
+
 const showSwitchModal = ref(false);
 
 const collapsedSites = ref(false);// thisis the default behivor forsites menu
 
 const sidebarType=ref("bg-white");//bg-white bg-default;
 
+const profileStore = useProfileStore()
 </script>
 
 <style lang="scss" scoped>
