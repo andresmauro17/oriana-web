@@ -61,6 +61,12 @@
                   <span class="ms-1">Configuracion</span>
                 </a>
               </li>
+              <li class="mb-2">
+                <a href="/admin" target="blank" class="dropdown-item text-info">
+                  <i class="ni ni-settings"></i>
+                  <span class="ms-1">admin</span>
+                </a>
+              </li>
               <div class="dropdown-divider"></div>
               <li class="mb-2">
                 <a href="/logout" class="dropdown-item">
