@@ -28,7 +28,7 @@
     >
     <ul class="navbar-nav">
         <li class="nav-item">
-          <a href="#" class="nav-link active" aria-controls="dashboardsExamples" role="button" aria-expanded="false">
+          <a href="#" class="nav-link" :class="{active: showSwitchModal}" aria-controls="dashboardsExamples" role="button" aria-expanded="false" @click="showSwitchModal = true">
             <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
               <i class="ni ni-shop text-primary text-sm opacity-10"></i>
             </div>
@@ -129,11 +129,60 @@
         </li>
       </ul>
     </div>
+    <!-- switch modal -->
+    <teleport to='body'>
+      <!-- switch modal -->
+      <Modal :show="showSwitchModal" @update:show="showSwitchModal = $event">
+        <template v-slot:header>
+          <h6 class="modal-title">
+            Usted tiene <strong class="text-primary">2</strong> organizaciones.
+          </h6>
+        </template>
+        <div class="list-group list-group-flush">
+          <a href="#!" class="list-group-item list-group-item-action">
+            <div class="row align-items-center">
+              <div class="col ml--2">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h4 class="mb-0 text-sm">Medex Cali</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+          <a href="#!" class="list-group-item list-group-item-action">
+            <div class="row align-items-center">
+              <div class="col ml--2">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h4 class="mb-0 text-sm">
+                      <i class="ni ni-check-bold text-success"></i> Medex
+                      Barranquilla
+                    </h4>
+                  </div>
+                  <div class="text-right">
+                    <i class="ni ni-settings text-primary"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <template v-slot:footer>
+          <a class="mb-0 btn btn-link pe-3 ps-0 ms-auto" href="#">
+            Agregar una organizacion
+          </a>
+        </template>
+      </Modal>
+    </teleport>
   </aside>
+  
 </template>
 
 <script setup>
 import { ref } from "vue";
+import Modal from "@/components/Modals/Modal.vue"
+const showSwitchModal = ref(false);
 
 const sidebarType=ref("bg-white");//bg-white bg-default;
 

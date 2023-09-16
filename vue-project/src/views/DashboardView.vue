@@ -26,5 +26,7 @@
 </template>
 
 <script setup>
+  import { ref } from "vue";
   import IndicatorComponent from "@/components/Indicator/IndicatorComponent.vue";
+  // import ModalSwitchOrg from "@/components/Modals/ModalSwitchOrg.vue"
 </script>
