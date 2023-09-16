@@ -53,7 +53,7 @@
             </div>
             <span class="nav-link-text ms-1">Sitios</span>
           </a>
-          <div class="collapse " id="applicationsExamples">
+          <div class="collapse" :class="{show:!collapsedSites}" id="applicationsExamples">
             <ul class="nav ms-4">
               <li class="nav-item ">
                 <a class="nav-link " href="#">
@@ -183,6 +183,8 @@
 import { ref } from "vue";
 import Modal from "@/components/Modals/Modal.vue"
 const showSwitchModal = ref(false);
+
+const collapsedSites = ref(false);// thisis the default behivor forsites menu
 
 const sidebarType=ref("bg-white");//bg-white bg-default;
 
