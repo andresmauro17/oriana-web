@@ -9,27 +9,28 @@
           <h5 class="text-capitalize">{{ sensor.name }}</h5>
         </div>
         <div class="text-end ms-auto">
-          <a :href="`/sensor/${sensor.id}`" class="mb-0 btn btn-xs bg-neutral">
+          <a :href="`/sensor/${sensor.id}/edit`" class="mb-0 btn btn-xs bg-neutral">
             <i class="fas fa-cog "></i> 
             Config
           </a>
         </div>
     </div>
     <!-- Card body -->
-    <div class="card-body card-body-indicator">
-      <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab dolorum natus architecto aliquam, labore accusamus error ut dolorem nobis quo odio? Tenetur pariatur ad perspiciatis culpa, mollitia ipsa placeat iusto?</p> -->
-      <div class="push-indicator" :class="colorClass">
-        <div class="push-in-indicator">
-          <p class="display">
-            <span id="temperatura_entero" class="temp_entero"> {{sensor.last_value}}</span>
-            <!-- <span id="temperatura_decimal" class="temp_decimal">.5</span> -->
-            <span v-if="sensor.sensor_type=='TEMPERATURE'" class="temp_grados">&deg;</span>
-            <span v-if="sensor.sensor_type=='HUMIDITY'" class="temp_grados">%</span>
-          </p>
+    <a :href="`/sensor/${sensor.id}`">
+      <div class="card-body card-body-indicator">
+        <div class="push-indicator" :class="colorClass">
+          <div class="push-in-indicator">
+            <p class="display">
+              <span id="temperatura_entero" class="temp_entero"> {{sensor.last_value}}</span>
+              <!-- <span id="temperatura_decimal" class="temp_decimal">.5</span> -->
+              <span v-if="sensor.sensor_type=='TEMPERATURE'" class="temp_grados">&deg;</span>
+              <span v-if="sensor.sensor_type=='HUMIDITY'" class="temp_grados">%</span>
+            </p>
+          </div>
         </div>
+        <p class="mt-3 mb-0 text-center" >{{formatedDatetime}}</p>
       </div>
-      <p class="mt-3 mb-0 text-center" >{{formatedDatetime}}</p>
-    </div>
+    </a>
   </div>
 </template>
 
