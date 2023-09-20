@@ -6,10 +6,10 @@
           <!-- Surtitle -->
           <!-- <h6 class="surtitle">5/23 projects</h6> -->
           <!-- Title -->
-          <h5 class="text-capitalize">Nevera Biologicos</h5>
+          <h5 class="text-capitalize">{{ sensor.name }}</h5>
         </div>
         <div class="text-end ms-auto">
-          <a href="#!" class="mb-0 btn btn-xs bg-neutral">
+          <a :href="`/sensor/${sensor.id}`" class="mb-0 btn btn-xs bg-neutral">
             <i class="fas fa-cog "></i> 
             Config
           </a>
@@ -18,21 +18,66 @@
     <!-- Card body -->
     <div class="card-body card-body-indicator">
       <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab dolorum natus architecto aliquam, labore accusamus error ut dolorem nobis quo odio? Tenetur pariatur ad perspiciatis culpa, mollitia ipsa placeat iusto?</p> -->
-      <div class="push-indicator push-indicator--green-light">
+      <div class="push-indicator" :class="colorClass">
         <div class="push-in-indicator">
           <p class="display">
-            <span id="temperatura_entero" class="temp_entero"> 20</span>
-            <span id="temperatura_decimal" class="temp_decimal">.5</span>
-            <span class="temp_grados">&deg;</span>
+            <span id="temperatura_entero" class="temp_entero"> {{sensor.last_value}}</span>
+            <!-- <span id="temperatura_decimal" class="temp_decimal">.5</span> -->
+            <span v-if="sensor.sensor_type=='TEMPERATURE'" class="temp_grados">&deg;</span>
+            <span v-if="sensor.sensor_type=='HUMIDITY'" class="temp_grados">%</span>
           </p>
         </div>
       </div>
-      <p class="mt-3 mb-0 text-center" >31-12-12 00:00:00</p>
+      <p class="mt-3 mb-0 text-center" >{{formatedDatetime}}</p>
     </div>
   </div>
 </template>
 
 <script setup>
+import { defineProps, computed, ref, onMounted } from 'vue';
+const props = defineProps(["sensorprop"]);
+
+
+const sensor = ref({});
+
+const colorClass = computed(()=>{
+  const gray = "push-indicator--gray-default"
+  const green = "push-indicator--green-light"
+  const blue = "push-indicator--blue-light"
+  const red = "push-indicator--red-light"
+  let color = gray
+  if(sensor.value.last_value && !isNaN(sensor.value.last_value)) {
+      if(sensor.value.last_value > sensor.value.max_threshold){
+        color = red
+      }else if(sensor.value.last_value < sensor.value.min_threshold){
+        color = blue
+      }else {
+        color = green
+      }
+  }
+  return color;
+})
+
+const formatedDatetime = computed(()=>{
+  let formattedDate = "aaaa-mm-dd";
+  let formattedTime = "hh:mm:ss";
+  if(sensor.value.last_value_date_time){
+    let dateObject = new Date(sensor.value.last_value_date_time);
+    formattedDate = dateObject.toISOString().split("T")[0]; // Get YYYY-MM-DD
+    formattedTime = dateObject.toISOString().split("T")[1].split(".")[0]; // Get HH:mm:ss
+  }
+  return `${formattedDate} | ${formattedTime}`
+})
+
+const setSensor = (data)=>{
+  data.last_value = data.last_value == null ? "--.--" : data.last_value;
+  sensor.value = data;
+}
+
+onMounted(()=>{
+  setSensor(props.sensorprop);
+});
+
 </script>
 
 <style lang="scss" scoped>
@@ -75,6 +120,16 @@
     rgba(201, 29, 18, 0.916667) 100%
   );
   box-shadow: 0px 4px 4px rgba(201, 29, 18, 0.46);
+}
+
+.push-indicator--gray-default {
+  background: linear-gradient(
+    360deg,
+    rgba(0,0,0,0.3) 0%,
+    rgba(0,0,0,0.3) 48.97%,
+    rgba(0,0,0,0.3) 100%
+  );
+  box-shadow: 0px 4px 4px rgba(0,0,0,0.3);
 }
 
 .push-in-indicator {

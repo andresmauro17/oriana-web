@@ -15,6 +15,9 @@ export default defineStore('profile', {
     getOrganizations(){
       userservices.getOrganizations().then((res)=>{
         this.organizations = res.data
+        if(this.currentuser.current_organization){
+          this.current_organization = this.organizations.filter((or)=>or.id==this.currentuser.current_organization)[0];
+        }
       })
     }
   }

@@ -11,6 +11,9 @@ class CurrentDataSerializer(serializers.Serializer):
     datetime = serializers.DateTimeField()
 
 class SensorSerializer(serializers.ModelSerializer):
+    max_threshold = serializers.DecimalField(max_digits=4, decimal_places=2, coerce_to_string=False)
+    min_threshold = serializers.DecimalField(max_digits=4, decimal_places=2, coerce_to_string=False)
+    last_value = serializers.DecimalField(max_digits=5, decimal_places=2, coerce_to_string=False)
     class Meta:
         model = Sensor
         fields = '__all__'

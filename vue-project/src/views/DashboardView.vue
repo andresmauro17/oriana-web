@@ -16,9 +16,9 @@
             </nav>
         </div>
       </div>
-      <div class="row">
-        <div class="col-xl-4 mb-4">
-          <IndicatorComponent />
+      <div v-if="sensors" class="row">
+        <div v-for="sensor in sensors" :key="sensor.id" class="col-xl-4 mb-4">
+          <IndicatorComponent :sensorprop="sensor" />
         </div>
       </div>
     </div>
@@ -26,7 +26,19 @@
 </template>
 
 <script setup>
-  import { ref } from "vue";
+  import { defineProps, onMounted, ref } from "vue";
+  import SensorService from "@/services/sensorservice.js"
   import IndicatorComponent from "@/components/Indicator/IndicatorComponent.vue";
-  // import ModalSwitchOrg from "@/components/Modals/ModalSwitchOrg.vue"
+  const props = defineProps(["site"]);
+
+  const sensors = ref([]);
+  const getDashboardSensors = ()=>{
+    SensorService.getDashboardSensors(1).then((res)=>{
+      sensors.value = res.data;
+    })
+  }
+  onMounted(()=>{
+    console.log("dashboardview",props.site)
+    getDashboardSensors();
+  })
 </script>

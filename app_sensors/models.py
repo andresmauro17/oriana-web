@@ -33,6 +33,9 @@ class Sensor(CustomBaseModel):
     alarms = models.ManyToManyField(User, through='SensorUserAlarm')
     site = models.ForeignKey(Site, blank=True, null=True,related_name='sensor', on_delete=models.SET_NULL)
     device_id = models.CharField(max_length=100, blank=True, null=True)
+    last_value = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
+    last_energy_state = models.BooleanField(null=True, blank=True)
+    last_value_date_time = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
         return '{}'.format(self.id)

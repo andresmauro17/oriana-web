@@ -36,12 +36,12 @@
             <i class="fas fa-sort text-default text-right" style="margin-left: auto;"></i>
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" v-if="profileStore.current_organization">
           <a href="#" class="nav-link" aria-controls="dashboardsExamples" role="button" aria-expanded="false">
             <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
               <i class="ni ni-check-bold text-success text-sm opacity-10"></i>
             </div>
-            <span class="nav-link-text ms-1">Medex Cali</span>
+            <span class="nav-link-text ms-1">{{profileStore.current_organization.name}}</span>
             <i class="fas fa-tools text-default text-right" style="margin-left: auto;"></i>
           </a>
         </li>

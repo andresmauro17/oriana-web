@@ -15,5 +15,4 @@ def index_view(request):
     else:
         organizations = request.user.organizations.all()
     serializer = OrganizationModelSerializer(organizations, many=True)
-    data = {"hello":"world"}
     return Response(serializer.data,status=status.HTTP_200_OK)
