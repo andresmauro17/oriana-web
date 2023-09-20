@@ -55,16 +55,13 @@
           </a>
           <div class="collapse" :class="{show:!collapsedSites}" id="applicationsExamples">
             <ul class="nav ms-4">
-              <li class="nav-item ">
-                <a class="nav-link " href="#">
-                  <span class="sidenav-mini-icon"> B </span>
-                  <span class="sidenav-normal"> Bodega Principal </span>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link " href="#">
-                  <span class="sidenav-mini-icon"> U </span>
-                  <span class="sidenav-normal"> Urgencias </span>
+              <li class="nav-item " v-for="site in profileStore.current_organization.sites" :key="site.id">
+                <a class="nav-link " :href="`/sites/${site.id}/switch/`">
+                  <div v-if="site.id==profileStore.currentuser.current_site" class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
+                    <i class="ni ni-check-bold text-success text-sm opacity-10"></i>
+                  </div>
+                  <span class="sidenav-mini-icon"> {{site.name}} </span>
+                  <span class="sidenav-normal"> {{site.name}} {{ profileStore.currentuser.current_site }}</span>
                 </a>
               </li>
             </ul>
@@ -139,7 +136,7 @@
           </h6>
         </template>
         <div class="list-group list-group-flush" v-if="profileStore.organizations">
-          <a href="#!" class="list-group-item list-group-item-action" v-for="organization in profileStore.organizations" :key="organization.id" >
+          <a :href="`/organizations/${organization.id}/switch/`" class="list-group-item list-group-item-action" v-for="organization in profileStore.organizations" :key="organization.id" >
             <div class="row align-items-center">
               <div class="col ml--2">
                 <div class="d-flex justify-content-between align-items-center">
