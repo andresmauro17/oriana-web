@@ -2,11 +2,18 @@
 
 # django imports
 from django.conf.urls import url
-from django.urls import path
+from django.urls import include, path
+
+from rest_framework.routers import DefaultRouter
 
 # views
-from .views import sensor_data_view
+from . import views
+
+
+router = DefaultRouter()
+router.register(r'', views.SensorViewSet, basename='sensor')
 
 urlpatterns = [
-    path('<str:sensor_unique>/currentdata/', sensor_data_view)
+    path('', include(router.urls)),
+    path('<str:sensor_unique>/currentdata/', views.sensor_data_view)
 ]
