@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="container-fluid mt--6 min-height-600">
+      <!-- breadcrumbs -->
       <div class="row align-items-center py-4">
         <div class="col-12">
             <nav aria-label="breadcrumb" class=" d-md-inline-block ml-md-4">

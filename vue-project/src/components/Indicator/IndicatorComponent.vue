@@ -9,14 +9,14 @@
           <h5 class="text-capitalize">{{ sensor.name }}</h5>
         </div>
         <div class="text-end ms-auto">
-          <a :href="`/sensor/${sensor.id}/edit`" class="mb-0 btn btn-xs bg-neutral">
+          <a :href="`/sensors/${sensor.id}/edit`" class="mb-0 btn btn-xs bg-neutral">
             <i class="fas fa-cog "></i> 
             Config
           </a>
         </div>
     </div>
     <!-- Card body -->
-    <a :href="`/sensor/${sensor.id}`">
+    <a :href="`/sensors/${sensor.id}`">
       <div class="card-body card-body-indicator">
         <div class="push-indicator" :class="colorClass">
           <div class="push-in-indicator">
