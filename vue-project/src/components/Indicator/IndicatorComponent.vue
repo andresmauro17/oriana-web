@@ -7,6 +7,13 @@
           <!-- <h6 class="surtitle">5/23 projects</h6> -->
           <!-- Title -->
           <h5 class="text-capitalize">{{ sensor.name }}</h5>
+          
+        </div>
+        <div v-if="isRealTimeMode" class="p-3 ms-auto text-center">
+          <span class="badge badge-secondary">
+            <i class="fas fa-dot-circle recording-text"></i>
+            Real time
+          </span>
         </div>
         <div class="text-end ms-auto">
           <a :href="`/sensors/${sensor.id}/edit`" class="mb-0 btn btn-xs bg-neutral">
@@ -141,6 +148,10 @@ const props = defineProps(["sensorprop", "showspectsprop"]);
 
 const sensor = ref({});
 
+const isRealTimeMode = ref(false);
+
+// setTimeout(()=>{isRealTimeMode.value=true}, 5000)
+
 const colorClass = computed(()=>{
   const gray = "push-indicator--gray-default"
   const green = "push-indicator--green-light"
@@ -265,5 +276,22 @@ const sensorSite = computed(()=>{
   font-size: 24px;
   line-height: 33px;
   color: #a29f9f;
+}
+
+.recording-text {
+  color: red;
+  animation: ease pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    color: red;
+  }
+  50% {
+    color: #e4e8ed;
+  }
+  100% {
+    color: red;
+  }
 }
 </style>
