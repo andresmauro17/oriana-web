@@ -61,7 +61,7 @@
                     <i class="ni ni-check-bold text-success text-sm opacity-10"></i>
                   </div>
                   <span class="sidenav-mini-icon"> {{site.name}} </span>
-                  <span class="sidenav-normal"> {{site.name}} {{ profileStore.currentuser.current_site }}</span>
+                  <span class="sidenav-normal"> {{site.name}}</span>
                 </a>
               </li>
             </ul>

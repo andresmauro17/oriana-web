@@ -19,7 +19,7 @@
       </div>
       <div v-if="sensors" class="row">
         <div v-for="sensor in sensors" :key="sensor.id" class="col-xl-4 mb-4">
-          <IndicatorComponent :sensorprop="sensor" />
+          <IndicatorComponent :sensorprop="sensor" :showspectsprop="false" />
         </div>
       </div>
     </div>

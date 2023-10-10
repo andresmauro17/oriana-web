@@ -9,7 +9,7 @@ from app_tasks.tasks import test_task
 
 # local
 from app_sensors.models import Sensor
-from .api.serializer import SensorSerializer
+from .api.serializer import SensorSerializer, convert_decimals
 
 # Create your views here.
 # @login_required
@@ -25,4 +25,5 @@ def test_celery(request):
 def sensor_home(request, sensor_id):
     sensor = get_object_or_404(Sensor, pk=sensor_id)
     sensor_serialized = SensorSerializer(sensor)
-    return render(request, 'sensors/sensor_home.html', {"sensor_serialized":sensor_serialized.data})
+    print(convert_decimals(sensor_serialized.data))
+    return render(request, 'sensors/sensor_home.html', {"sensor_serialized":convert_decimals(sensor_serialized.data)})

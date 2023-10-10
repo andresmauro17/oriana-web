@@ -28,15 +28,115 @@
             </p>
           </div>
         </div>
-        <p class="mt-3 mb-0 text-center" >{{formatedDatetime}}</p>
+        <h6 class="mt-3 mb-0 font-weight-bolder text-center">{{formatedDatetime}}</h6>
+        <p v-if="sensor.last_energy_state==true" class="text-sm mb-0 font-weight-bolder text-center"> <i class="ni ni-check-bold text-success text-sm opacity-10"></i> Energia</p>
+        <p v-else-if="sensor.last_energy_state==false" class="text-sm mb-0 font-weight-bolder text-center"> <i class="ni ni-fat-remove text-warning text-sm opacity-10"></i> Energia</p>
+        <p v-else class="text-sm mb-0 font-weight-bolder text-center"> ------- </p>
+        <!-- <p class="text-sm mb-0 opacity-8 text-center"><span class="badge bg-default">Sensor Desactualizado</span></p>
+        <p class="text-sm mb-0 opacity-8 text-center"><i class="ni ni-check-bold text-success text-sm opacity-10"></i> Todo esta ok</p>
+        <p class="text-sm mb-0 opacity-8 text-center"><span class="badge bg-warning">Por encima el limite</span></p>
+        <p class="text-sm mb-0 opacity-8 text-center"><span class="badge bg-info">Por debajo del limite</span></p> -->
+        
       </div>
     </a>
+    <!-- Sensor Spects table -->
+    <div v-if="showspectsprop" class="row justify-content-center mb-4">
+      <div class="col-7">
+        <div class="table-responsive">
+          <table class="table mb-0 align-items-center">
+            <tbody>
+              <tr>
+                <td>
+                  <div class="px-2 py-0 d-flex">
+                    <span class="badge bg-warning me-3">&nbsp;</span>
+                    <div class="d-flex flex-column justify-content-center">
+                      <h6 class="mb-0 text-sm">Limite Maximo</h6>
+                    </div>
+                  </div>
+                </td>
+                <td class="text-sm text-center align-middle">
+                  <span class="text-xs font-weight-bold">{{sensorprop.max_threshold}}</span>
+                  <span v-if="sensor.sensor_type=='TEMPERATURE'" class="temp_grados">&deg;</span>
+                  <span v-if="sensor.sensor_type=='HUMIDITY'" class="temp_grados">%</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="px-2 py-0 d-flex">
+                    <span class="badge bg-info me-3">&nbsp;</span>
+                    <div class="d-flex flex-column justify-content-center">
+                      <h6 class="mb-0 text-sm">Limite Minimo</h6>
+                    </div>
+                  </div>
+                </td>
+                <td class="text-sm text-center align-middle">
+                  <span class="text-xs font-weight-bold">{{sensorprop.min_threshold}}</span>
+                  <span v-if="sensor.sensor_type=='TEMPERATURE'" class="temp_grados">&deg;</span>
+                  <span v-if="sensor.sensor_type=='HUMIDITY'" class="temp_grados">%</span>  
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="px-2 py-0 d-flex">
+                    <div class="d-flex flex-column justify-content-center">
+                      <h6 class="mb-0 text-sm">Sensor</h6>
+                    </div>
+                  </div>
+                </td>
+                <td class="text-sm text-center align-middle">
+                  <span class="text-xs font-weight-bold">{{sensorprop.unique_id}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="px-2 py-0 d-flex">
+                    <div class="d-flex flex-column justify-content-center">
+                      <h6 class="mb-0 text-sm">Sitio</h6>
+                    </div>
+                  </div>
+                </td>
+                <td class="text-sm text-center align-middle">
+                  <span class="text-xs font-weight-bold">{{ sensorSite.name }}</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="px-2 py-0 d-flex">
+                    <div class="d-flex flex-column justify-content-center">
+                      <h6 class="mb-0 text-sm">Ciudad</h6>
+                    </div>
+                  </div>
+                </td>
+                <td class="text-sm text-center align-middle">
+                  <span class="text-xs font-weight-bold">{{profileStore.current_organization.city}}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div v-if="showspectsprop" class="row justify-content-center mb-4">
+      <div
+        class="col-7"
+      >
+        <a href="#" class="btn w-100 bg-light">
+          <i
+            class="mb-1 text-sm text-secondary"
+            :class="`fa fa-history`"
+            aria-hidden="true"
+          ></i>
+         Ver Historial
+        </a>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { defineProps, computed, ref, onMounted } from 'vue';
-const props = defineProps(["sensorprop"]);
+import useProfileStore from "@/stores/profile.js"
+const props = defineProps(["sensorprop", "showspectsprop"]);
 
 
 const sensor = ref({});
@@ -79,6 +179,16 @@ onMounted(()=>{
   setSensor(props.sensorprop);
 });
 
+const profileStore = useProfileStore()
+const sensorSite = computed(()=>{
+  if(profileStore.current_organization){
+    if(profileStore.current_organization.sites){
+      let site = profileStore.current_organization.sites.find((site)=>props.sensorprop.site==site.id)
+      return site
+    }
+  }
+  return ""
+})
 </script>
 
 <style lang="scss" scoped>
