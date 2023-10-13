@@ -21,7 +21,7 @@ const sensorDataChartOptions = {
   xAxis: {
     type: 'category',
     boundaryGap: false,
-    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'algo', 'Sun']
   },
   yAxis: {
     type: 'value',
@@ -44,35 +44,6 @@ const sensorDataChartOptions = {
         data: [{ type: 'average', name: 'Avg' }]
       }
     },
-    {
-      name: 'Lowest',
-      type: 'line',
-      data: [1, -2, 2, 5, 3, 2, 0],
-      markPoint: {
-        data: [{ name: '周最低', value: -2, xAxis: 1, yAxis: -1.5 }]
-      },
-      markLine: {
-        data: [
-          { type: 'average', name: 'Avg' },
-          [
-            {
-              symbol: 'none',
-              x: '90%',
-              yAxis: 'max'
-            },
-            {
-              symbol: 'circle',
-              label: {
-                position: 'start',
-                formatter: 'Max'
-              },
-              type: 'max',
-              name: '最高点'
-            }
-          ]
-        ]
-      }
-    }
   ]
 };
 

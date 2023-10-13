@@ -38,17 +38,29 @@
   import DatePicker from 'vue-datepicker-next';
   import 'vue-datepicker-next/index.css';
   import sensorDataChartOptions from "./sensorDataChartOptions.js"
+  import SensorService from "@/services/sensorservice.js"
 
-  defineProps(["sensorData"])
+  const props = defineProps(["sensorData"])
 
   const generateChart = ()=>{
     var chartDom = document.getElementById('mainchart');
     var sensorChart = echarts.init(chartDom);
+    sensorDataChartOptions.series[0].data = values.value
+    sensorDataChartOptions.xAxis.data = values_datetime.value
+    console.log("setoptions:", sensorDataChartOptions)
     sensorChart.setOption(sensorDataChartOptions)
   };
 
+  const values = ref([]);
+  const values_datetime = ref([]);
   onMounted(()=>{
-    generateChart();
+    SensorService.getSensorData(props.sensorData.id).then((res)=>{
+      let rawdata = res.data;
+      values.value = rawdata.map(item => item.value);
+      values_datetime.value = rawdata.map(item => item.date_time);
+      console.log("values:", values.value);
+      generateChart();
+    })
   })
 
   const dateRange = ref([new Date(), new Date()]);
