@@ -141,7 +141,7 @@
 </template>
 
 <script setup>
-import { defineProps, computed, ref, onMounted, defineEmits } from 'vue';
+import { defineProps, computed, ref, onMounted, defineEmits, watch } from 'vue';
 import useProfileStore from "@/stores/profile.js"
 import useChatterBoxStore from "@/stores/chatterbox.js"
 
@@ -157,9 +157,29 @@ const toggleShowHistory=()=>{
 
 const sensor = ref({});
 
-const isRealTimeMode = ref(true);
+const isRealTimeMode = ref(false);
 
 const chatterBoxStore = useChatterBoxStore()
+let lastDataIndex = 0;
+watch(chatterBoxStore.messages, (newValue) => {
+  let messages = newValue;
+  let sensormessages = messages[sensor.value.unique_id]
+  let messagesLength = sensormessages.length
+  console.log("messagesLength", messagesLength, "lastDataIndex",lastDataIndex)
+  if(messagesLength-1 != lastDataIndex) {
+    // console.log(messages)
+    lastDataIndex = messagesLength-1
+    console.log("rawdata", sensormessages[lastDataIndex])
+    if(lastDataIndex > 0){
+      isRealTimeMode.value=true
+      let sensorNewData = sensormessages[lastDataIndex];
+      sensor.value.last_value = sensorNewData.value;
+      sensor.value.last_value_date_time = sensorNewData.datetime;
+      sensor.value.last_energy_state = sensorNewData.energy ? true:false;
+    }
+  }
+  console.log("-------------------------")
+});
 
 
 // setTimeout(()=>{isRealTimeMode.value=true}, 5000)
@@ -182,15 +202,23 @@ const colorClass = computed(()=>{
   return color;
 })
 
-const formatedDatetime = computed(()=>{
+const formatedDateTime = (last_value_date_time)=>{
   let formattedDate = "aaaa-mm-dd";
   let formattedTime = "hh:mm:ss";
-  if(sensor.value.last_value_date_time){
-    let dateObject = new Date(sensor.value.last_value_date_time);
+  if(last_value_date_time){
+    let dateObject = new Date(last_value_date_time);
     formattedDate = dateObject.toISOString().split("T")[0]; // Get YYYY-MM-DD
     formattedTime = dateObject.toISOString().split("T")[1].split(".")[0]; // Get HH:mm:ss
   }
   return `${formattedDate} | ${formattedTime}`
+}
+
+const formatedDatetime = computed(()=>{
+ 
+  if(sensor.value.last_value_date_time){
+    return formatedDateTime(sensor.value.last_value_date_time)
+  }
+  return ""
 })
 
 const setSensor = (data)=>{
