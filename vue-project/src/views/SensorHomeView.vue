@@ -17,17 +17,11 @@
       </div>
     </div>
     <div class="row gx-4">
-      <IndicatorComponent :sensorprop="sensorData" :showspectsprop="true" />
+      <IndicatorComponent :sensorprop="sensorData" :showspectsprop="true" @toggleShowHistory="()=>{showHistory= !showHistory}" />
     </div>
-    <!-- <div class="card shadow-lg mx-4">
-      <div class="card-body p-3">
-        <div class="row gx-4">
-          <IndicatorComponent :sensorprop="sensorData" />
-        </div>
-      </div>
-    </div> -->
-
-
+    <div v-if="showHistory" class="row gx-4 mt-4">
+      <SensorHistoryComponent :sensorData="sensorData" />
+    </div>
   </div>
 </template>
 
@@ -35,7 +29,8 @@
   import { ref, onMounted, computed } from 'vue';
   import useProfileStore from "@/stores/profile.js"
   import IndicatorComponent from "@/components/Indicator/IndicatorComponent.vue";
-  
+  import SensorHistoryComponent from "./SensorHomeView/SensorHistoryComponent.vue"
+  const showHistory = ref(true);
   const profileStore = useProfileStore()
   const sensorSite = computed(()=>{
     if(profileStore.current_organization){

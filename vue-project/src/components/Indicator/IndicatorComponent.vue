@@ -127,7 +127,7 @@
       <div
         class="col-7"
       >
-        <a href="#" class="btn w-100 bg-light">
+        <a href="#" @click="toggleShowHistory" class="btn w-100 bg-light">
           <i
             class="mb-1 text-sm text-secondary"
             :class="`fa fa-history`"
@@ -141,10 +141,17 @@
 </template>
 
 <script setup>
-import { defineProps, computed, ref, onMounted } from 'vue';
+import { defineProps, computed, ref, onMounted, defineEmits } from 'vue';
 import useProfileStore from "@/stores/profile.js"
 const props = defineProps(["sensorprop", "showspectsprop"]);
+const emit = defineEmits(["toggleShowHistory"])
 
+const showHistory = ref(false)
+
+const toggleShowHistory=()=>{
+  showHistory.value=!showHistory.value;
+  emit("toggleShowHistory")
+}
 
 const sensor = ref({});
 
