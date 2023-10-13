@@ -55,11 +55,17 @@
 
   const props = defineProps(["sensorData"])
 
+  // ---------- chart logic --------------------
+  
+  const values = ref([]);
+  const values_datetime = ref([]);
+
   const setInitialOptions = ()=>{
     let variable = props.sensorData.sensor_type=='TEMPERATURE'?"Temperatura":props.sensorData.sensor_type=="HUMIDITY"?"Humedad":"valor";
     sensorDataChartOptions.title.text = `${variable}: ${props.sensorData.name}`
     sensorDataChartOptions.series[0].name = `${variable}`
   }
+
   const generateChart = ()=>{
     var chartDom = document.getElementById('mainchart');
     var sensorChart = echarts.init(chartDom);
@@ -93,56 +99,82 @@
     })
   }
 
-  const values = ref([]);
-  const values_datetime = ref([]);
-  onMounted(()=>{
-    setInitialOptions()
-    getDataByDate()
-  })
-
+  // ---------- Datime picker logic --------------------
   const currentDate = new Date();
+  const dateRange = ref([]);
+  const formattedDateToday = ref("");
 
-  const year = currentDate.getFullYear();
-  const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-  const day = String(currentDate.getDate()).padStart(2, '0');
+  const formatDate = (dateToformat)=>{
+    const year = dateToformat.getFullYear();
+    const month = String(dateToformat.getMonth() + 1).padStart(2, '0');
+    const day = String(dateToformat.getDate()).padStart(2, '0');
 
-  const formattedDateToday = `${year}-${month}-${day}`;
+    return `${year}-${month}-${day}`;
+  }
 
-  const dateRange = ref([formattedDateToday, formattedDateToday]);
   const datePickerShortcuts = ref([
     {
       text: 'hoy',
       onClick() {
-        const date = new Date();
-        // return a Date
-        return date;
+        dateRange.value = [formattedDateToday.value, formattedDateToday.value]
       },
     },
     {
       text: 'Ayer',
       onClick() {
-        const date = new Date();
+        let date = new Date();
         date.setTime(date.getTime() - 3600 * 1000 * 24);
-        return date;
+        date = formatDate(date)
+        dateRange.value = [date, date]
       },
     },
     {
       text: 'Este mes',
       onClick() {
-        const date = new Date();
-        date.setTime(date.getTime() - 3600 * 1000 * 24);
-        return date;
+        let date = new Date();
+        let firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+        let lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+        firstDay = formatDate(firstDay)
+        lastDay = formatDate(lastDay)
+        dateRange.value = [firstDay, lastDay]
       },
     },
     {
       text: 'Este trimestre',
       onClick() {
-        const date = new Date();
-        date.setTime(date.getTime() - 3600 * 1000 * 24);
-        return date;
+        let date = new Date();
+        let quarter = Math.floor(date.getMonth() / 3) + 1;
+        let firstDayOfQuarter = new Date(date.getFullYear(), (quarter - 1) * 3, 1);
+        let lastDayOfQuarter = new Date(date.getFullYear(), quarter * 3, 0);
+        // let firstDayOfQuarter = new Date(date.getFullYear(), date.getMonth() - 2, 1);
+        // let lastDayOfQuarter = new Date(date.getFullYear(), date.getMonth(), 0);
+        firstDayOfQuarter = formatDate(firstDayOfQuarter)
+        lastDayOfQuarter = formatDate(lastDayOfQuarter)
+        dateRange.value = [firstDayOfQuarter, lastDayOfQuarter]
+      },
+    },
+    {
+      text: 'Este año',
+      onClick() {
+        let date = new Date();
+        let firstDay = new Date(date.getFullYear(), 0, 1);
+        let lastDay = new Date(date.getFullYear(), 11, 31);
+        firstDay = formatDate(firstDay)
+        lastDay = formatDate(lastDay)
+        dateRange.value = [firstDay, lastDay]
+        
       },
     },
   ])
+
+  // ---------- end Datime picker logic --------------------
+  // Initializing component
+  onMounted(()=>{
+    formattedDateToday.value = formatDate(currentDate)
+    dateRange.value = [formattedDateToday.value, formattedDateToday.value]
+    setInitialOptions()
+    getDataByDate()
+  })
 
 </script>
 
