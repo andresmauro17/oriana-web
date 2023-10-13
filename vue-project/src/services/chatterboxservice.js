@@ -3,7 +3,7 @@ import * as mqtt from 'mqtt/dist/mqtt.min'
 const ChatterBoxService = {};
 
 ChatterBoxService.startMqttClient = async function () {
-  console.log("ChatterBoxService.startMqttClient")
+  // console.log("ChatterBoxService.startMqttClient")
   const options ={
     host:"localhost",
     port:8083,

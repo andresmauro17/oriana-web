@@ -200,7 +200,6 @@ const setSensor = (data)=>{
 
 onMounted(()=>{
   setSensor(props.sensorprop);
-  chatterBoxStore.startMqttClient()
 });
 
 const profileStore = useProfileStore()

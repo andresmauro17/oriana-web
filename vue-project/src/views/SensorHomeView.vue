@@ -30,6 +30,8 @@
   import useProfileStore from "@/stores/profile.js"
   import IndicatorComponent from "@/components/Indicator/IndicatorComponent.vue";
   import SensorHistoryComponent from "./SensorHomeView/SensorHistoryComponent.vue"
+  import useChatterBoxStore from "@/stores/chatterbox.js"
+
   const showHistory = ref(true);
   const profileStore = useProfileStore()
   const sensorSite = computed(()=>{
@@ -45,9 +47,15 @@
   
   const sensorData = ref({});
   sensorData.value = JSON.parse(document.getElementById('sensor_serialized').textContent);
-  // onMounted(() => {
-  //   console.log("hola", sensorData.value);
-  // })
+
+  const chatterBoxStore = useChatterBoxStore()
+  onMounted(() => {
+    chatterBoxStore.startMqttClient(sensorData.value.unique_id)
+    setTimeout(()=>{
+      chatterBoxStore.startMqttClient("ffffffff")
+    }, 5000)
+    
+  })
 </script>
 
 <style lang="scss" scoped>
