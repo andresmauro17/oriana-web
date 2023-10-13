@@ -36,4 +36,4 @@ class SensorAdmin(admin.ModelAdmin):
     list_filter = ['sensor_type', 'site']
     search_fields = []
     ordering = []
-    inlines = [ SensorUserAlarmInline, DataInline ]
+    inlines = [ SensorUserAlarmInline ]

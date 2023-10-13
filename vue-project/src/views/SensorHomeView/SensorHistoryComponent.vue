@@ -8,6 +8,12 @@
           <!-- Surtitle -->
           <h6 class="surtitle">Historial de datos</h6>
         </div>
+        <div v-if="profileStore.currentuser.is_staff" class="text-end ms-auto">
+          <a :href="`/admin/app_data/data/?sensor__id__exact=${sensorData.id}`" class="mb-0 btn btn-xs bg-neutral">
+            <i class="fas fa-cog "></i> 
+            Config
+          </a>
+        </div>
     </div>
 
     <div class="p-3 card-body">
@@ -45,8 +51,10 @@
   import 'vue-datepicker-next/index.css';
   import sensorDataChartOptions from "./sensorDataChartOptions.js"
   import SensorService from "@/services/sensorservice.js"
+  import useProfileStore from "@/stores/profile.js"
 
   const props = defineProps(["sensorData"])
+  const profileStore = useProfileStore()
 
   // ---------- chart logic --------------------
   
