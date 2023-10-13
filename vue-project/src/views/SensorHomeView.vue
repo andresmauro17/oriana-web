@@ -45,9 +45,9 @@
   
   const sensorData = ref({});
   sensorData.value = JSON.parse(document.getElementById('sensor_serialized').textContent);
-  onMounted(() => {
-    console.log("hola", sensorData.value);
-  })
+  // onMounted(() => {
+  //   console.log("hola", sensorData.value);
+  // })
 </script>
 
 <style lang="scss" scoped>
