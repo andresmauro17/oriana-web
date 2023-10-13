@@ -65,6 +65,8 @@
     let variable = props.sensorData.sensor_type=='TEMPERATURE'?"Temperatura":props.sensorData.sensor_type=="HUMIDITY"?"Humedad":"valor";
     sensorDataChartOptions.title.text = `${variable}: ${props.sensorData.name}`
     sensorDataChartOptions.series[0].name = `${variable}`
+    sensorDataChartOptions.series[0].markLine.data[0].yAxis = props.sensorData.max_threshold
+    sensorDataChartOptions.series[0].markLine.data[1].yAxis = props.sensorData.min_threshold
   }
 
   const generateChart = ()=>{
