@@ -143,6 +143,8 @@
 <script setup>
 import { defineProps, computed, ref, onMounted, defineEmits } from 'vue';
 import useProfileStore from "@/stores/profile.js"
+import useChatterBoxStore from "@/stores/chatterbox.js"
+
 const props = defineProps(["sensorprop", "showspectsprop"]);
 const emit = defineEmits(["toggleShowHistory"])
 
@@ -155,7 +157,10 @@ const toggleShowHistory=()=>{
 
 const sensor = ref({});
 
-const isRealTimeMode = ref(false);
+const isRealTimeMode = ref(true);
+
+const chatterBoxStore = useChatterBoxStore()
+
 
 // setTimeout(()=>{isRealTimeMode.value=true}, 5000)
 
@@ -195,6 +200,7 @@ const setSensor = (data)=>{
 
 onMounted(()=>{
   setSensor(props.sensorprop);
+  chatterBoxStore.startMqttClient()
 });
 
 const profileStore = useProfileStore()
