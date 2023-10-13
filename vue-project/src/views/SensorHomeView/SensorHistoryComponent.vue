@@ -20,13 +20,26 @@
     <div class="p-3 card-body">
       <date-picker
         v-model:value="dateRange"
+        value-type="format"
+        format="YYYY-MM-DD"
         :shortcuts="datePickerShortcuts"
         type="date"
         range
         placeholder="Seleccione el rango de fechas"
       ></date-picker>
+      <a href="javascript:;" @click="getDataByDate" class="mb-0 mx-2 btn btn-md bg-gradient-success">
+        <i class="fas fa-chart-line "></i> 
+        Buscar
+      </a>
+      <!-- <a
+            class="mt-4 btn btn-sm"
+            :href="actions.route"
+            :class="`bg-gradient-${actions.color}`"
+          >
+            {{ actions.label }}
+          </a> -->
       <div class="mt-4">
-        <div id="mainchart" style="width: 1000px;height:600px;"></div>
+        <div id="mainchart"></div>
       </div>
     </div>
   </div>
@@ -42,28 +55,60 @@
 
   const props = defineProps(["sensorData"])
 
+  const setInitialOptions = ()=>{
+    let variable = props.sensorData.sensor_type=='TEMPERATURE'?"Temperatura":props.sensorData.sensor_type=="HUMIDITY"?"Humedad":"valor";
+    sensorDataChartOptions.title.text = `${variable}: ${props.sensorData.name}`
+    sensorDataChartOptions.series[0].name = `${variable}`
+  }
   const generateChart = ()=>{
     var chartDom = document.getElementById('mainchart');
     var sensorChart = echarts.init(chartDom);
     sensorDataChartOptions.series[0].data = values.value
     sensorDataChartOptions.xAxis.data = values_datetime.value
-    console.log("setoptions:", sensorDataChartOptions)
+    
+    if (sensorDataChartOptions.series[0].data.length === 0) {
+      sensorDataChartOptions.graphic = [
+        {
+          type: 'text',
+          left: 'center',
+          top: 'center',
+          style: {
+            fill: 'rgba(0, 0, 0, 0.25)',
+            fontSize: 18,
+            fontWeight: 'bold',
+            text: `⚠️ No hay datos disponibles entre ${dateRange.value[0]} y ${dateRange.value[1]}`
+          }
+        }
+      ];
+    }
     sensorChart.setOption(sensorDataChartOptions)
   };
+
+  const getDataByDate = ()=>{
+    SensorService.getSensorData(props.sensorData.id, dateRange.value[0], dateRange.value[1]).then((res)=>{
+      let rawdata = res.data;
+      values.value = rawdata.map(item => item.value);
+      values_datetime.value = rawdata.map(item => item.date_time);
+      generateChart();
+    })
+  }
 
   const values = ref([]);
   const values_datetime = ref([]);
   onMounted(()=>{
-    SensorService.getSensorData(props.sensorData.id).then((res)=>{
-      let rawdata = res.data;
-      values.value = rawdata.map(item => item.value);
-      values_datetime.value = rawdata.map(item => item.date_time);
-      console.log("values:", values.value);
-      generateChart();
-    })
+    setInitialOptions()
+    getDataByDate()
   })
 
-  const dateRange = ref([new Date(), new Date()]);
+  const currentDate = new Date();
+
+  const year = currentDate.getFullYear();
+  const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+  const day = String(currentDate.getDate()).padStart(2, '0');
+
+  const formattedDateToday = `${year}-${month}-${day}`;
+
+  const dateRange = ref([formattedDateToday, formattedDateToday]);
   const datePickerShortcuts = ref([
     {
       text: 'hoy',
@@ -101,6 +146,9 @@
 
 </script>
 
-<style lang="scss" scoped>
-
+<style lang="css" scoped>
+#mainchart{
+  width: 100%;
+  height:600px;
+}
 </style>

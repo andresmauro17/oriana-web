@@ -1,6 +1,6 @@
 const sensorDataChartOptions = {
   title: {
-    text: 'Temperature Change in the Coming Week'
+    text: 'Temperature'
   },
   tooltip: {
     trigger: 'axis'
@@ -9,29 +9,49 @@ const sensorDataChartOptions = {
   toolbox: {
     show: true,
     feature: {
-      dataZoom: {
-        yAxisIndex: 'none'
+      dataZoom: [
+        {
+          type: 'slider',
+          start: 0,
+          end: 100,
+          showDetail: false,
+          zoomLock: true
+        },
+        {
+          type: 'inside',
+          start: 0,
+          end: 100,
+          zoomLock: true
+        }
+      ],
+      dataView: { 
+        readOnly: false,
+        title: 'Vista de Datos'
       },
-      dataView: { readOnly: false },
-      magicType: { type: ['line', 'bar'] },
-      restore: {},
-      saveAsImage: {}
+      restore: {title: 'Restaurar'},
+      saveAsImage: {title: 'Guardar Imagen'}
     }
   },
   xAxis: {
     type: 'category',
     boundaryGap: false,
-    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'algo', 'Sun']
+    data: []
   },
-  yAxis: {
+   yAxis: {
     type: 'value',
+    min: function(value) {
+        return value.min - 1; // Adjust the min value
+    },
+    max: function(value) {
+        return value.max + 1; // Adjust the max value
+    },
     axisLabel: {
       formatter: '{value} °C'
     }
   },
   series: [
     {
-      name: 'Highest',
+      name: 'Valor',
       type: 'line',
       data: [10, 11, 13, 11, 12, 12, 9],
       markPoint: {
@@ -41,7 +61,7 @@ const sensorDataChartOptions = {
         ]
       },
       markLine: {
-        data: [{ type: 'average', name: 'Avg' }]
+        data: [{ yAxis: 8, name: 'Threshold', lineStyle: { color: 'red' } }, { yAxis: 2, name: 'Threshold', lineStyle: { color: 'blue' } } ]
       }
     },
   ]
