@@ -61,10 +61,10 @@
                   <span class="ms-1">Configuracion</span>
                 </a>
               </li>
-              <li class="mb-2">
+              <li v-if="profileStore.currentuser.is_staff" class="mb-2">
                 <a href="/admin" target="blank" class="dropdown-item text-info">
                   <i class="ni ni-settings"></i>
-                  <span class="ms-1">admin</span>
+                  <span class="ms-1">adminn</span>
                 </a>
               </li>
               <div class="dropdown-divider"></div>

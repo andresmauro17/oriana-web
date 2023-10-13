@@ -8,13 +8,6 @@
           <!-- Surtitle -->
           <h6 class="surtitle">Historial de datos</h6>
         </div>
-        
-        <div class="text-end ms-auto">
-          <a :href="`/sensors/${sensorData.id}/edit`" class="mb-0 btn btn-xs bg-neutral">
-            <i class="fas fa-cog "></i> 
-            Config
-          </a>
-        </div>
     </div>
 
     <div class="p-3 card-body">
