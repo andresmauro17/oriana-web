@@ -9,7 +9,7 @@
           <h6 class="surtitle">Historial de datos</h6>
         </div>
         <div v-if="profileStore.currentuser.is_staff" class="text-end ms-auto">
-          <a :href="`/admin/app_data/data/?sensor__id__exact=${sensorData.id}`" class="mb-0 btn btn-xs bg-neutral">
+          <a :href="`/admin/app_data/data/?sensor__id__exact=${sensorData.id}`" target="blank" class="mb-0 btn btn-xs bg-neutral">
             <i class="fas fa-cog "></i> 
             Config
           </a>
