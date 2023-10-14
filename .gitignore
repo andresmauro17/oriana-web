@@ -135,5 +135,6 @@ static_cdn/*
 .vscode/settings.json
 
 Scripts/*
-static/dev/
+static/dev/assets
+static/prod/assets
 media
