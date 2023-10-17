@@ -1,4 +1,24 @@
 {
+  "nucleo-icons.eot": {
+    "file": "assets/nucleo-icons-f899f875.eot",
+    "src": "nucleo-icons.eot"
+  },
+  "nucleo-icons.svg": {
+    "file": "assets/nucleo-icons-be977573.svg",
+    "src": "nucleo-icons.svg"
+  },
+  "nucleo-icons.ttf": {
+    "file": "assets/nucleo-icons-655956cd.ttf",
+    "src": "nucleo-icons.ttf"
+  },
+  "nucleo-icons.woff": {
+    "file": "assets/nucleo-icons-daa807b2.woff",
+    "src": "nucleo-icons.woff"
+  },
+  "nucleo-icons.woff2": {
+    "file": "assets/nucleo-icons-3180896c.woff2",
+    "src": "nucleo-icons.woff2"
+  },
   "src/assets/fonts/nucleo-icons.eot": {
     "file": "assets/nucleo-icons-f899f875.eot",
     "src": "src/assets/fonts/nucleo-icons.eot"

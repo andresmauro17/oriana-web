@@ -6,9 +6,11 @@ services:
       context: .
       dockerfile: ./compose/local/node/Dockerfile
     volumes:
-      - ./app-ui:/usr/src
+      - ./vue-project:/usr/src/vue-project
+      - ./static:/usr/src/static
     image: oriana_ui
-    command: npm run serve
+    command: npm run watch
+    # command: tail -f /dev/null
 
   django: &django
     build:
