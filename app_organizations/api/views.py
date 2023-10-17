@@ -10,6 +10,10 @@ from app_organizations.api.serializers import OrganizationModelSerializer
 @api_view(["GET"])
 def index_view(request):
     organizations = []
+
+    if request.user.is_anonymous:
+        return Response(organizations,status=status.HTTP_200_OK)
+
     if request.user.is_staff:
         organizations = Organization.objects.all()
     else:

@@ -31,6 +31,10 @@ def login_view(request):
 def user_current_view(request):
     # current_user = User.objects.filter(id=request.user.id)
     current_user = request.user
+
+    if request.user.is_anonymous:
+        return Response([],status=status.HTTP_200_OK)
+
     user_organizations = request.user.organizations.all()
 
     update_user=False
