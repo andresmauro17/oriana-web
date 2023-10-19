@@ -8,7 +8,7 @@ services:
     volumes:
       - ./vue-project:/usr/src/vue-project
       - ./static:/usr/src/static
-      - ./log:/var/log/
+      - ./log:/var/log
     image: oriana_ui
     command: npm run build
     # command: tail -f /dev/null
