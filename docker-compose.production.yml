@@ -6,14 +6,15 @@ services:
       context: .
       dockerfile: ./compose/local/node/Dockerfile
     volumes:
-      - ./app-ui:/usr/src
+      - ./vue-project:/usr/src/vue-project
+      - ./static:/usr/src/static
     image: oriana_ui
-    command: npm run serve
+    command: npm run build
 
   django: &django
     build:
       context: .
-      dockerfile: ./compose/local/django/Dockerfile
+      dockerfile: ./compose/production/django/Dockerfile
     image: oriana_django
     depends_on:
       - node
@@ -27,32 +28,32 @@ services:
       - "8000:8000"
     expose:
       - "3306"
-    command: python manage.py runserver 0.0.0.0:8000
+    command: /start
 
 
   redis:
     image: redis:3.2
 
-  celeryworker:
-    <<: *django
-    image: oriana_celeryworker
-    depends_on:
-      - redis
-    ports: []
-    command: /start-celeryworker
+  # celeryworker:
+  #   <<: *django
+  #   image: oriana_celeryworker
+  #   depends_on:
+  #     - redis
+  #   ports: []
+  #   command: /start-celeryworker
 
-  celerybeat:
-    <<: *django
-    image: oriana_celerybeat
-    depends_on:
-      - redis
-    ports: []
-    command: /start-celerybeat
+  # celerybeat:
+  #   <<: *django
+  #   image: oriana_celerybeat
+  #   depends_on:
+  #     - redis
+  #   ports: []
+  #   command: /start-celerybeat
 
-  flower:
-    <<: *django
-    image: oriana_flower
-    ports:
-      - "5555:5555"
-      - "6379:6379"
-    command: /start-flower
+  # flower:
+  #   <<: *django
+  #   image: oriana_flower
+  #   ports:
+  #     - "5555:5555"
+  #     - "6379:6379"
+  #   command: /start-flower
