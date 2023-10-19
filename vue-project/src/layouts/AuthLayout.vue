@@ -1,13 +1,13 @@
 <template>
   <div>
-    <AuthNavbar />
+    <AuthNavBar />
     <slot name="content"></slot>
     <AuthFooter />
   </div>
 </template>
 
 <script setup>
-import AuthNavbar from "@/layouts/AuthLayout/AuthNavbar.vue";
+import AuthNavBar from "@/layouts/AuthLayout/AuthNavBar.vue";
 import AuthFooter from "@/layouts/AuthLayout/AuthFooter.vue";
 </script>
 
