@@ -11,7 +11,7 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     environment:
-      - APP_ENV_SETTINGS: "config.settings.production"
+      APP_ENV_SETTINGS: "config.settings.production"
     env_file:
       - ./.env
     volumes:
