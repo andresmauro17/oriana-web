@@ -52,6 +52,9 @@ We are using django, vue2 and webpack for assets.
 3. Collect statics 
         docker-compose run --rm django python manage.py collectstatic
 
+4. run logs in production
+        - docker-compose exec django /bin/sh
+
 ## Emqx stuffs
 1. create rules in emqx using api from django
         docker-compose run --rm django python manage.py createemqxrules
