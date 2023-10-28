@@ -14,13 +14,23 @@ We are using django, vue2 and webpack for assets.
 
 .env_example
        
-        
+
+## With Docker
+2.  install docker
+        docker-compose build
+
+3.  run docker
+        docker-compose up
+
+
+## Without Docker
+
 2.  start a python virtual enviroment
-        virtualenv -p $(which python3) .venv
-        
+        python -m venv .venv
+
 3.  active virtualenv 
         source .venv/bin/activate
-        
+
 4.  install python dependencis
         pip install -r requirements/local.txt
 
@@ -31,6 +41,18 @@ We are using django, vue2 and webpack for assets.
         python manage.py runserver
 
 # some commands 
+
+## production
+1. Create a super user
+        docker-compose run --rm django python manage.py createsuperuser
+
+2. Building assets to production
+        docker-compose run --rm node npm run build
+
+3. Collect statics 
+        docker-compose run --rm django python manage.py collectstatic
+
+## Emqx stuffs
 1. create rules in emqx using api from django
         docker-compose run --rm django python manage.py createemqxrules
 
