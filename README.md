@@ -54,6 +54,7 @@ We are using django, vue2 and webpack for assets.
 
 4. run logs in production
         - docker-compose exec django /bin/sh
+        - tail -f /var/log/django.log
 
 ## Emqx stuffs
 1. create rules in emqx using api from django
