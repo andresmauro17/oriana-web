@@ -1,18 +1,6 @@
 version: "3"
 
 services:
-  node:
-    build: 
-      context: .
-      dockerfile: ./compose/local/node/Dockerfile
-    volumes:
-      - ./vue-project:/usr/src/vue-project
-      - ./static:/usr/src/static
-      - ./log:/var/log
-    image: oriana_ui
-    command: npm run build
-    # command: tail -f /dev/null
-
   django: &django
     build:
       context: .
@@ -22,6 +10,8 @@ services:
       - node
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    environment:
+      - APP_ENV_SETTINGS: "config.settings.production"
     env_file:
       - ./.env
     volumes:

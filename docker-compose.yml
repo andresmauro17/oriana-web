@@ -23,6 +23,8 @@ services:
       - "host.docker.internal:host-gateway"
     env_file:
       - ./.env
+    environment:
+      APP_ENV_SETTINGS: "config.settings.local"
     volumes:
       - .:/app
     ports:
@@ -35,26 +37,26 @@ services:
   redis:
     image: redis:3.2
 
-  celeryworker:
-    <<: *django
-    image: oriana_celeryworker
-    depends_on:
-      - redis
-    ports: []
-    command: /start-celeryworker
+  # celeryworker:
+  #   <<: *django
+  #   image: oriana_celeryworker
+  #   depends_on:
+  #     - redis
+  #   ports: []
+  #   command: /start-celeryworker
 
-  celerybeat:
-    <<: *django
-    image: oriana_celerybeat
-    depends_on:
-      - redis
-    ports: []
-    command: /start-celerybeat
+  # celerybeat:
+  #   <<: *django
+  #   image: oriana_celerybeat
+  #   depends_on:
+  #     - redis
+  #   ports: []
+  #   command: /start-celerybeat
 
-  flower:
-    <<: *django
-    image: oriana_flower
-    ports:
-      - "5555:5555"
-      - "6379:6379"
-    command: /start-flower
+  # flower:
+  #   <<: *django
+  #   image: oriana_flower
+  #   ports:
+  #     - "5555:5555"
+  #     - "6379:6379"
+  #   command: /start-flower
