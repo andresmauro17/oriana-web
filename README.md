@@ -72,3 +72,6 @@ We are using django, vue2 and webpack for assets.
     }
   }
 }
+
+2. run emqx 
+        sudo docker-compose -f docker-compose.yml up

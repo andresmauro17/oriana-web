@@ -101,7 +101,7 @@
           </h6>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link" aria-controls="dashboardsExamples" role="button" aria-expanded="false">
+          <a href="https://stats.uptimerobot.com/ZxQm5CPDX8" target="blank" class="nav-link" aria-controls="dashboardsExamples" role="button" aria-expanded="false">
             <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
               <i class="ni ni-spaceship text-dark text-sm opacity-10"></i>
             </div>
@@ -109,7 +109,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link" aria-controls="dashboardsExamples" role="button" aria-expanded="false">
+          <a href="https://tidal-consonant-eec.notion.site/Centro-de-ayuda-sistema-de-monitoreo-continuo-G-THUX-08010899dca54e64b1856e5931f96ea5?pvs=4" target="blank" class="nav-link" aria-controls="dashboardsExamples" role="button" aria-expanded="false">
             <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
               <i class="ni ni-palette text-dark text-sm opacity-10"></i>
             </div>
@@ -117,7 +117,9 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link" aria-controls="dashboardsExamples" role="button" aria-expanded="false">
+          
+            <!-- <a href="https://ingenialo.atlassian.net/servicedesk/customer/portals" target="blank" class="nav-link" aria-controls="dashboardsExamples" role="button" aria-expanded="false"> -->
+            <a href="https://wa.me/573173099005" target="blank" class="nav-link" aria-controls="dashboardsExamples" role="button" aria-expanded="false">
             <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
               <i class="ni ni-support-16 text-dark text-sm opacity-10"></i>
             </div>
