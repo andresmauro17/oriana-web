@@ -3,7 +3,11 @@ import os
 import base64
 import requests
 class Command(BaseCommand):
-    help = 'this command cretes the resources in emqx'
+    """ 
+        this command creates the resources in emqx
+        python manage.py create_curren_data_to_django_rule
+    """
+    help = 'this command creates the resources in emqx'
 
     EMQX_API_HOST = os.getenv('EMQX_API_HOST')
     AUTH_HEADER = "Basic " + base64.b64encode((os.getenv('EMQX_API_KEY') + ":" + os.getenv('EMQX_API_SECRET')).encode()).decode()
