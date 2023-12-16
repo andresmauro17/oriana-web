@@ -141,3 +141,7 @@ Scripts/*
 # static/prod/manifest.json
 static/*
 media
+
+
+emqx/emqx1_data/*
+emqx/emqx2_data/
