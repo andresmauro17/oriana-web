@@ -8,6 +8,8 @@ services:
     volumes:
       - ./vue-project:/usr/src/vue-project
       - ./static:/usr/src/static
+    env_file:
+      - ./.env
     image: oriana_ui
     command: npm run watch
     # command: tail -f /dev/null
