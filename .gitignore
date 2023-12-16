@@ -139,7 +139,7 @@ Scripts/*
 # static/dev/manifest.json
 # static/prod/assets
 # static/prod/manifest.json
-static/*
+static/dev
 media
 
 
