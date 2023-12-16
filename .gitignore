@@ -130,7 +130,7 @@ package-lock.json
 
 #!assets/include/*
 
-# static_cdn/*
+static_cdn/*
 
 .vscode/settings.json
 
