@@ -30,7 +30,9 @@ ChatterBoxService.startMqttClient = async function () {
   let client = {}
   try {
     client = await mqtt.connect(connectUrl, options);
+    console.log("se conecto:",client)
   } catch (error) {
+    console.log("error conectandose")
     console.log(error);
   }
   return client;
