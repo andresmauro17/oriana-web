@@ -26,7 +26,7 @@ ChatterBoxService.startMqttClient = async function () {
     password: PASSWORD
   }
   
-  const connectUrl = `ws://${options.host}:${options.port}${options.endpoint}`
+  const connectUrl = `${options.host}:${options.port}${options.endpoint}`
   let client = {}
   try {
     client = await mqtt.connect(connectUrl, options);
