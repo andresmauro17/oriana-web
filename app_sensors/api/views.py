@@ -49,10 +49,16 @@ def sensor_data_view(request, sensor_unique):
         date = serializer.validated_data['date'],
         time = serializer.validated_data['time'],
     )
+    sensor.last_energy_state = data_created.energy
+    sensor.last_value = data_created.value
+    sensor.last_value_date = data_created.date
+    sensor.last_value_time = data_created.time
+
     if sensor.sensor_type != serializer.validated_data['sensortype'] or sensor.device_id != serializer.validated_data['deviceid']:
         sensor.sensor_type = serializer.validated_data['sensortype']
         sensor.device_id = serializer.validated_data['deviceid']
-        sensor.save()
+    
+    sensor.save()
     sensor_serialized = SensorSerializer(sensor)
 
     return Response({'data':serializer.validated_data,'sensor':sensor_serialized.data})
