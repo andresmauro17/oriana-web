@@ -3,7 +3,7 @@ from app_data.models import Data
 
 @admin.register(Data)
 class DataAdmin(admin.ModelAdmin):
-    list_display = ['id', 'sensor', 'value', 'energy', 'date_time', 'created_at']
+    list_display = ['id', 'sensor', 'value', 'energy', 'date', 'time', 'created_at']
     # autocomplete_fields = ['sensor']
     # list_editable = ['name','manufacturer_id', 'device_type']
     list_filter = ['sensor']

@@ -46,7 +46,8 @@ def sensor_data_view(request, sensor_unique):
         sensor = sensor,
         value = serializer.validated_data['value'],
         energy = serializer.validated_data['energy'],
-        date_time = serializer.validated_data['datetime'],
+        date = serializer.validated_data['date'],
+        time = serializer.validated_data['time'],
     )
     if sensor.sensor_type != serializer.validated_data['sensortype'] or sensor.device_id != serializer.validated_data['deviceid']:
         sensor.sensor_type = serializer.validated_data['sensortype']

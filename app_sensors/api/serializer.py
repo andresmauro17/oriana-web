@@ -9,7 +9,9 @@ class CurrentDataSerializer(serializers.Serializer):
     deviceid = serializers.CharField(max_length=100)
     value = serializers.DecimalField(max_digits=5, decimal_places=2)
     energy = serializers.BooleanField()
-    datetime = serializers.DateTimeField()
+    # datetime = serializers.DateTimeField()
+    date = serializers.DateField()
+    time = serializers.TimeField()
 
 class SensorSerializer(serializers.ModelSerializer):
     max_threshold = serializers.DecimalField(max_digits=4, decimal_places=2, coerce_to_string=False)

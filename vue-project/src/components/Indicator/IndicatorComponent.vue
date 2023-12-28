@@ -174,7 +174,8 @@ watch(chatterBoxStore.messages, (newValue) => {
       isRealTimeMode.value=true
       let sensorNewData = sensormessages[lastDataIndex];
       sensor.value.last_value = sensorNewData.value;
-      sensor.value.last_value_date_time = sensorNewData.datetime;
+      sensor.value.last_value_date = sensorNewData.date;
+      sensor.value.last_value_time = sensorNewData.time;
       sensor.value.last_energy_state = sensorNewData.energy ? true:false;
     }
   }
@@ -202,21 +203,23 @@ const colorClass = computed(()=>{
   return color;
 })
 
-const formatedDateTime = (last_value_date_time)=>{
+const formatedDateTime = (last_value_date, last_value_time)=>{
   let formattedDate = "aaaa-mm-dd";
   let formattedTime = "hh:mm:ss";
-  if(last_value_date_time){
-    let dateObject = new Date(last_value_date_time);
-    formattedDate = dateObject.toISOString().split("T")[0]; // Get YYYY-MM-DD
-    formattedTime = dateObject.toISOString().split("T")[1].split(".")[0]; // Get HH:mm:ss
+  if(last_value_date && last_value_time){
+    // let dateObject = new Date(last_value_date);
+    // formattedDate = dateObject.toISOString().split("T")[0]; // Get YYYY-MM-DD
+    // formattedTime = dateObject.toISOString().split("T")[1].split(".")[0]; // Get HH:mm:ss
+    formattedDate = last_value_date;
+    formattedTime = last_value_time;
   }
   return `${formattedDate} | ${formattedTime}`
 }
 
 const formatedDatetime = computed(()=>{
  
-  if(sensor.value.last_value_date_time){
-    return formatedDateTime(sensor.value.last_value_date_time)
+  if(sensor.value.last_value_date && sensor.value.last_value_time){
+    return formatedDateTime(sensor.value.last_value_date, sensor.value.last_value_time)
   }
   return ""
 })
