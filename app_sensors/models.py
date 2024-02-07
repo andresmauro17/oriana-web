@@ -23,6 +23,12 @@ class Sensor(CustomBaseModel):
         ('HUMIDITY','Humedad'),
     )
     sensor_type = models.CharField(max_length=100, choices=VARIABLE_CHOICES)
+    
+    BROKER_CHOICES = (
+        ('java', 'Java Server'),
+        ('emqx','EMQX'),
+    )
+    last_broker = models.CharField(max_length=100, choices=BROKER_CHOICES)
 
     # most brands will have some sort of id you'll want to track
     unique_id = models.CharField(max_length=100, unique=True)
