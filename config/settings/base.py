@@ -16,8 +16,8 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # BASE_DIR = Path(__file__).resolve().parent.parent
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) # BASE_DIR variable in settings folder
-
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) # BASE_DIR variable in settings folder
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 
 # Users and authentication
 
-AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = 'app_users.User'
 
 # Application definition
 
@@ -44,10 +44,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'apps.users.apps.UsersAppConfig',
-    'apps.dashboard.apps.DashboardAppConfig',
-    'apps.sensors.apps.SensorsConfig',
-    'apps.organizations.apps.OrganizationAppConfig'
+    'app_utilities',
+    'app_users.apps.AppUsersAppConfig',
+    'app_dashboard.apps.DashboardAppConfig',
+    'app_sensors.apps.AppSensorsConfig',
+    'app_data.apps.AppDataConfig',
+    'app_organizations.apps.AppOrganizationAppConfig',
+    'app_emqx.apps.AppEmqxConfig',
+    'app_amarey.apps.AppAmareyConfig'
 ]
 
 MIDDLEWARE = [
@@ -58,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'app_users.middleware.VerifyUserHasOrganizationMiddleware'
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -94,8 +99,20 @@ DATABASES = {
             'user' : os.getenv('ORIANA_DB_USER'),
             'password' : os.getenv('ORIANA_DB_PASSWORD'),
         },
-    }
+    },
+    'amarey_db': {
+        'ENGINE': 'django.db.backends.mysql',
+        'OPTIONS': {
+            'host': os.getenv('ORIANA_DB_HOST'),
+            # 'port': os.getenv('ORIANA_DB_PORT'),
+            'database' : os.getenv('AMAREY_DB_NAME'),
+            'user' : os.getenv('ORIANA_DB_USER'),
+            'password' : os.getenv('ORIANA_DB_PASSWORD'),
+        },
+    },
 }
+
+DATABASE_ROUTERS = ['app_amarey.db_router.AmareyDBRouter']
 
 
 # Password validation
@@ -135,7 +152,7 @@ LOGIN_URL='/login'
 # Celery
 INSTALLED_APPS += ['django_celery_beat']
 INSTALLED_APPS += ['django_celery_results']
-INSTALLED_APPS += ['apps.taskapp.celery.CeleryAppConfig']
+INSTALLED_APPS += ['app_tasks.celery.CeleryAppConfig']
 if USE_TZ:
     CELERY_TIMEZONE = TIME_ZONE
 CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', 'redis://localhost:6379')
@@ -151,7 +168,13 @@ CELERYD_TASK_SOFT_TIME_LIMIT = 60
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_BASE_DIR =BASE_DIR/'static'
+STATICFILES_DIRS = [
+    STATICFILES_BASE_DIR,
+]
 STATIC_ROOT = os.path.join(BASE_DIR, "static_cdn", "static_root")
 
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, "static_cdn", "media_root")
+
+

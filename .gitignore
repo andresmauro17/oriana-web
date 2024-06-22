@@ -135,3 +135,13 @@ static_cdn/*
 .vscode/settings.json
 
 Scripts/*
+# static/dev/assets
+# static/dev/manifest.json
+# static/prod/assets
+# static/prod/manifest.json
+static/dev
+media
+
+
+emqx/emqx1_data/*
+emqx/emqx2_data/

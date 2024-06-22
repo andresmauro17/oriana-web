@@ -1,0 +1,41 @@
+{% load static %}
+{% load mix %}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vite Appp</title>
+  {% include 'layout/includes/css.html' %}
+
+  {% block styles %}
+  {% endblock styles %}
+</head>
+
+<body>
+  <noscript>
+    <strong>We're sorry but doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+  </noscript>
+  <div id="app">
+    antes
+    {% block breadcrumb %}
+    {% endblock breadcrumb %}
+    <!-- Content goes here -->
+    <main-layout>
+      <template #content>
+        dentro
+      </template>
+    </main-layout>
+    {% block content %}
+    {% endblock content %}
+  </div>
+
+  {% include 'layout/includes/js.html' %}
+  {% block script %}
+  {% endblock script %}
+</body>
+
+</html>

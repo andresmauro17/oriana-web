@@ -17,17 +17,32 @@ from django.contrib import admin
 from django.urls import include, path
 
 from django.conf import settings
+from django.conf.urls.static import static
 
-from apps.sensors.views import vue_test
-from apps.sensors.views import test_celery
+from app_sensors.views import vue_test
+from app_sensors.views import test_celery
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('vue-test/', vue_test),
     path('celery-test/', test_celery),
-    path('',include(('apps.users.urls', 'users'), namespace='users')),
-    path('', include('apps.dashboard.urls'), name='dashboard'),
+    path('',include(('app_users.urls', 'users'), namespace='users')),
+    path('',include(('app_organizations.urls', 'organizations'), namespace='organizations')),
+    path('',include(('app_sensors.urls', 'sensors'), namespace='sensors')),
+    path('', include(('app_dashboard.urls', 'dashboard'), namespace='dashboard')),
 ]
+
+if settings.DEBUG:
+    # import debug_toolbar
+    
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+    # urlpatterns = [
+    #     # For django versions before 2.0:
+    #     url(r'^__debug__/', include(debug_toolbar.urls)),
+
+    # ] + urlpatterns
 
 
 # print("--------------------------")

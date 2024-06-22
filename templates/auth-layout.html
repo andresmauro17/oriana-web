@@ -1,8 +1,14 @@
 {% extends "base.html" %}
 {% load static %}
+{% load mix %}
 
 {% block app %}
     <auth-layout v-slot:content> 
-        {% block content %}{% endblock %}
+        <!-- Breadcrumb-->
+        {% block breadcrumb %}
+        {% endblock breadcrumb %}
+        <!-- Content-->
+        {% block content %}
+        {% endblock content %}
     </auth-layout>
 {% endblock app %}

@@ -1,8 +1,14 @@
 {% extends "base.html" %}
 {% load static %}
+{% load mix %}
 
 {% block app %}
     <dashboard-layout v-slot:content> 
-        {% block content %}{% endblock %}
+        <!-- Breadcrumb-->
+        {% block breadcrumb %}
+        {% endblock breadcrumb %}
+        <!-- Content-->
+        {% block content %}
+        {% endblock content %}
     </dashboard-layout>
 {% endblock app %}

@@ -1,20 +1,10 @@
 # Base Image
-FROM python:3.6
-
-# create and set working directory
-RUN mkdir /app
-WORKDIR /app
-
-# Add current directory code to working directory
-ADD . /app/
+FROM python:3.8
 
 # set default environment variables
 ENV PYTHONUNBUFFERED 1
 ENV LANG C.UTF-8
 ENV DEBIAN_FRONTEND=noninteractive 
-
-# set project environment variables
-# grab these via Python's os.environ
 # these are 100% optional here
 ENV PORT=8000
 
@@ -30,10 +20,39 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-
 # install environment dependencies
 RUN pip3 install --upgrade pip 
 
 # Requirements are installed here to ensure they will be cached.
-RUN pip install -r requirements/local.txt
+COPY ./requirements /requirements
+RUN pip install -r /requirements/local.txt
+
+# # create and set working directory
+# RUN mkdir /app
+# WORKDIR /app
+
+# # Add current directory code to working directory
+# ADD . /app/
+
+COPY ./compose/production/django/entrypoint /entrypoint
+RUN sed -i 's/\r//' /entrypoint
+RUN chmod +x /entrypoint
+
+COPY ./compose/local/django/start /start
+RUN sed -i 's/\r//' /start
+RUN chmod +x /start
+
+COPY ./compose/local/django/celery/worker/start /start-celeryworker
+RUN sed -i 's/\r//' /start-celeryworker
+RUN chmod +x /start-celeryworker
+
+COPY ./compose/local/django/celery/beat/start /start-celerybeat
+RUN sed -i 's/\r//' /start-celerybeat
+RUN chmod +x /start-celerybeat
+
+COPY ./compose/local/django/celery/flower/start /start-flower
+RUN sed -i 's/\r//' /start-flower
+RUN chmod +x /start-flower
+
+WORKDIR /app
 

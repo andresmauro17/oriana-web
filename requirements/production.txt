@@ -1,1 +1,9 @@
 -r ./base.txt
+
+gunicorn
+
+# # Static files
+# django-storages[boto3]==1.7.1
+
+# Email
+django-anymail[mailgun]

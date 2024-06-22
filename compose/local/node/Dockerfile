@@ -1,20 +1,16 @@
-# importa la imagen ubuntu version 10
-FROM node:14
+# importa la imagen node
+FROM node:18.18
 
 # copie el package json en usr/src
-COPY ["app-ui/package.json", "/usr/src/"]
+COPY ["./vue-project/package.json", "/usr/src"]
+
+RUN mkdir /usr/src/vue-project
+RUN mv /usr/src/package.json /usr/src/vue-project
+
 
 # haga un cd /usr/src
-WORKDIR /usr/src
+WORKDIR /usr/src/vue-project
 
 # instale las dependencioa
-RUN npm install
-
-# copie el package json en usr/src
-COPY ["./app-ui", "/usr/src/"]
-
-# exponga el puerto 3000
-# EXPOSE 3000
-
-# defino el comando por defecto que se ejecuta cuando le de run al contenedor
-# CMD ["npx","nodemon", "index.js"]
+# RUN pwd
+RUN npm install

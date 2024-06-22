@@ -1,0 +1,56 @@
+{
+  "src/assets/fonts/nucleo-icons.eot": {
+    "file": "assets/nucleo-icons-f899f875.eot",
+    "src": "src/assets/fonts/nucleo-icons.eot"
+  },
+  "src/assets/fonts/nucleo-icons.svg": {
+    "file": "assets/nucleo-icons-be977573.svg",
+    "src": "src/assets/fonts/nucleo-icons.svg"
+  },
+  "src/assets/fonts/nucleo-icons.ttf": {
+    "file": "assets/nucleo-icons-655956cd.ttf",
+    "src": "src/assets/fonts/nucleo-icons.ttf"
+  },
+  "src/assets/fonts/nucleo-icons.woff": {
+    "file": "assets/nucleo-icons-daa807b2.woff",
+    "src": "src/assets/fonts/nucleo-icons.woff"
+  },
+  "src/assets/fonts/nucleo-icons.woff2": {
+    "file": "assets/nucleo-icons-3180896c.woff2",
+    "src": "src/assets/fonts/nucleo-icons.woff2"
+  },
+  "src/assets/img/down-arrow-dark.svg": {
+    "file": "assets/down-arrow-dark-13d4c70e.svg",
+    "src": "src/assets/img/down-arrow-dark.svg"
+  },
+  "src/assets/img/down-arrow-white.svg": {
+    "file": "assets/down-arrow-white-e66846bd.svg",
+    "src": "src/assets/img/down-arrow-white.svg"
+  },
+  "src/assets/img/logos/gthux/onlylogo.png": {
+    "file": "assets/onlylogo-9441dfc1.png",
+    "src": "src/assets/img/logos/gthux/onlylogo.png"
+  },
+  "src/main.css": {
+    "file": "assets/main-e2deee5d.css",
+    "src": "src/main.css"
+  },
+  "src/main.js": {
+    "assets": [
+      "assets/down-arrow-white-e66846bd.svg",
+      "assets/down-arrow-dark-13d4c70e.svg",
+      "assets/onlylogo-9441dfc1.png",
+      "assets/nucleo-icons-f899f875.eot",
+      "assets/nucleo-icons-3180896c.woff2",
+      "assets/nucleo-icons-daa807b2.woff",
+      "assets/nucleo-icons-655956cd.ttf",
+      "assets/nucleo-icons-be977573.svg"
+    ],
+    "css": [
+      "assets/main-e2deee5d.css"
+    ],
+    "file": "assets/main-5ce2b4f7.js",
+    "isEntry": true,
+    "src": "src/main.js"
+  }
+}

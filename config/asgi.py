@@ -12,7 +12,7 @@ import os
 import django
 from channels.http import AsgiHandler
 from channels.routing import ProtocolTypeRouter, ChannelNameRouter
-from apps.mqtt_app.consumers import MqttConsumer
+from app_mqtt.consumers import MqttConsumer
 # os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings')
 django.setup()
 
