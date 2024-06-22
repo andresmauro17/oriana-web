@@ -98,7 +98,17 @@ DATABASES = {
             'user' : os.getenv('ORIANA_DB_USER'),
             'password' : os.getenv('ORIANA_DB_PASSWORD'),
         },
-    }
+    },
+    'secondary': {
+        'ENGINE': 'django.db.backends.mysql',
+        'OPTIONS': {
+            'host': os.getenv('ORIANA_DB_HOST'),
+            # 'port': os.getenv('ORIANA_DB_PORT'),
+            'database' : os.getenv('AMAREY_DB_NAME'),
+            'user' : os.getenv('ORIANA_DB_USER'),
+            'password' : os.getenv('ORIANA_DB_PASSWORD'),
+        },
+    },
 }
 
 
