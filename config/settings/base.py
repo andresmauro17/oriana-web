@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'app_sensors.apps.AppSensorsConfig',
     'app_data.apps.AppDataConfig',
     'app_organizations.apps.AppOrganizationAppConfig',
-    'app_emqx.apps.AppEmqxConfig'
+    'app_emqx.apps.AppEmqxConfig',
+    'app_amarey.apps.AppAmareyConfig'
 ]
 
 MIDDLEWARE = [
@@ -99,7 +100,7 @@ DATABASES = {
             'password' : os.getenv('ORIANA_DB_PASSWORD'),
         },
     },
-    'secondary': {
+    'amarey_db': {
         'ENGINE': 'django.db.backends.mysql',
         'OPTIONS': {
             'host': os.getenv('ORIANA_DB_HOST'),
@@ -110,6 +111,8 @@ DATABASES = {
         },
     },
 }
+
+DATABASE_ROUTERS = ['app_amarey.db_router.AmareyDBRouter']
 
 
 # Password validation
