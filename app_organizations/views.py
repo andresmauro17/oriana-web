@@ -34,3 +34,15 @@ def switch_site(request, site_id):
     current_user.save()
     
     return redirect('dashboard:dashboard_site', current_user.current_site.id)
+
+@login_required
+def misingorganization(request):
+    current_user = request.user
+    organizations = current_user.organizations.all()
+    if(organizations):
+        return redirect('dashboard:dashboard_site', current_user.current_site.id)
+    return render(request, "app_organizations/misingorganization.html")
+
+@login_required
+def misinsites(request):
+    return render(request, "app_organizations/misinsites.html")

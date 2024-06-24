@@ -26,13 +26,14 @@
       id="sidenav-collapse-main"
       class="collapse navbar-collapse w-auto h-auto h-100"
     >
-    <ul class="navbar-nav">
+      <!-- organization menu -->
+      <ul class="navbar-nav" v-if="profileStore.organizations.length">
         <li class="nav-item">
           <a href="#" class="nav-link" :class="{active: showSwitchModal}" aria-controls="dashboardsExamples" role="button" aria-expanded="false" @click="showSwitchModal = true">
             <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
               <i class="ni ni-shop text-primary text-sm opacity-10"></i>
             </div>
-            <span class="nav-link-text ms-1">Organizaciones</span>
+            <span class="nav-link-text ms-1">Organizaciones {{ profileStore.organizations.lenght }}</span>
             <i class="fas fa-sort text-default text-right" style="margin-left: auto;"></i>
           </a>
         </li>
@@ -45,7 +46,6 @@
             <i class="fas fa-tools text-default text-right" style="margin-left: auto;"></i>
           </a>
         </li>
-        <hr class="mt-0 horizontal dark" />
         <li class="nav-item">
           <a data-bs-toggle="collapse" href="#applicationsExamples" class="nav-link " aria-controls="applicationsExamples" role="button" aria-expanded="false">
             <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
@@ -67,6 +67,10 @@
             </ul>
           </div>
         </li>
+        <hr class="mt-0 horizontal dark" />
+      </ul>
+      <!-- main menu -->
+      <ul class="navbar-nav">
         <li class="nav-item">
           <a href="#" class="nav-link " aria-controls="dashboardsExamples" role="button" aria-expanded="false">
             <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
@@ -91,6 +95,9 @@
             <span class="nav-link-text ms-1">Eventos</span>
           </a>
         </li>
+      </ul>
+      <!-- docs menu -->
+      <ul class="navbar-nav">
         <li class="mt-3 nav-item">
           <hr class="mt-0 horizontal dark" />
           <h6

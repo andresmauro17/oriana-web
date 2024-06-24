@@ -1,0 +1,31 @@
+{% extends "dashboard-layout.html" %}
+
+{% block content %}
+    <div class="container-fluid mt-4 min-height-600">
+    <!-- breadcrumbs -->
+    <div class="row gx-4">
+    </div>
+    <div class="row gx-4 mt-4">
+        <div class="card">
+            <!-- Card header -->
+            <div class="card-header py-3 d-flex align-items-center border-bottom">
+                <div class="d-flex align-items-center">
+                <!-- Title -->
+                <!-- <h5 class="text-capitalize">{{ sensorData.name }}</h5> -->
+                <!-- Surtitle -->
+                <h6 class="surtitle">No tienes una organizacion asignada!</h6>
+                </div>
+            </div>
+            <div class="p-3 card-body">
+            <p> Pide al administrador que que agregue a una organizacion, o solicita al equipo de soporte la creacion de una</p>
+            </div>
+        </div>
+    </div>
+  </div>
+{% endblock content%}
+
+
+
+{% block javascript %}
+
+{% endblock javascript%}
