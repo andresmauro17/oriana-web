@@ -12,6 +12,7 @@ class Site(CustomBaseModel):
     name = models.CharField(max_length=100,)
     organization = models.ForeignKey(Organization, related_name='sites', on_delete = models.CASCADE)
     empresa_id_amarey = models.PositiveIntegerField(null=True, blank=True)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         # return self.name + "|" + self.organization.name

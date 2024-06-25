@@ -37,6 +37,7 @@ class Organization(CustomBaseModel):
     members = models.ManyToManyField(
         settings.AUTH_USER_MODEL, related_name='organizations', through='Membership'
     )
+    is_active = models.BooleanField(default=True)
 
 
     def __str__(self):

@@ -15,8 +15,8 @@ def index_view(request):
         return Response(organizations,status=status.HTTP_200_OK)
 
     if request.user.is_staff:
-        organizations = Organization.objects.all()
+        organizations = Organization.objects.filter(is_active=True)
     else:
-        organizations = request.user.organizations.all()
+        organizations = request.user.organizations.filter(is_active=True)
     serializer = OrganizationModelSerializer(organizations, many=True)
     return Response(serializer.data,status=status.HTTP_200_OK)

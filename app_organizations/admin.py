@@ -27,7 +27,7 @@ class SiteInline(admin.TabularInline):
 
 @admin.register(Organization)
 class OrganizationAdmin(admin.ModelAdmin):
-    list_display = ['id','name','owner','company_name']
+    list_display = ['id','name','owner','is_active','company_name']
     autocomplete_fields = ['owner']
     list_editable = []
     list_filter = ['owner__company']
