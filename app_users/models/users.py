@@ -5,6 +5,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import BaseUserManager
 from django.core.validators import RegexValidator
+from django.db.models import Q
 
 # Models
 from app_organizations.models import Site
@@ -103,7 +104,17 @@ class User(CustomBaseModel, AbstractUser):
 
     current_organization = models.ForeignKey(Organization, blank=True, null=True, on_delete=models.SET_NULL)
     current_site = models.ForeignKey(Site, blank=True, null=True, on_delete=models.SET_NULL)
-
+    @property
+    def get_user_organizations(self):
+        "Returns the person's full name."
+        if self.is_staff:
+            organizations_ids = Organization.objects.filter(is_active=True).values_list('id', flat=True)
+        else:
+            organizations_ids = self.organizations.filter(is_active=True).values_list('id', flat=True)
+        organizations = Organization.objects.filter(
+            Q(id__in=organizations_ids) | Q(owner_id=self.id)
+        ).filter(is_active=True)
+        return organizations
 
     def __str__(self):
         return self.email

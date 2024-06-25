@@ -22,15 +22,9 @@ def dahsboard_sensors(request):
         if request.user.current_organization:
             sites_ids = Site.objects.filter(organization = request.user.current_organization)
         else:
-            organizations_ids = request.user.organizations.all().values_list('id', flat=True)
-            organizations_ids = Organization.objects.filter(
-                Q(id__in=organizations_ids) | Q(owner_id=request.user.id)
-            ).values_list('id', flat=True)
+            organizations_ids = request.user.get_user_organizations.values_list('id', flat=True)
             sites_ids = Site.objects.filter(organization_id__in = organizations_ids).values_list('id', flat=True)
-            print('sites_ids')
-            print(sites_ids)
     sensors = Sensor.objects.filter(site_id__in=sites_ids)
-    print(sensors)
     
     #Legacy database 
     empresas_ids = Site.objects.filter(id__in = sites_ids).exclude(empresa_id_amarey__isnull=True).values_list('empresa_id_amarey', flat=True)

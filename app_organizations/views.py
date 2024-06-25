@@ -21,7 +21,7 @@ def switch_organization(request, organization_id):
     if organization_id==0:
         current_user.current_organization = None
     else:
-        organization = get_object_or_404(current_user.organizations, pk=organization_id)
+        organization = get_object_or_404(current_user.get_user_organizations, pk=organization_id)
         if(organization):
             current_user.current_organization = organization
     current_user.save()
@@ -46,9 +46,9 @@ def switch_site(request, site_id):
 @login_required
 def misingorganization(request):
     current_user = request.user
-    organizations = current_user.organizations.all()
-    if(organizations):
-        return redirect('dashboard:dashboard_site', current_user.current_site.id)
+    organizations = current_user.get_user_organizations
+    if organizations or current_user.is_staff:
+        return redirect('dashboard:dashboard')
     return render(request, "app_organizations/misingorganization.html")
 
 @login_required
