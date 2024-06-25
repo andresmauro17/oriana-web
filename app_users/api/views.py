@@ -37,14 +37,9 @@ def user_current_view(request):
 
     user_organizations = request.user.organizations.all()
 
-    if not current_user.current_organization:
+    if not current_user.current_organization and current_user.current_site:
         current_user.current_site = None
         current_user.save()
-    else:
-        if not current_user.current_site:
-            sites = Site.objects.filter(organization=current_user.current_organization)
-            if sites:
-                current_user.current_site = sites.first()
 
     # if not current_user.current_organization or not current_user.current_site:
     #     first_org = current_user.organizations.first()

@@ -17,12 +17,6 @@ def dashboard(request):
     """ this view renderize a tempalte to load the Dashboard component"""
 
     if request.user.current_site:
-            return redirect('dashboard:dashboard_site', request.user.current_site.id)
+        return render(request, 'dashboard/dashboard.html',{"site":request.user.current_site})
 
     return render(request, 'dashboard/dashboard.html',{"site":{"id":0}})
-
-@login_required
-def dashboard_site(request, site_id):
-    """ this view renderize a tempalte to load the Dashboard component"""
-    site = get_object_or_404(Site, pk=site_id)
-    return render(request, 'dashboard/dashboard.html', {"site":site})

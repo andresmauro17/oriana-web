@@ -16,28 +16,32 @@ from app_organizations.models import Site, Organization
 def switch_organization(request, organization_id):
     """ this view switch organizations"""
     current_user = request.user
+
+    current_user.current_site = None
     if organization_id==0:
         current_user.current_organization = None
-        current_user.current_site = None
     else:
-        organization = get_object_or_404(Organization,pk=organization_id)
-        current_user.current_organization = organization
-        sites = Site.objects.filter(organization=organization)
-        if sites:
-            current_user.current_site = sites.first()
+        organization = get_object_or_404(current_user.organizations, pk=organization_id)
+        if(organization):
+            current_user.current_organization = organization
     current_user.save()
-    
-    return redirect('dashboard:dashboard_site', current_user.current_site.id)
+
+    previous_url = request.META.get('HTTP_REFERER', 'fallback_url_name')
+    return redirect(previous_url)
 
 @login_required
 def switch_site(request, site_id):
     """ this view switch organizations"""
     current_user = request.user
-    site = get_object_or_404(Site,pk=site_id)
-    current_user.current_site = site
+    if site_id == 0 or not current_user.current_organization:
+        current_user.current_site = None
+    else:
+        site = get_object_or_404(current_user.current_organization.sites, pk=site_id)
+        current_user.current_site = site
     current_user.save()
     
-    return redirect('dashboard:dashboard_site', current_user.current_site.id)
+    previous_url = request.META.get('HTTP_REFERER', 'fallback_url_name')
+    return redirect(previous_url)
 
 @login_required
 def misingorganization(request):
