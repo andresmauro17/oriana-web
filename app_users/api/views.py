@@ -37,13 +37,21 @@ def user_current_view(request):
 
     user_organizations = request.user.organizations.all()
 
-    update_user=False
-    if not current_user.current_organization or not current_user.current_site:
-        first_org = current_user.organizations.first()
-        current_user.current_organization = first_org
-        sites = Site.objects.filter(organization=first_org)
-        if sites:
-            current_user.current_site = sites.first()
+    if not current_user.current_organization:
+        current_user.current_site = None
         current_user.save()
+    else:
+        if not current_user.current_site:
+            sites = Site.objects.filter(organization=current_user.current_organization)
+            if sites:
+                current_user.current_site = sites.first()
+
+    # if not current_user.current_organization or not current_user.current_site:
+    #     first_org = current_user.organizations.first()
+    #     current_user.current_organization = first_org
+    #     sites = Site.objects.filter(organization=first_org)
+    #     if sites:
+    #         current_user.current_site = sites.first()
+    #     current_user.save()
     serializer = CurrentUserSerializer(current_user)
     return Response(serializer.data,status=status.HTTP_200_OK)

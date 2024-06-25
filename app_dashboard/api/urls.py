@@ -7,5 +7,5 @@ from django.urls import path
 from .views import dahsboard_sensors
 
 urlpatterns = [
-    path('<int:site_id>/sensors', dahsboard_sensors)
+    path('sensors/', dahsboard_sensors),
 ]

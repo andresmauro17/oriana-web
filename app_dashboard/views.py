@@ -19,7 +19,7 @@ def dashboard(request):
     if request.user.current_site:
             return redirect('dashboard:dashboard_site', request.user.current_site.id)
 
-    return render(request, 'dashboard/dashboard.html')
+    return render(request, 'dashboard/dashboard.html',{"site":{"id":0}})
 
 @login_required
 def dashboard_site(request, site_id):

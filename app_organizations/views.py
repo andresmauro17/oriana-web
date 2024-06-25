@@ -16,11 +16,15 @@ from app_organizations.models import Site, Organization
 def switch_organization(request, organization_id):
     """ this view switch organizations"""
     current_user = request.user
-    organization = get_object_or_404(Organization,pk=organization_id)
-    current_user.current_organization = organization
-    sites = Site.objects.filter(organization=organization)
-    if sites:
-        current_user.current_site = sites.first()
+    if organization_id==0:
+        current_user.current_organization = None
+        current_user.current_site = None
+    else:
+        organization = get_object_or_404(Organization,pk=organization_id)
+        current_user.current_organization = organization
+        sites = Site.objects.filter(organization=organization)
+        if sites:
+            current_user.current_site = sites.first()
     current_user.save()
     
     return redirect('dashboard:dashboard_site', current_user.current_site.id)

@@ -34,7 +34,7 @@
 
   const sensors = ref([]);
   const getDashboardSensors = ()=>{
-    SensorService.getDashboardSensors(props.site).then((res)=>{
+    SensorService.getDashboardSensors().then((res)=>{
       sensors.value = res.data;
     })
   }

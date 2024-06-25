@@ -21,13 +21,14 @@ class VerifyUserHasOrganizationMiddleware:
         if not exclude and current_user.is_authenticated:
             organizations = current_user.organizations.all()
             if organizations:
-                if not current_user.current_organization:
-                    current_user.current_organization = organizations.first()
-                sites = Site.objects.filter(organization=current_user.current_organization)
-                if sites:
-                    current_user.current_site = sites.first()
-                else:
-                    return redirect('organizations:misingsites')
+                pass
+                # if not current_user.current_organization:
+                #     current_user.current_organization = organizations.first()
+                # sites = Site.objects.filter(organization=current_user.current_organization)
+                # if sites:
+                #     current_user.current_site = sites.first()
+                # else:
+                #     return redirect('organizations:misingsites')
             else:
                 return redirect('organizations:misingorganization')
                

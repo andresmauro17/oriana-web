@@ -33,17 +33,18 @@
             <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
               <i class="ni ni-shop text-primary text-sm opacity-10"></i>
             </div>
-            <span class="nav-link-text ms-1">Organizaciones {{ profileStore.organizations.lenght }}</span>
+            <span class="nav-link-text ms-1">Organizaciones</span>
             <i class="fas fa-sort text-default text-right" style="margin-left: auto;"></i>
           </a>
         </li>
-        <li class="nav-item" v-if="profileStore.current_organization">
+        <li class="nav-item">
           <a href="#" class="nav-link" aria-controls="dashboardsExamples" role="button" aria-expanded="false">
             <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
               <i class="ni ni-check-bold text-success text-sm opacity-10"></i>
             </div>
-            <span class="nav-link-text ms-1">{{profileStore.current_organization.name}}</span>
-            <i class="fas fa-tools text-default text-right" style="margin-left: auto;"></i>
+            <span v-if="profileStore.current_organization.id" class="nav-link-text ms-1">{{profileStore.current_organization.name}}</span>
+            <span v-else class="nav-link-text ms-1">Todas</span>
+            <i v-if="profileStore.current_organization.id" class="fas fa-tools text-default text-right" style="margin-left: auto;"></i>
           </a>
         </li>
         <li class="nav-item">
@@ -55,6 +56,17 @@
           </a>
           <div class="collapse" :class="{show:!collapsedSites}" id="applicationsExamples">
             <ul class="nav ms-4">
+              <!-- empty site -->
+              <li class="nav-item ">
+                <a class="nav-link " :href="`/sites/0/switch/`">
+                  <div v-if="!profileStore.currentuser.current_site" class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
+                    <i class="ni ni-check-bold text-success text-sm opacity-10"></i>
+                  </div>
+                  <span class="sidenav-mini-icon"> Todos  </span>
+                  <span class="sidenav-normal"> Todos </span>
+                </a>
+              </li>
+              <!-- iterating sites -->
               <li class="nav-item " v-for="site in profileStore.current_organization.sites" :key="site.id">
                 <a class="nav-link " :href="`/sites/${site.id}/switch/`">
                   <div v-if="site.id==profileStore.currentuser.current_site" class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
@@ -141,10 +153,26 @@
       <Modal :show="showSwitchModal" @update:show="showSwitchModal = $event">
         <template v-slot:header>
           <h6 class="modal-title">
-            Usted tiene <strong class="text-primary">2</strong> organizaciones.
+            Usted tiene <strong class="text-primary">{{profileStore.organizations.length}}</strong>Organizaciones:
           </h6>
         </template>
         <div class="list-group list-group-flush" v-if="profileStore.organizations">
+          <!-- Todas -->
+          <a :href="`/organizations/0/switch/`" class="list-group-item list-group-item-action">
+            <div class="row align-items-center">
+              <div class="col ml--2">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h4 class="mb-0 text-sm">
+                      <i class="ni ni-check-bold text-success" v-if="!profileStore.current_organization.id"></i>
+                      Todas
+                    </h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+          <!-- iterating orgs -->
           <a :href="`/organizations/${organization.id}/switch/`" class="list-group-item list-group-item-action" v-for="organization in profileStore.organizations" :key="organization.id" >
             <div class="row align-items-center">
               <div class="col ml--2">
