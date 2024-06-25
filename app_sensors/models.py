@@ -45,6 +45,10 @@ class Sensor(CustomBaseModel):
     last_value_date = models.DateField(blank=True, null=True)
     last_value_time = models.TimeField(blank=True, null=True)
 
+    @property
+    def get_location(self):
+        return f'{self.site.organization.name}|{self.site.name}'
+
     def __str__(self):
         return '{}'.format(self.id)
 

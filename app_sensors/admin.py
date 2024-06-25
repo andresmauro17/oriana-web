@@ -30,7 +30,7 @@ class SensorUserAlarmInline(admin.TabularInline):
 
 @admin.register(Sensor)
 class SensorAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'unique_id', 'sensor_type','last_broker','site']
+    list_display = ['id', 'name', 'unique_id', "is_active", 'sensor_type','last_broker','site']
     autocomplete_fields = ['site']
     list_editable = ['name','unique_id', 'sensor_type']
     list_filter = ['sensor_type', 'last_broker', 'site']

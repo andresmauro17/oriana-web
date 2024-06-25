@@ -93,6 +93,10 @@ class Nevera(models.Model):
     ultimodatohora = models.TimeField(db_column='ultimoDatoHora', blank=True, null=True)  # Field name made lowercase.
     ultimodatofecha = models.DateField(db_column='ultimoDatoFecha', blank=True, null=True)  # Field name made lowercase.
     
+    @property
+    def get_location(self):
+        return f'{self.empresa.nombre}'
+
     def __str__(self):
         return f'{self.nombrenevera}'
     class Meta:

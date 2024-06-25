@@ -3,11 +3,14 @@
     <!-- Card header -->
     <div class="card-header py-3 d-flex align-items-center border-bottom">
         <div class="d-flex align-items-center">
-          <!-- Surtitle -->
-          <!-- <h6 class="surtitle">5/23 projects</h6> -->
           <!-- Title -->
-          <h5 class="text-capitalize">{{ sensor.name }}</h5>
-          
+          <div class="mx-3">
+            <a href="javascript:;" class="text-md text-dark font-weight-600">{{ sensor.name }}</a>
+            <small class="d-block text-muted">{{ sensor.location }}</small>
+          </div>
+          <!-- <h5 class="text-capitalize">{{ sensor.name }} </h5> -->
+          <!-- Surtitle -->
+          <!-- <h6 class="text-muted text-small text-end"> {{ sensor.location }} </h6> -->
         </div>
         <div v-if="isRealTimeMode" class="p-3 ms-auto text-center">
           <span class="badge badge-secondary">
@@ -191,7 +194,7 @@ const colorClass = computed(()=>{
   const blue = "push-indicator--blue-light"
   const red = "push-indicator--red-light"
   let color = gray
-  if(sensor.value.last_value && !isNaN(sensor.value.last_value)) {
+  if(sensor.value.last_value && !isNaN(sensor.value.last_value) && sensor.value.is_active) {
       if(sensor.value.last_value > sensor.value.max_threshold){
         color = red
       }else if(sensor.value.last_value < sensor.value.min_threshold){

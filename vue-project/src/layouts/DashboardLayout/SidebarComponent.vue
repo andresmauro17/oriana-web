@@ -153,7 +153,7 @@
       <Modal :show="showSwitchModal" @update:show="showSwitchModal = $event">
         <template v-slot:header>
           <h6 class="modal-title">
-            Usted tiene <strong class="text-primary">{{profileStore.organizations.length}}</strong>Organizaciones:
+            Usted tiene <strong class="text-primary"> {{profileStore.organizations.length}} </strong> Organizaciones:
           </h6>
         </template>
         <div class="list-group list-group-flush" v-if="profileStore.organizations">
@@ -192,9 +192,9 @@
           </a>
         </div>
         <template v-slot:footer>
-          <a class="mb-0 btn btn-link pe-3 ps-0 ms-auto" href="#">
+          <!-- <a class="mb-0 btn btn-link pe-3 ps-0 ms-auto" href="#">
             Agregar una organizacion
-          </a>
+          </a> -->
         </template>
       </Modal>
     </teleport>

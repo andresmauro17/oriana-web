@@ -18,11 +18,15 @@ class SensorSerializer(serializers.ModelSerializer):
     min_threshold = serializers.DecimalField(max_digits=4, decimal_places=2, coerce_to_string=False)
     last_value = serializers.DecimalField(max_digits=5, decimal_places=2, coerce_to_string=False)
     legacy = serializers.SerializerMethodField()
+    location = serializers.SerializerMethodField()
     class Meta:
         model = Sensor
         fields = '__all__'
     def get_legacy(self, obj):
         return False
+    
+    def get_location(self, obj):
+        return obj.get_location
 
 
 def convert_decimals(data):

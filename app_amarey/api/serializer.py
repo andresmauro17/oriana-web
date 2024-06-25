@@ -19,6 +19,7 @@ class NeveraSerializer(serializers.ModelSerializer):
     site = serializers.PrimaryKeyRelatedField(source='empresa', read_only=True)
     alarms = serializers.SerializerMethodField()
     legacy = serializers.SerializerMethodField()
+    location = serializers.SerializerMethodField()
 
     class Meta:
         model = Nevera
@@ -26,10 +27,12 @@ class NeveraSerializer(serializers.ModelSerializer):
             'id', 'max_threshold', 'min_threshold', 'last_value',
             'created_at', 'updated_at', 'name', 'sensor_type', 'last_broker',
             'unique_id', 'is_active', 'was_modified', 'device_id', 'last_energy_state',
-            'last_value_date', 'last_value_time', 'site', 'alarms','legacy'
+            'last_value_date', 'last_value_time', 'site', 'alarms','legacy','location'
         ]
 
     def get_alarms(self, obj):
         return [obj.temmax, obj.temmin]
     def get_legacy(self, obj):
         return True
+    def get_location(self, obj):
+        return obj.get_location
