@@ -7,7 +7,6 @@ class NeveraSerializer(serializers.ModelSerializer):
     min_threshold = serializers.FloatField(source='temmin')
     last_value = serializers.DecimalField(source='ultimodato', max_digits=8, decimal_places=2)
     name = serializers.CharField(source='nombrenevera')
-    sensor_type = serializers.CharField(source='tiposensor')
     last_broker = serializers.CharField(default="emqx")  # Assuming a default value, modify as needed
     unique_id = serializers.CharField(source='sensor')
     is_active = serializers.BooleanField(source='activa')
@@ -20,6 +19,7 @@ class NeveraSerializer(serializers.ModelSerializer):
     alarms = serializers.SerializerMethodField()
     legacy = serializers.SerializerMethodField()
     location = serializers.SerializerMethodField()
+    sensor_type = serializers.SerializerMethodField()
 
     class Meta:
         model = Nevera
@@ -36,3 +36,10 @@ class NeveraSerializer(serializers.ModelSerializer):
         return True
     def get_location(self, obj):
         return obj.get_location
+    def get_sensor_type(self, obj):
+        sensortype = None
+        if obj.tiposensor == 'temperatura':
+            sensortype = 'TEMPERATURE'
+        elif obj.tiposensor == 'humedad':
+            sensortype = 'HUMIDITY'
+        return sensortype
