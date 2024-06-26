@@ -142,6 +142,29 @@
       },
     },
     {
+      text: 'Esta semana',
+      onClick() {
+        let date = new Date();
+        let day = date.getDay();
+
+        // Calculate the difference to the nearest Monday
+        let diffToMonday = (day === 0 ? -6 : 1) - day;
+
+        // Calculate the first day of the current week (Monday)
+        let firstDayOfWeek = new Date(date);
+        firstDayOfWeek.setDate(date.getDate() + diffToMonday);
+
+        // Calculate the last day of the current week (Sunday)
+        let lastDayOfWeek = new Date(firstDayOfWeek);
+        lastDayOfWeek.setDate(firstDayOfWeek.getDate() + 6);
+        
+        firstDayOfWeek = formatDate(firstDayOfWeek)
+        lastDayOfWeek = formatDate(lastDayOfWeek)
+        dateRange.value = [firstDayOfWeek, lastDayOfWeek]
+        
+      },
+    },
+    {
       text: 'Este mes',
       onClick() {
         let date = new Date();
