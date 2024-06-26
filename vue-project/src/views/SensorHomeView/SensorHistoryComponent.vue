@@ -67,6 +67,16 @@
     sensorDataChartOptions.series[0].name = `${variable}`
     sensorDataChartOptions.series[0].markLine.data[0].yAxis = props.sensorData.max_threshold
     sensorDataChartOptions.series[0].markLine.data[1].yAxis = props.sensorData.min_threshold
+
+    sensorDataChartOptions.yAxis.min = (value)=>{
+      const min_threshold = props.sensorData.min_threshold
+      return value.min - 1 > min_threshold ? min_threshold -1 : value.min - 1; // Adjust the min value
+    }
+
+    sensorDataChartOptions.yAxis.max = (value)=> {
+        const max_threshold = props.sensorData.max_threshold
+        return value.max + 1 < max_threshold ? max_threshold + 1 : value.max + 1; // Adjust the max value
+    }
   }
 
   const generateChart = ()=>{

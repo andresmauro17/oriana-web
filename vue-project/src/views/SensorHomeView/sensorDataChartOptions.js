@@ -39,12 +39,8 @@ const sensorDataChartOptions = {
   },
    yAxis: {
     type: 'value',
-    min: function(value) {
-        return value.min - 1; // Adjust the min value
-    },
-    max: function(value) {
-        return value.max + 1; // Adjust the max value
-    },
+    min:()=>{},// Adjust the min value
+    max:()=>{},// Adjust the max value
     axisLabel: {
       formatter: '{value} °C'
     }
