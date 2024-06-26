@@ -30,6 +30,7 @@ urlpatterns = [
     path('',include(('app_organizations.urls', 'organizations'), namespace='organizations')),
     path('',include(('app_sensors.urls', 'sensors'), namespace='sensors')),
     path('', include(('app_dashboard.urls', 'dashboard'), namespace='dashboard')),
+    path('', include(('app_amarey.urls', 'legacy'), namespace='legacy')),
 ]
 
 if settings.DEBUG:

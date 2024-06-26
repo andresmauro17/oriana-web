@@ -52,8 +52,8 @@ class NeveraAdmin(admin.ModelAdmin):
 
 @admin.register(Datos)
 class DatosAdmin(admin.ModelAdmin):
-    list_display = ['iddatos','nevera_idnevera','hora','fecha','temperatura','humedad','energia','created_at','updated_at']
+    list_display = ['iddatos','nevera','hora','fecha','temperatura','humedad','energia','created_at','updated_at']
     ordering = ['iddatos']
-    list_filter = ['nevera_idnevera']
+    list_filter = ['nevera']
 
     

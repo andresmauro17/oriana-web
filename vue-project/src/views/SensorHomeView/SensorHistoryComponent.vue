@@ -94,7 +94,7 @@
   };
 
   const getDataByDate = ()=>{
-    SensorService.getSensorData(props.sensorData.id, dateRange.value[0], dateRange.value[1]).then((res)=>{
+    SensorService.getSensorData(props.sensorData.id, props.sensorData.legacy, dateRange.value[0], dateRange.value[1]).then((res)=>{
       let rawdata = res.data;
       values.value = rawdata.map(item => item.value);
       values_datetime.value = rawdata.map(item => `${item.date} ${item.time}`);

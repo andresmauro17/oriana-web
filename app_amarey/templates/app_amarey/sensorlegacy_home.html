@@ -1,0 +1,20 @@
+{% extends "dashboard-layout.html" %}
+
+
+
+{% block content %}
+    
+    <sensor-home-view />
+{% endblock content%}
+
+
+
+{% block javascript %}
+
+{{ sensor_serialized|json_script:"sensor_serialized" }}
+
+<script>
+//const sensorData = JSON.parse(document.getElementById('sensor_serialized').textContent);
+// console.log(sensorData)
+</script>
+{% endblock javascript%}

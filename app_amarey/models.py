@@ -29,7 +29,7 @@ class Empresa(models.Model):
 
 class Datos(models.Model):
     iddatos = models.AutoField(db_column='idDatos', primary_key=True)  # Field name made lowercase.
-    nevera_idnevera = models.ForeignKey('Nevera', models.DO_NOTHING, db_column='nevera_idNevera')  # Field name made lowercase.
+    nevera = models.ForeignKey('Nevera', models.DO_NOTHING, related_name='datos', db_column='nevera_idNevera')  # Field name made lowercase.
     hora = models.TimeField(blank=True, null=True)
     fecha = models.DateField(blank=True, null=True)
     temperatura = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)

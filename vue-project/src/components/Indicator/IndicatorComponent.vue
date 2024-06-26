@@ -26,7 +26,7 @@
         </div>
     </div>
     <!-- Card body -->
-    <a :href="`/sensors/${sensor.id}`">
+    <a :href="`/${sensor.legacy?'sensorslegacy':'sensors'}/${sensor.id}`">
       <div class="card-body card-body-indicator">
         <div class="push-indicator" :class="colorClass">
           <div class="push-in-indicator">
