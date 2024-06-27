@@ -32,7 +32,7 @@
     "src": "src/assets/img/logos/gthux/onlylogo.png"
   },
   "src/main.css": {
-    "file": "assets/main-0f9f4f9e.css",
+    "file": "assets/main-79469478.css",
     "src": "src/main.css"
   },
   "src/main.js": {
@@ -47,9 +47,9 @@
       "assets/nucleo-icons-be977573.svg"
     ],
     "css": [
-      "assets/main-0f9f4f9e.css"
+      "assets/main-79469478.css"
     ],
-    "file": "assets/main-2d9f5af2.js",
+    "file": "assets/main-1734cc4d.js",
     "isEntry": true,
     "src": "src/main.js"
   }
