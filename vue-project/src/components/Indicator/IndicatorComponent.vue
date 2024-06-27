@@ -140,11 +140,15 @@
         </a>
       </div>
     </div>
+    <div class="card-footer" v-if="delayedHours>hourTreshold">
+      <ArgonBadge color="danger" size="lg" class="w-100"> No trasmite hace {{delayedHours}} horas!</ArgonBadge>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { defineProps, computed, ref, onMounted, defineEmits, watch } from 'vue';
+import ArgonBadge from "@/components/ArgonBadge.vue";
 import useProfileStore from "@/stores/profile.js"
 import useChatterBoxStore from "@/stores/chatterbox.js"
 
@@ -206,7 +210,7 @@ const colorClass = computed(()=>{
   return color;
 })
 
-const formatedDateTime = (last_value_date, last_value_time)=>{
+const formatDateTime = (last_value_date, last_value_time)=>{
   let formattedDate = "aaaa-mm-dd";
   let formattedTime = "hh:mm:ss";
   if(last_value_date && last_value_time){
@@ -222,12 +226,21 @@ const formatedDateTime = (last_value_date, last_value_time)=>{
 const formatedDatetime = computed(()=>{
  
   if(sensor.value.last_value_date && sensor.value.last_value_time){
-    return formatedDateTime(sensor.value.last_value_date, sensor.value.last_value_time)
+    return formatDateTime(sensor.value.last_value_date, sensor.value.last_value_time)
   }
   return ""
 })
 
+const hourTreshold = 2;
+const delayedHours = ref(0);
 const setSensor = (data)=>{
+
+  //calculate delayed hours
+  const lastValueDateTime = new Date(`${data.last_value_date}T${data.last_value_time}`);
+  const now = new Date();
+  const differenceInMilliseconds = now - lastValueDateTime;
+  delayedHours.value = Math.floor(differenceInMilliseconds / (1000 * 60 * 60));
+
   data.last_value = data.last_value == null ? "--.--" : data.last_value;
   sensor.value = data;
 }
