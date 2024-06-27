@@ -19,7 +19,7 @@
           </span>
         </div>
         <div v-if="profileStore.currentuser.is_staff" class="text-end ms-auto">
-          <a :href="`/admin/app_sensors/sensor/${sensor.id}/change/`" target="blank" class="mb-0 btn btn-xs bg-neutral">
+          <a :href="`/admin/${sensor.legacy?'app_amarey/nevera':'app_sensors/sensor'}/${sensor.id}/change/`" target="blank" class="mb-0 btn btn-xs bg-neutral">
             <i class="fas fa-cog "></i> 
             Config
           </a>
