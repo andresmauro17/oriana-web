@@ -97,7 +97,7 @@
                   <span class="text-xs font-weight-bold">{{sensorprop.unique_id}}</span>
                 </td>
               </tr>
-              <tr>
+              <tr v-if="sensorSite">
                 <td>
                   <div class="px-2 py-0 d-flex">
                     <div class="d-flex flex-column justify-content-center">
