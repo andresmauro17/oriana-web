@@ -109,7 +109,7 @@
                   <span class="text-xs font-weight-bold">{{ sensorSite.name }}</span>
                 </td>
               </tr>
-              <tr>
+              <!-- <tr>
                 <td>
                   <div class="px-2 py-0 d-flex">
                     <div class="d-flex flex-column justify-content-center">
@@ -120,7 +120,7 @@
                 <td class="text-sm text-center align-middle">
                   <span class="text-xs font-weight-bold">{{profileStore.current_organization.city}}</span>
                 </td>
-              </tr>
+              </tr> -->
             </tbody>
           </table>
         </div>
@@ -251,13 +251,13 @@ onMounted(()=>{
 
 const profileStore = useProfileStore()
 const sensorSite = computed(()=>{
-  if(profileStore.current_organization){
-    if(profileStore.current_organization.sites){
-      let site = profileStore.current_organization.sites.find((site)=>props.sensorprop.site==site.id)
-      return site
-    }
+  let site = null;
+  if(props.sensorprop.legacy){
+    site =  profileStore.sites.find((site)=>props.sensorprop.site==site.empresa_id_amarey)
+  }else{
+    site =  profileStore.sites.find((site)=>props.sensorprop.site==site.id)
   }
-  return ""
+  return site
 })
 </script>
 

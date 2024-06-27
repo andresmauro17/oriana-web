@@ -33,15 +33,21 @@ def switch_organization(request, organization_id):
 def switch_site(request, site_id):
     """ this view switch organizations"""
     current_user = request.user
-    if site_id == 0 or not current_user.current_organization:
+    if site_id == 0:
         current_user.current_site = None
     else:
-        site = get_object_or_404(current_user.current_organization.sites, pk=site_id)
-        current_user.current_site = site
+        print("entro alelse")
+        site = get_object_or_404(Site, pk=site_id)
+        if(current_user.get_user_organizations.filter(id=site.organization.id)):
+            current_user.current_site = site
+        else:
+            pass
+        if(not current_user.current_organization):
+            current_user.current_organization = site.organization
     current_user.save()
-    
-    previous_url = request.META.get('HTTP_REFERER', 'fallback_url_name')
-    return redirect(previous_url)
+    return redirect('dashboard:dashboard')
+    # previous_url = request.META.get('HTTP_REFERER', 'fallback_url_name')
+    # return redirect(previous_url)
 
 @login_required
 def misingorganization(request):

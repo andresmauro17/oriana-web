@@ -8,7 +8,7 @@
                   <li class="breadcrumb-item">
                       <a href="/"><i class="fas fa-home"></i></a>
                   </li>
-                  <li class="breadcrumb-item"><a :href="`/sites/${sensorSite.id}/switch/`">{{ sensorSite.name }}</a></li>
+                  <li class="breadcrumb-item" v-if="sensorSite"><a :href="`/sites/${sensorSite.id}/switch/`">{{ sensorSite.name }}</a></li>
                   <li class="breadcrumb-item active" aria-current="page">
                     {{sensorData.name}}
                   </li>
@@ -35,15 +35,14 @@
   const showHistory = ref(true);
   const profileStore = useProfileStore()
   const sensorSite = computed(()=>{
-    if(profileStore.current_organization){
-      if(profileStore.current_organization.sites){
-        let site = profileStore.current_organization.sites.find((site)=>sensorData.value.site==site.id)
-        return site
-      }
+    let site = null;
+    if(sensorData.value.legacy){
+      site =  profileStore.sites.find((site)=>sensorData.value.site==site.empresa_id_amarey)
+    }else{
+      site =  profileStore.sites.find((site)=>sensorData.value.site==site.id)
     }
-   return ""
+   return site
   })
-  profileStore.current_organization.sites
   
   const sensorData = ref({});
   sensorData.value = JSON.parse(document.getElementById('sensor_serialized').textContent);

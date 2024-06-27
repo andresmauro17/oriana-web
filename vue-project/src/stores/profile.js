@@ -4,7 +4,8 @@ export default defineStore('profile', {
   state: () => ({
     currentuser:{},
     organizations:[],
-    current_organization:{}
+    current_organization:{},
+    sites:[]
   }),
   actions:{
     getCurrentUser(){
@@ -14,9 +15,10 @@ export default defineStore('profile', {
     },
     getOrganizations(){
       userservices.getOrganizations().then((res)=>{
-        console.log('res', res.data);
         this.organizations = res.data
-        console.log('organ', this.organizations);
+        const allSites = this.organizations.flatMap(org => org.sites);
+        this.sites = allSites;
+        // console.log(this.sites);
         if(this.currentuser.current_organization){
           this.current_organization = this.organizations.filter((or)=>or.id==this.currentuser.current_organization)[0];
         }
