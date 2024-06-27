@@ -25,9 +25,9 @@ def switch_organization(request, organization_id):
         if(organization):
             current_user.current_organization = organization
     current_user.save()
-
-    previous_url = request.META.get('HTTP_REFERER', 'fallback_url_name')
-    return redirect(previous_url)
+    return redirect('dashboard:dashboard')
+    # previous_url = request.META.get('HTTP_REFERER', 'fallback_url_name')
+    # return redirect(previous_url)
 
 @login_required
 def switch_site(request, site_id):
