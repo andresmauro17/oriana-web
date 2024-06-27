@@ -34,7 +34,7 @@ def dahsboard_sensors(request):
     filtered_empresas_ids = [id for id in empresas_ids if id is not None]
     legacy_sensors = Nevera.objects.filter(empresa_id__in = list(empresas_ids))
     if not includedeactivated:
-        legacy_sensors = legacy_sensors.filter(activa=True)
+        legacy_sensors = legacy_sensors.get_active()
 
 
     serializer = SensorSerializer(sensors, many=True)

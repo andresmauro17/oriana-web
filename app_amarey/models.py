@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 
 # Create your models here.
 
@@ -42,6 +43,16 @@ class Datos(models.Model):
         app_label = 'app_amarey'
         managed = False
         db_table = 'datos'
+
+class NeveraQuerySet(models.query.QuerySet):
+    def get_active(self):
+        return self.filter(Q(activa=1) | Q(activa=4))
+
+class NeveraManager(models.Manager):
+    def get_queryset(self):
+        return NeveraQuerySet(self.model, using=self._db)
+    def get_active(self):
+        return self.get_queryset().get_active()
 
 class Nevera(models.Model):
     idnevera = models.AutoField(db_column='idNevera', primary_key=True)  # Field name made lowercase.
@@ -92,7 +103,8 @@ class Nevera(models.Model):
     ultimodatoenergia = models.IntegerField(db_column='ultimoDatoEnergia', blank=True, null=True)  # Field name made lowercase.
     ultimodatohora = models.TimeField(db_column='ultimoDatoHora', blank=True, null=True)  # Field name made lowercase.
     ultimodatofecha = models.DateField(db_column='ultimoDatoFecha', blank=True, null=True)  # Field name made lowercase.
-    
+    objects = NeveraManager()
+
     @property
     def get_location(self):
         return f'{self.empresa.nombre}'
