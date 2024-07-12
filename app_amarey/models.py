@@ -1,7 +1,7 @@
+from datetime import datetime, time
 from django.db import models
 from django.db.models import Q
-
-# Create your models here.
+from django.db.models.signals import post_save
 
 class Companias(models.Model):
     nombre = models.CharField(max_length=255)
@@ -55,15 +55,19 @@ class NeveraManager(models.Manager):
         return self.get_queryset().get_active()
 
 class Nevera(models.Model):
+    TIPO_SENSOR_CHOICES = (
+        ('temperatura', 'temperatura'),
+        ('humedad','humedad'),
+    )
     idnevera = models.AutoField(db_column='idNevera', primary_key=True)  # Field name made lowercase.
     empresa = models.ForeignKey(Empresa, models.DO_NOTHING)
-    cuidad = models.CharField(max_length=255, blank=True, null=True)
-    nombrenevera = models.CharField(db_column='nombreNevera', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    sensor = models.CharField(max_length=255, blank=True, null=True)
-    activa = models.IntegerField(blank=True, null=True)
-    modificado = models.IntegerField(blank=True, null=True)
-    temmax = models.FloatField(db_column='temMax', blank=True, null=True)  # Field name made lowercase.
-    temmin = models.FloatField(db_column='temMin', blank=True, null=True)  # Field name made lowercase.
+    cuidad = models.CharField(max_length=255, null=True)
+    nombrenevera = models.CharField(db_column='nombreNevera', max_length=255, null=True)  # Field name made lowercase.
+    sensor = models.CharField(max_length=255, null=True)
+    activa = models.IntegerField(null=True)
+    modificado = models.IntegerField(null=True)
+    temmax = models.FloatField(db_column='temMax', default=8, null=True)  # Field name made lowercase.
+    temmin = models.FloatField(db_column='temMin', default=2, null=True)  # Field name made lowercase.
     humemax = models.FloatField(db_column='humeMax', blank=True, null=True)  # Field name made lowercase.
     humemin = models.FloatField(db_column='humeMin', blank=True, null=True)  # Field name made lowercase.
     telefonomarcado = models.CharField(db_column='telefonoMarcado', max_length=255, blank=True, null=True)  # Field name made lowercase.
@@ -96,9 +100,9 @@ class Nevera(models.Model):
     numactivo = models.CharField(db_column='numActivo', max_length=255, blank=True, null=True)  # Field name made lowercase.
     tiponevera = models.CharField(db_column='tipoNevera', max_length=255, blank=True, null=True)  # Field name made lowercase.
     compresor = models.CharField(max_length=255, blank=True, null=True)
-    created_at = models.DateTimeField(blank=True, null=True)
-    updated_at = models.DateTimeField(blank=True, null=True)
-    tiposensor = models.CharField(db_column='tipoSensor', max_length=11, blank=True, null=True)  # Field name made lowercase.
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
+    tiposensor = models.CharField(db_column='tipoSensor', max_length=11, choices=TIPO_SENSOR_CHOICES, blank=True, null=True)  # Field name made lowercase.
     ultimodato = models.DecimalField(db_column='ultimoDato', max_digits=8, decimal_places=2, blank=True, null=True)  # Field name made lowercase.
     ultimodatoenergia = models.IntegerField(db_column='ultimoDatoEnergia', blank=True, null=True)  # Field name made lowercase.
     ultimodatohora = models.TimeField(db_column='ultimoDatoHora', blank=True, null=True)  # Field name made lowercase.
@@ -116,3 +120,13 @@ class Nevera(models.Model):
         managed = False
         db_table = 'nevera'
 
+def nevera_post_save(sender, instance, *args, **kwargs):
+    current_date = datetime.now().date()
+    midnight_time = time(0, 0)
+    Datos.objects.create(nevera=instance,hora=midnight_time,fecha=current_date,temperatura=0,humedad=0,energia=1)
+
+
+post_save.connect(nevera_post_save, sender=Nevera)
+
+
+    

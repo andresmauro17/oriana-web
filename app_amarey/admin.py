@@ -43,11 +43,14 @@ class CompaniasFilter(admin.SimpleListFilter):
 
 @admin.register(Nevera)
 class NeveraAdmin(admin.ModelAdmin):
+    exclude = ['direccion','fechacalificacion','nombretecnico','marca','modelo','serial','capacidad','ciudadcompra','fechacompra','fases','voltaje','amperaje','marcaunidad','refunidad','refrigerante','periodicidad','tipodecontrolador','refcontrolador','patroncalibracion','potencia','numactivo','tiponevera','compresor',]
     list_display = ['idnevera', 'empresa', 'cuidad', 'nombrenevera', 'sensor', 'activa', 'modificado', 'temmax', 'temmin', 'humemax', 'humemin', 'telefonomarcado', 'telefonomarcadob', 'telefonomarcadoc', 'telefonomarcadod', 'tiposensor', 'ultimodato', 'ultimodatoenergia', 'ultimodatohora', 'ultimodatofecha', 'updated_at']
     list_editable = [ 'cuidad', 'nombrenevera', 'sensor', 'activa', 'modificado', 'temmax', 'temmin', 'humemax', 'humemin', 'telefonomarcado', 'telefonomarcadob', 'telefonomarcadoc', 'telefonomarcadod', 'tiposensor',]
     ordering = ['empresa']
     list_filter = [CompaniasFilter, 'activa', 'empresa']
     # inlines = [ DatosInline ]
+    save_as = True
+    save_on_top = True
 
 
 @admin.register(Datos)
