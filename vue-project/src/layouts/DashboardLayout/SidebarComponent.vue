@@ -31,7 +31,7 @@
         <li class="nav-item">
           <a href="#" class="nav-link" :class="{active: showSwitchModal}" aria-controls="dashboardsExamples" role="button" aria-expanded="false" @click="showSwitchModal = true">
             <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
-              <i class="ni ni-shop text-primary text-sm opacity-10"></i>
+              <i class="ni ni-building text-primary text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Organizaciones</span>
             <i class="fas fa-sort text-default text-right" style="margin-left: auto;"></i>
@@ -83,6 +83,22 @@
       </ul>
       <!-- main menu -->
       <ul class="navbar-nav">
+        <li class="nav-item">
+          <a href="/" :class="isActiveIfIsRoot()" class="nav-link " aria-controls="dashboardsExamples" role="button" aria-expanded="false">
+            <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
+              <i class="ni ni-shop text-primary text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/status" :class="isActive([`/status/`])" class="nav-link" aria-controls="dashboardsExamples" role="button" aria-expanded="false">
+            <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
+              <i class="ni ni-bullet-list-67 text-primary text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Status</span>
+          </a>
+        </li>
         <li class="nav-item">
           <a href="#" class="nav-link " aria-controls="dashboardsExamples" role="button" aria-expanded="false">
             <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
@@ -214,6 +230,13 @@ const collapsedSites = ref(false);// thisis the default behivor forsites menu
 const sidebarType=ref("bg-white");//bg-white bg-default;
 
 const profileStore = useProfileStore()
+
+function isActive(paths) {
+  return paths.includes(window.location.pathname) ? "active" : "";
+}
+function isActiveIfIsRoot() {
+  return window.location.pathname === "/"?"active" : "";
+}
 </script>
 
 <style lang="scss" scoped>

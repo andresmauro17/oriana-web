@@ -3,6 +3,8 @@ from django.db import models
 from django.db.models import Q
 from django.db.models.signals import post_save
 
+from datetime import datetime
+
 class Companias(models.Model):
     nombre = models.CharField(max_length=255)
     created_at = models.DateTimeField(blank=True, null=True)
@@ -113,6 +115,12 @@ class Nevera(models.Model):
     def get_location(self):
         return f'{self.empresa.nombre}'
 
+    @property
+    def ultimodatetime(self):
+        if self.ultimodatofecha and self.ultimodatohora:
+            return datetime.combine(self.ultimodatofecha, self.ultimodatohora)
+        return None
+
     def __str__(self):
         return f'{self.nombrenevera}'
     class Meta:
@@ -127,6 +135,3 @@ def nevera_post_save(sender, instance, *args, **kwargs):
 
 
 post_save.connect(nevera_post_save, sender=Nevera)
-
-
-    

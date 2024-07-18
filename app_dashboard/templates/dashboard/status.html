@@ -1,0 +1,139 @@
+{% extends "dashboard-layout.html" %}
+
+{% block content %}
+    <div class="container-fluid mt--6 min-height-600">
+      <!-- breadcrumbs -->
+      <div class="row align-items-center py-4">
+        <div class="col-12">
+            <nav aria-label="breadcrumb" class=" d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links">
+                    <li class="breadcrumb-item">
+                        <a to="/"><i class="fas fa-home"></i></a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        status</span>
+                    </li>
+                </ol>
+            </nav>
+        </div>
+      </div>
+      <div class="row gx-4 mt-4">
+        <div class="card z-index-2">
+            <!-- Card header -->
+            <div class="card-header py-3 d-flex align-items-center border-bottom">
+                <div class="d-flex align-items-center">
+                  <h6 class="surtitle">Estado de los sensores {{current_datetime_local}}</h6>
+                  
+                </div>
+            </div>
+
+            <div class="p-3 card-body">
+              
+              <div class="mt-4">
+                {% for site in sites %}
+                  <h5>
+                    {{site.get_site_org}}
+                    <a href="/admin/app_organizations/site/{{site.id}}/change/" target="_blank"> ✏️ </a>
+                  </h5>
+                  <ul>
+                    {% for sensor in site.sensors %}
+                      <li>
+                        {% if sensor.last_value > sensor.max_threshold %}
+                        🔴 
+                        {% elif sensor.last_value < sensor.min_threshold %}
+                        🔵
+                        {% else%}
+                        🟢 
+                        {% endif %}
+                        {% if sensor.was_modified %}
+                        🔄
+                        {% endif %}
+                        <a href="/sensors/{{sensor.id}}" target="_blank">id {{sensor.id}}</a>
+                        <a href="/admin/app_sensors/sensor/{{sensor.id}}/change/" target="_blank"> ✏️ </a>
+                        {{sensor.name}}
+                        | {{sensor.unique_id}}
+                        <b>
+                            {{sensor.last_value}} {% if sensor.sensor_type == "HUMIDITY" %} % {% else%} °c {% endif %}
+                        </b>
+                        <span>
+                            | {{sensor.last_value_date}} {{sensor.last_value_time}}
+                        </span>
+                        <span>
+                          | energia:
+                            {% if sensor.last_energy_state%}
+                                ✅
+                            {% else%}
+                                ❌
+                            {% endif %}
+                        </span>
+                        {% if sensor.is_delayed %}
+                          <span>
+                              <b class="red-background">No esta transmitiendo hace {{sensor.hours_delayed}} horas</b> ⏱️
+                          </span>
+                        {% endif %}
+                      </li>
+                    {% endfor %}
+
+                    {% for sensor in site.legacy_sensors %}
+                      <li>
+                        <div class="">
+                                {% if sensor.ultimodato > sensor.temmax %}
+                                🔴 
+                                {% elif sensor.ultimodato < sensor.temmin %}
+                                🔵
+                                {% else%}
+                                🟢 
+                                {% endif %}
+                                {% if sensor.modificado %}
+                                🔄
+                                    {% if sensor.activa == 4 %}
+                                    ⏰
+                                    {% endif %} 
+                                {% endif %}
+                                <a href="/sensorslegacy/{{sensor.idnevera}}" target="_blank">id {{sensor.idnevera}}</a>
+                                <a href="/admin/app_amarey/nevera/{{sensor.idnevera}}/change/" target="_blank"> ✏️ </a>
+                                {{sensor.nombrenevera}}
+                                | {{sensor.sensor}}
+                                {% comment %} | <a href="https://app.gthux.com/admin/app_amarey/nevera/?empresa__id__exact={{sensor.empresa_id}}" target="_blank"> {{sensor.empresa}} </a> {% endcomment %}
+                                <b>
+                                    {{sensor.ultimodato}} {% if sensor.tiposensor == "humedad" %} % {% else%} °c {% endif %}
+                                </b>
+                                <span>
+                                    | {{sensor.ultimodatofecha}} {{sensor.ultimodatohora}}
+                                </span>
+                                <span>
+                                  | energia:
+                                    {% if sensor.ultimodatoenergia%}
+                                        ✅
+                                    {% else%}
+                                        ❌
+                                    {% endif %}
+                                </span>
+                                {% if sensor.is_delayed %}
+                                  <span>
+                                      <b class="red-background">No esta transmitiendo hace {{sensor.hours_delayed}} horas</b> ⏱️
+                                  </span>
+                                {% endif %}
+                        </div>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                  <hr>
+                {% endfor %}
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+{% endblock content%}
+
+{% block base_head %}
+<style>
+.red-background{
+  background:red;
+  color:white;
+}
+  
+</style>
+{% endblock base_head%}

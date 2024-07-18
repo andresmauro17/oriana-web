@@ -13,4 +13,5 @@ WORKDIR /usr/src/vue-project
 
 # instale las dependencioa
 # RUN pwd
-RUN npm install
+# RUN npm install
+CMD ["npm", "install"]

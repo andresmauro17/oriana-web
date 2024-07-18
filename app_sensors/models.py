@@ -1,13 +1,14 @@
 # Django
-from django.db import models
+from datetime import datetime
 
-# Utilities
-from config.utils.models import CustomBaseModel
+from django.db import models
 
 # Models
 from app_organizations.models import Site
 from app_users.models import User
 
+# Utilities
+from config.utils.models import CustomBaseModel
 
 
 class Sensor(CustomBaseModel):
@@ -48,6 +49,12 @@ class Sensor(CustomBaseModel):
     @property
     def get_location(self):
         return f'{self.site.organization.name}|{self.site.name}'
+
+    @property
+    def last_value_date_time(self):
+        if self.last_value_date and self.last_value_time:
+            return datetime.combine(self.last_value_date, self.last_value_time)
+        return None
 
     def __str__(self):
         return '{}'.format(self.id)
