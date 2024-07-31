@@ -1,5 +1,7 @@
 {% extends "dashboard-layout.html" %}
-
+{% block viewtitle %}
+    gthux|dashboard
+{% endblock viewtitle %}
 {% block content %}
     <dashboard-view site="{{site.id}}"/>
 {% endblock content%}
