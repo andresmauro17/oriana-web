@@ -145,7 +145,7 @@ EMAIL_PORT = os.getenv('APP_EMAIL_PORT')
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es'
 
 TIME_ZONE = 'UTC'
 
