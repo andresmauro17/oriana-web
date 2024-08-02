@@ -58,12 +58,12 @@
             <div class="card-footer text-center pt-0 px-lg-2 px-1">
               <p class="text-sm mx-auto">
                 Olvido su contraseña
-                <a href="#" class="text-info font-weight-bold"> Recordar</a>
+                <a href="/accounts/password-reset/" class="text-info font-weight-bold"> Recordar</a>
               </p>
-              <p class="mb-4 text-sm mx-auto">
+              <!-- <p class="mb-4 text-sm mx-auto">
                 No tienes una cuenta?
                 <a href="#" class="text-info font-weight-bold"> Crear</a>
-              </p>
+              </p> -->
             </div>
           </div>
         </div>

@@ -58,7 +58,7 @@
         <ul class="navbar-nav d-lg-block d-none">
           <li class="nav-item">
             <a
-              href="https://www.creative-tim.com/product/vue-argon-dashboard-pro"
+              href="https://mdo.net.co/plataformas/"
               class="mb-0 btn btn-sm me-1"
               :class="btnBackground ? btnBackground : 'bg-white text-dark'"
               onclick="smoothToPricing('pricing-soft-ui')"
