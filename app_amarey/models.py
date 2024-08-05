@@ -88,7 +88,7 @@ class Nevera(models.Model):
     nombrenevera = models.CharField(
         db_column="nombreNevera", max_length=255, null=True
     )  # Field name made lowercase.
-    sensor = models.CharField(max_length=255, null=True)
+    sensor = models.CharField(max_length=255, null=True, blank=True)
     activa = models.IntegerField(null=True)
     modificado = models.IntegerField(null=True)
     temmax = models.FloatField(

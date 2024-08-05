@@ -47,7 +47,8 @@ class NeveraAdmin(admin.ModelAdmin):
     list_display = ['idnevera', 'empresa', 'cuidad', 'nombrenevera', 'sensor', 'activa', 'modificado', 'temmax', 'temmin', 'humemax', 'humemin', 'telefonomarcado', 'telefonomarcadob', 'telefonomarcadoc', 'telefonomarcadod', 'tiposensor', 'ultimodato', 'ultimodatoenergia', 'ultimodatohora', 'ultimodatofecha', 'updated_at']
     list_editable = [ 'cuidad', 'nombrenevera', 'sensor', 'activa', 'modificado', 'temmax', 'temmin', 'humemax', 'humemin', 'telefonomarcado', 'telefonomarcadob', 'telefonomarcadoc', 'telefonomarcadod', 'tiposensor',]
     ordering = ['empresa']
-    list_filter = [CompaniasFilter, 'activa', 'empresa']
+    list_filter = ['activa','modificado', CompaniasFilter, 'empresa']
+    search_fields = ['sensor', 'nombrenevera']
     # inlines = [ DatosInline ]
     save_as = True
     save_on_top = True

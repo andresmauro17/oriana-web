@@ -34,6 +34,6 @@ class SensorAdmin(admin.ModelAdmin):
     autocomplete_fields = ['site']
     list_editable = ['name','unique_id', 'sensor_type']
     list_filter = ['sensor_type', 'last_broker', 'site']
-    search_fields = []
+    search_fields = ['unique_id', 'name']
     ordering = []
     inlines = [ SensorUserAlarmInline ]
