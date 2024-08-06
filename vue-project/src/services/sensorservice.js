@@ -13,4 +13,9 @@ SensorService.getSensorData = function (sensor_id, legacy, from=null, to=null) {
   return api.get(`/${endpoint}/${sensor_id}/data`).then((res)=>res);
 }
 
+SensorService.getSensorCertificates = function (sensor_id, legacy) {
+  const endpoint = legacy?'sensorslegacy':'sensors';
+  return api.get(`/${endpoint}/${sensor_id}/certificates`).then((res)=>res);
+}
+
 export default SensorService

@@ -8,57 +8,75 @@ from rest_framework import mixins
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
-# Local imports 
-from .serializer import CurrentDataSerializer, SensorSerializer
-from app_sensors.models import Sensor
-
-# apps import
-from app_sensors.models import Sensor
+# Local imports
 from app_data.models import Data
+from app_sensors.models import Sensor, Certificate
+from .serializer import (
+    CurrentDataSerializer,
+    SensorSerializer,
+    CertificatesSerializer,
+)
+
 
 class SensorViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
-    """ Sensor viewset """
+    """Sensor viewset"""
+
     queryset = Sensor.objects.all()
-    serializer_class=SensorSerializer
+    serializer_class = SensorSerializer
     permission_classes = (IsAuthenticated,)
 
 
-@api_view(['POST'])
+@api_view(["POST"])
 def sensor_data_view(request, sensor_unique):
-    """ this endpoint is called by the mqtt broker to store the current data
-        request : /api/sensors/fff45524/currentdata/
-        {
-            "sensortype": "TEMPERATURE",
-            "deviceid":"gtv51-l001-l002",
-            "value":32,
-            "energy":1,
-            "datetime":"23-03-29 03:24:00"
-        }
+    """this endpoint is called by the mqtt broker to store the current data
+    request : /api/sensors/fff45524/currentdata/
+    {
+        "sensortype": "TEMPERATURE",
+        "deviceid":"gtv51-l001-l002",
+        "value":32,
+        "energy":1,
+        "datetime":"23-03-29 03:24:00"
+    }
     """
     sensor = Sensor.objects.filter(unique_id=sensor_unique).first()
     if not sensor:
-        content = {'message': 'Sensor not found'}
+        content = {"message": "Sensor not found"}
         return Response(content, status=status.HTTP_404_NOT_FOUND)
-    serializer = CurrentDataSerializer(data = request.data)
-    
+    serializer = CurrentDataSerializer(data=request.data)
+
     serializer.is_valid(raise_exception=True)
     data_created = Data.objects.create(
-        sensor = sensor,
-        value = serializer.validated_data['value'],
-        energy = serializer.validated_data['energy'],
-        date = serializer.validated_data['date'],
-        time = serializer.validated_data['time'],
+        sensor=sensor,
+        value=serializer.validated_data["value"],
+        energy=serializer.validated_data["energy"],
+        date=serializer.validated_data["date"],
+        time=serializer.validated_data["time"],
     )
     sensor.last_energy_state = data_created.energy
     sensor.last_value = data_created.value
     sensor.last_value_date = data_created.date
     sensor.last_value_time = data_created.time
 
-    if sensor.sensor_type != serializer.validated_data['sensortype'] or sensor.device_id != serializer.validated_data['deviceid']:
-        sensor.sensor_type = serializer.validated_data['sensortype']
-        sensor.device_id = serializer.validated_data['deviceid']
-    
+    if (
+        sensor.sensor_type != serializer.validated_data["sensortype"]
+        or sensor.device_id != serializer.validated_data["deviceid"]
+    ):
+        sensor.sensor_type = serializer.validated_data["sensortype"]
+        sensor.device_id = serializer.validated_data["deviceid"]
+
     sensor.save()
     sensor_serialized = SensorSerializer(sensor)
 
-    return Response({'data':serializer.validated_data,'sensor':sensor_serialized.data})
+    return Response(
+        {"data": serializer.validated_data, "sensor": sensor_serialized.data}
+    )
+
+
+@api_view(["GET"])
+def sensor_certificates_view(request, sensor_unique):
+    """sensor certificates api view"""
+    certificates = Certificate.objects.filter(sensor=sensor_unique).order_by(
+        "-calibration_date"
+    )
+    certificates_serialized = CertificatesSerializer(certificates, many=True)
+    return Response({"data": certificates_serialized.data})

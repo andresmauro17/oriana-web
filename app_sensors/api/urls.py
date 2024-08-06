@@ -16,5 +16,6 @@ router.register(r'', views.SensorViewSet, basename='sensor')
 urlpatterns = [
     path('', include(router.urls)),
     path('<str:sensor_unique>/data/', app_data_api_views.get_sensor_data),
-    path('<str:sensor_unique>/currentdata/', views.sensor_data_view)
+    path('<str:sensor_unique>/currentdata/', views.sensor_data_view),
+    path('<str:sensor_unique>/certificates/', views.sensor_certificates_view)
 ]
