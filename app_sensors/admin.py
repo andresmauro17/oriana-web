@@ -1,5 +1,4 @@
-from django.contrib import admin
-
+""" Appsensor admin module """
 # django imports
 from django.contrib import admin
 
@@ -40,6 +39,15 @@ class CertificatesInline(admin.TabularInline):
     can_delete = True
     show_change_link = True
     extra = 0
+
+
+@admin.register(Certificate)
+class CertificateAdmin(admin.ModelAdmin):
+    """Certificate Admin"""
+
+    list_display = ['id', 'sensor', 'calibration_date', 'url', 'created_at']
+    ordering = ['id']
+    list_filter = ["sensor"]
 
 
 @admin.register(Sensor)

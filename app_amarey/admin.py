@@ -32,6 +32,14 @@ class CertificadosInline(admin.TabularInline):
     extra = 0
 
 
+@admin.register(Certificados)
+class CertificadosAdmin(admin.ModelAdmin):
+    """CertificadosAdmin"""
+    list_display = ['id', 'nevera', 'fechacalibracion', 'url', 'created_at']
+    ordering = ['id']
+    list_filter = ["nevera"]
+
+
 @admin.register(Companias)
 class CompaniasAdmin(admin.ModelAdmin):
     """CompaniasAdmin"""
