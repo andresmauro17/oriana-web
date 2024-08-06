@@ -1,11 +1,14 @@
+""" Amarey legacy models """
+import random
 from datetime import datetime, time
-
 from django.db import models
 from django.db.models import Q
 from django.db.models.signals import post_save
 
+from app_utilities.utils import get_filename_ext
 
 class Companias(models.Model):
+    """ Legacy Companias model """
     nombre = models.CharField(max_length=255)
     created_at = models.DateTimeField(blank=True, null=True)
     updated_at = models.DateTimeField(blank=True, null=True)
@@ -14,12 +17,14 @@ class Companias(models.Model):
         return f"{self.nombre}"
 
     class Meta:
+        """ Meta class """
         app_label = "app_amarey"
         managed = False
         db_table = "companias"
 
 
 class Empresa(models.Model):
+    """ Legacy Empresa model """
     nombre = models.CharField(max_length=255, blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True)
     updated_at = models.DateTimeField(blank=True, null=True)
@@ -31,12 +36,14 @@ class Empresa(models.Model):
         return f"{self.nombre}"
 
     class Meta:
+        """ Meta class """
         app_label = "app_amarey"
         managed = False
         db_table = "empresa"
 
 
 class Datos(models.Model):
+    """ Datos legacy model"""
     iddatos = models.AutoField(
         db_column="idDatos", primary_key=True
     )  # Field name made lowercase.
@@ -57,25 +64,32 @@ class Datos(models.Model):
     updated_at = models.DateTimeField(blank=True, null=True)
 
     class Meta:
+        """ Meta class """
         app_label = "app_amarey"
         managed = False
         db_table = "datos"
 
 
 class NeveraQuerySet(models.query.QuerySet):
+    """ queryset """
     def get_active(self):
+        """ get active nevera"""
         return self.filter(Q(activa=1) | Q(activa=4))
 
 
 class NeveraManager(models.Manager):
+    """ NeveraManager """
     def get_queryset(self):
+        """ get queryset """
         return NeveraQuerySet(self.model, using=self._db)
 
     def get_active(self):
+        """ get active """
         return self.get_queryset().get_active()
 
 
 class Nevera(models.Model):
+    """ legacy nevera model """
     TIPO_SENSOR_CHOICES = (
         ("temperatura", "temperatura"),
         ("humedad", "humedad"),
@@ -194,10 +208,12 @@ class Nevera(models.Model):
 
     @property
     def get_location(self):
+        """ Return the emprsa name """
         return f"{self.empresa.nombre}"
 
     @property
     def ultimodatetime(self):
+        """ retunr the last datetime data """
         if self.ultimodatofecha and self.ultimodatohora:
             return datetime.combine(self.ultimodatofecha, self.ultimodatohora)
         return None
@@ -206,22 +222,52 @@ class Nevera(models.Model):
         return f"{self.nombrenevera}"
 
     class Meta:
+        """ Meta class """
         app_label = "app_amarey"
         managed = False
         db_table = "nevera"
 
 
-def nevera_post_save(sender, instance, *args, **kwargs):
-    current_date = datetime.now().date()
-    midnight_time = time(0, 0)
-    Datos.objects.create(
-        nevera=instance,
-        hora=midnight_time,
-        fecha=current_date,
-        temperatura=0,
-        humedad=0,
-        energia=1,
-    )
+def nevera_post_save(sender, instance, created, *args, **kwargs):
+    """ Signal to create a data after save it """
+    if created:
+        # Logic to execute only when a new record is created
+        current_date = datetime.now().date()
+        midnight_time = time(0, 0)
+        Datos.objects.create(
+            nevera=instance,
+            hora=midnight_time,
+            fecha=current_date,
+            temperatura=0,
+            humedad=0,
+            energia=1,
+        )
 
 
 post_save.connect(nevera_post_save, sender=Nevera)
+
+
+def upload_cert_path(instance, filename):
+    """ path to store certs """
+    rand = random.randint(1, 3910209312)
+    name, ext = get_filename_ext(filename)
+    final_filename = f"{rand}_{name}.{ext}"
+    return f"certificates/neveras/{instance.nevera.idnevera}/{final_filename}"
+
+
+class Certificados(models.Model):
+    """calibration certs"""
+    nevera = models.ForeignKey(
+        "Nevera", models.DO_NOTHING, db_column="neveraId"
+    )
+    # url = models.CharField(max_length=255)
+    url = models.FileField(upload_to=upload_cert_path, max_length=255)
+    fechacalibracion = models.DateField(db_column="fechaCalibracion")
+    created_at = models.DateTimeField(blank=True, null=True)
+    updated_at = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        """Meta class"""
+
+        managed = False
+        db_table = "certificados"

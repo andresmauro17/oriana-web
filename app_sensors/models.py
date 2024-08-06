@@ -1,6 +1,9 @@
+""" Sensors related models """
+
+import random
+
 # Django
 from datetime import datetime
-
 from django.db import models
 
 # Models
@@ -9,6 +12,7 @@ from app_users.models import User
 
 # Utilities
 from config.utils.models import CustomBaseModel
+from app_utilities.utils import get_filename_ext
 
 
 class Sensor(CustomBaseModel):
@@ -57,16 +61,18 @@ class Sensor(CustomBaseModel):
 
     @property
     def get_location(self):
+        """ get location string """
         return f"{self.site.organization.name}|{self.site.name}"
 
     @property
     def last_value_date_time(self):
+        """ get last datetime values """
         if self.last_value_date and self.last_value_time:
             return datetime.combine(self.last_value_date, self.last_value_time)
         return None
 
     def __str__(self):
-        return "{}".format(self.id)
+        return f"{self.id}"
 
 
 class SensorUserAlarm(models.Model):
@@ -78,4 +84,20 @@ class SensorUserAlarm(models.Model):
     is_sms = models.BooleanField()
 
     class Meta:
+        """ meta class """
         unique_together = (("user", "sensor"),)
+
+
+def upload_cert_path(instance, filename):
+    """path to store certs"""
+    rand = random.randint(1, 3910209312)
+    name, ext = get_filename_ext(filename)
+    final_filename = f"{rand}_{name}.{ext}"
+    return f"certificates/sensor/{instance.sensor.id}/{final_filename}"
+
+
+class Certificate(CustomBaseModel):
+    """calibration certs"""
+    sensor = models.ForeignKey(Sensor, on_delete=models.CASCADE)
+    url = models.FileField(upload_to=upload_cert_path, max_length=255)
+    calibration_date = models.DateField()
