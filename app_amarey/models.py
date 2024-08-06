@@ -251,7 +251,7 @@ def upload_cert_path(instance, filename):
     """ path to store certs """
     rand = random.randint(1, 3910209312)
     name, ext = get_filename_ext(filename)
-    final_filename = f"{rand}_{name}.{ext}"
+    final_filename = f"{rand}_{name}{ext}"
     return f"certificates/neveras/{instance.nevera.idnevera}/{final_filename}"
 
 
