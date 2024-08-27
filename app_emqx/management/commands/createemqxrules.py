@@ -71,7 +71,7 @@ SELECT
    topic
 FROM
   "sensors/+/currentdata/"
-WHERE payload.typeofmessage = 1
+WHERE payload.msgtype = 1
         """
         rule_id = "current_data_to_django"
         body = {

@@ -1,5 +1,8 @@
 """ api sensors view"""
 
+from pytz import timezone
+from datetime import datetime
+
 # restframework imports
 from rest_framework.response import Response
 from rest_framework import status
@@ -31,26 +34,44 @@ def sensor_data_view(request, sensor_unique):
     """this endpoint is called by the mqtt broker to store the current data
     request : /api/sensors/fff45524/currentdata/
     {
-        "sensortype": "TEMPERATURE",
+        "variable": "TEMPERATURE",
         "deviceid":"gtv51-l001-l002",
         "value":32,
         "energy":1,
         "datetime":"23-03-29 03:24:00"
     }
     """
+    serializer = CurrentDataSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+
     sensor = Sensor.objects.filter(unique_id=sensor_unique).first()
     if not sensor:
+        Sensor.objects.create(
+            name="anonymous",
+            sensor_type=serializer.validated_data["variable"],
+            last_broker="emqx",
+            unique_id=sensor_unique,
+            max_threshold=8,
+            min_threshold=2,
+            is_active=True,
+        )
         content = {"message": "Sensor not found"}
         return Response(content, status=status.HTTP_404_NOT_FOUND)
-    serializer = CurrentDataSerializer(data=request.data)
 
-    serializer.is_valid(raise_exception=True)
+    user_tz = timezone("America/Bogota")
+    current_datetime_utc = datetime.now()
+    current_datetime_local = current_datetime_utc.astimezone(user_tz).replace(
+        tzinfo=None
+    )
+
     data_created = Data.objects.create(
         sensor=sensor,
         value=serializer.validated_data["value"],
         energy=serializer.validated_data["energy"],
-        date=serializer.validated_data["date"],
-        time=serializer.validated_data["time"],
+        # date=serializer.validated_data["date"],
+        # time=serializer.validated_data["time"],
+        date=current_datetime_local.date(),
+        time=current_datetime_local.time(),
     )
     sensor.last_energy_state = data_created.energy
     sensor.last_value = data_created.value
@@ -58,10 +79,10 @@ def sensor_data_view(request, sensor_unique):
     sensor.last_value_time = data_created.time
 
     if (
-        sensor.sensor_type != serializer.validated_data["sensortype"]
+        sensor.sensor_type != serializer.validated_data["variable"]
         or sensor.device_id != serializer.validated_data["deviceid"]
     ):
-        sensor.sensor_type = serializer.validated_data["sensortype"]
+        sensor.sensor_type = serializer.validated_data["variable"]
         sensor.device_id = serializer.validated_data["deviceid"]
 
     sensor.save()

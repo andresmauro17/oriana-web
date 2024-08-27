@@ -62,7 +62,10 @@ class Sensor(CustomBaseModel):
     @property
     def get_location(self):
         """ get location string """
-        return f"{self.site.organization.name}|{self.site.name}"
+        if self.site:
+            return f"{self.site.organization.name}|{self.site.name}"
+        else:
+            return ""
 
     @property
     def last_value_date_time(self):

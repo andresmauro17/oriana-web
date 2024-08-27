@@ -9,13 +9,13 @@ from app_sensors.models import Certificate
 
 class CurrentDataSerializer(serializers.Serializer):
     """ Serializer to get the sensor current data for mqtt"""
-    sensortype = serializers.ChoiceField(Sensor.VARIABLE_CHOICES)
+    variable = serializers.ChoiceField(Sensor.VARIABLE_CHOICES)
     deviceid = serializers.CharField(max_length=100)
     value = serializers.DecimalField(max_digits=5, decimal_places=2)
     energy = serializers.BooleanField()
     # datetime = serializers.DateTimeField()
-    date = serializers.DateField()
-    time = serializers.TimeField()
+    # date = serializers.DateField()
+    # time = serializers.TimeField()
 
 
 class SensorSerializer(serializers.ModelSerializer):
