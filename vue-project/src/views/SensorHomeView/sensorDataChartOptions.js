@@ -3,7 +3,12 @@ const sensorDataChartOptions = {
     text: 'Temperature'
   },
   tooltip: {
-    trigger: 'axis'
+    trigger: 'axis',
+    formatter: function (params) {
+      const date = new Date(params[0].value[0]);
+      return `${date.toLocaleString()}: ${params[0].value[1]} °C`;
+      // return `${date.toLocaleString()}: ${params[0].value[1]} °C <br> some report description TODO`;
+    }
   },
   legend: {},
   toolbox: {
@@ -33,9 +38,8 @@ const sensorDataChartOptions = {
     }
   },
   xAxis: {
-    type: 'category',
+    type: 'time',  // Change to time axis
     boundaryGap: false,
-    data: []
   },
    yAxis: {
     type: 'value',
@@ -49,7 +53,7 @@ const sensorDataChartOptions = {
     {
       name: 'Valor',
       type: 'line',
-      data: [10, 11, 13, 11, 12, 12, 9],
+      data: [], // This will be set dynamically
       markPoint: {
         data: [
           { type: 'max', name: 'Max' },

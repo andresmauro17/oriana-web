@@ -82,10 +82,10 @@
   const generateChart = ()=>{
     var chartDom = document.getElementById('mainchart');
     var sensorChart = echarts.init(chartDom);
-    sensorDataChartOptions.series[0].data = values.value
-    sensorDataChartOptions.xAxis.data = values_datetime.value
+    const chartData = values_datetime.value.map((datetime, index) => [datetime, values.value[index]]);
+    sensorDataChartOptions.series[0].data = chartData;
     
-    if (sensorDataChartOptions.series[0].data.length === 0) {
+    if (chartData.length === 0) {
       sensorDataChartOptions.graphic = [
         {
           type: 'text',
@@ -100,14 +100,14 @@
         }
       ];
     }
-    sensorChart.setOption(sensorDataChartOptions)
+    sensorChart.setOption(sensorDataChartOptions);
   };
 
   const getDataByDate = ()=>{
     SensorService.getSensorData(props.sensorData.id, props.sensorData.legacy, dateRange.value[0], dateRange.value[1]).then((res)=>{
       let rawdata = res.data;
       values.value = rawdata.map(item => item.value);
-      values_datetime.value = rawdata.map(item => `${item.date} ${item.time}`);
+      values_datetime.value = rawdata.map(item => new Date(`${item.date}T${item.time}`));
       generateChart();
     })
   }
