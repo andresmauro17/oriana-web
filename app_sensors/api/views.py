@@ -71,7 +71,7 @@ def sensor_data_view(request, sensor_unique):
         # date=serializer.validated_data["date"],
         # time=serializer.validated_data["time"],
         date=current_datetime_local.date(),
-        time=current_datetime_local.time(),
+        time=current_datetime_local.time().replace(microsecond=0),
     )
     sensor.last_energy_state = data_created.energy
     sensor.last_value = data_created.value
