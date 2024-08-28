@@ -118,16 +118,16 @@ class Nevera(models.Model):
         db_column="humeMin", blank=True, null=True
     )  # Field name made lowercase.
     telefonomarcado = models.CharField(
-        db_column="telefonoMarcado", max_length=255, blank=True, null=True
+        db_column="telefonoMarcado", max_length=10, blank=True, null=True
     )  # Field name made lowercase.
     telefonomarcadob = models.CharField(
-        db_column="telefonoMarcadoB", max_length=255, blank=True, null=True
+        db_column="telefonoMarcadoB", max_length=10, blank=True, null=True
     )  # Field name made lowercase.
     telefonomarcadoc = models.CharField(
-        db_column="telefonoMarcadoC", max_length=255, blank=True, null=True
+        db_column="telefonoMarcadoC", max_length=10, blank=True, null=True
     )  # Field name made lowercase.
     telefonomarcadod = models.CharField(
-        db_column="telefonoMarcadoD", max_length=255, blank=True, null=True
+        db_column="telefonoMarcadoD", max_length=10, blank=True, null=True
     )  # Field name made lowercase.
     direccion = models.CharField(max_length=255, blank=True, null=True)
     fechacalificacion = models.DateField(
