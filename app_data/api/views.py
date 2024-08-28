@@ -26,7 +26,7 @@ def get_sensor_data(request, sensor_unique):
     from_date = request.query_params.get('from')
     to_date = request.query_params.get('to')
 
-    if  from_date is None or to_date is None:
+    if from_date is None or to_date is None:
         from_date = datetime.today().strftime('%Y-%m-%d')
         to_date = from_date
 
@@ -35,7 +35,11 @@ def get_sensor_data(request, sensor_unique):
     from_datetime = from_datetime.replace(hour=0, minute=0, second=0)
     to_datetime = to_datetime.replace(hour=23, minute=59, second=59)
 
-    data = sensor.data.filter(date__gte=from_datetime, date__lte=to_datetime)
+    data = sensor.data.filter(
+        date__gte=from_datetime,
+        date__lte=to_datetime
+    ).order_by('date', 'time')
+    
     # data = sensor.data.all()
     # print(data)
     serializer = DataSerializer(data, many=True)
