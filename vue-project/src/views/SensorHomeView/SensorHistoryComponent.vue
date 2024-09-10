@@ -30,6 +30,8 @@
         <i class="fas fa-chart-line "></i> 
         Buscar
       </a>
+      <input v-if="profileStore.currentuser.is_staff" type="checkbox" id="checkbox" v-model="symbolschecked" />
+      <!-- <label for="checkbox">sym</label> -->
       <!-- <a
             class="mt-4 btn btn-sm"
             :href="actions.route"
@@ -55,6 +57,7 @@
 
   const props = defineProps(["sensorData"])
   const profileStore = useProfileStore()
+  const symbolschecked = ref(false);
 
   // ---------- chart logic --------------------
   
@@ -100,6 +103,12 @@
         }
       ];
     }
+    if (symbolschecked.value) {
+      sensorDataChartOptions.series[0].symbol = 'circle';
+    }else{
+      sensorDataChartOptions.series[0].symbol = 'none';
+    }
+    sensorDataChartOptions.dataZoom.startValue = dateRange.value[0];
     sensorChart.setOption(sensorDataChartOptions);
   };
 

@@ -1,3 +1,5 @@
+// TODO hide circles points in the line, is better to show all as a line or show points
+/// uff a lot of ideas here https://echarts.apache.org/examples/en/editor.html?c=line-aqi
 const sensorDataChartOptions = {
   title: {
     text: 'Temperature'
@@ -62,9 +64,18 @@ const sensorDataChartOptions = {
       },
       markLine: {
         data: [{ yAxis: 8, name: 'Threshold', lineStyle: { color: 'red' } }, { yAxis: 2, name: 'Threshold', lineStyle: { color: 'blue' } } ]
-      }
+      },
+      symbol: 'none',
     },
-  ]
+  ],
+  dataZoom: [
+    {
+      startValue: ''
+    },
+    {
+      type: 'inside'
+    }
+  ],
 };
 
 export default sensorDataChartOptions;
