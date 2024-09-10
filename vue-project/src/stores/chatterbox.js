@@ -9,10 +9,10 @@ export default defineStore('chatterbox', {
   }),
   actions:{
     async startMqttClient(sensorid){
-      console.log("startMqttClient")
+      // console.log("startMqttClient")
 
       if(!this.isConnected){
-        console.log("linea15")
+        // console.log("isconnected")
         this.client = await ChatterBoxService.startMqttClient();
       }
       await this.subscribeTo(sensorid);
@@ -25,10 +25,10 @@ export default defineStore('chatterbox', {
       const subscribeTopic = `sensors/${sensorid}/currentdata/`
       await this.client.subscribe(subscribeTopic, { qos: 0 }, err => {
         if (err) {
-          console.log("Error in DeviceSubscription");
+          // console.log("Error in DeviceSubscription");
           return false;
         }
-        console.log("Device subscription Success", subscribeTopic);
+        // console.log("Device subscription Success", subscribeTopic);
         this.sensorsuscribed.push(sensorid)
         this.messages[sensorid] = []
 

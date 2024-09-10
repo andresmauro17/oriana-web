@@ -99,20 +99,15 @@ const password = ref(''); // Initialize password as an empty string
 
 
 const onSubmit = ()=>{
-  console.log('Email:', email.value);
-  console.log('Password:', password.value);
   loginService
     .login(email.value, password.value)
     .then((res) => {
-      console.log("el status es");
-      console.log(res.status);
       if (res.status == 201) {
         window.location = nextParam ? nextParam : "/";
       }
     })
     .catch((error) => {
       if (error.response.status === 401) {
-        console.log(error.response);
         alertText.value = error.response.data.error;
         showAlert.value = true;
       }

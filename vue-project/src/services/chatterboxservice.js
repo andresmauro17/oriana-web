@@ -7,12 +7,12 @@ const PASSWORD = import.meta.env.VITE_WEBSOCKET_PASSWORD
 const ChatterBoxService = {};
 
 ChatterBoxService.startMqttClient = async function () {
-  console.log("ChatterBoxService.startMqttClientttt")
-  console.log("HOST:", HOST)
-  console.log("PORT:", PORT)
-  console.log("USERNAME:", USERNAME)
-  console.log("PASSWORD", PASSWORD)
-  console.log("---------------------------------")
+  // console.log("ChatterBoxService.startMqttClientttt")
+  // console.log("HOST:", HOST)
+  // console.log("PORT:", PORT)
+  // console.log("USERNAME:", USERNAME)
+  // console.log("PASSWORD", PASSWORD)
+  // console.log("---------------------------------")
   const options ={
     host:HOST,
     port:PORT,
@@ -30,10 +30,10 @@ ChatterBoxService.startMqttClient = async function () {
   let client = {}
   try {
     client = await mqtt.connect(connectUrl, options);
-    console.log("se conecto:",client)
+    // console.log("se conecto:",client)
   } catch (error) {
-    console.log("error conectandose a wss server:: ")
-    console.log(error);
+    // console.log("error conectandose a wss server:: ")
+    // console.log(error);
   }
   return client;
 };

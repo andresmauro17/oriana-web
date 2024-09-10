@@ -53,7 +53,6 @@
     setTimeout(()=>{
       chatterBoxStore.startMqttClient("ffffffff")
     }, 5000)
-    
   })
 </script>
 

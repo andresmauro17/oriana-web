@@ -39,7 +39,6 @@
     })
   }
   onMounted(()=>{
-    console.log("dashboardview",props.site)
     getDashboardSensors();
   })
 </script>

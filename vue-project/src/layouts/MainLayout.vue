@@ -5,16 +5,7 @@
   </div>
 </template>
 
-<script>
-import { onMounted} from "vue";
-export default {
-  setup () {
-    onMounted(()=>{
-      console.log("mainlayout mounted")
-    })
+<script setup>
 
-    return {}
-  }
-}
 </script>
 

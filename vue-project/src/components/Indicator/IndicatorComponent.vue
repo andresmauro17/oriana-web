@@ -194,11 +194,11 @@ watch(chatterBoxStore.messages, (newValue) => {
   let messages = newValue;
   let sensormessages = messages[sensor.value.unique_id]
   let messagesLength = sensormessages.length
-  console.log("messagesLength", messagesLength, "lastDataIndex",lastDataIndex)
+  // console.log("messagesLength", messagesLength, "lastDataIndex",lastDataIndex)
   if(messagesLength-1 != lastDataIndex) {
     // console.log(messages)
     lastDataIndex = messagesLength-1
-    console.log("rawdata", sensormessages[lastDataIndex])
+    // console.log("rawdata", sensormessages[lastDataIndex])
     if(lastDataIndex > 0){
       isRealTimeMode.value=true
       let sensorNewData = sensormessages[lastDataIndex];
@@ -208,7 +208,7 @@ watch(chatterBoxStore.messages, (newValue) => {
       sensor.value.last_energy_state = sensorNewData.energy ? true:false;
     }
   }
-  console.log("-------------------------")
+  // console.log("-------------------------")
 });
 
 

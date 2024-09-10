@@ -39,15 +39,11 @@
   const props = defineProps(["showmodal", "sensor"]);
   const emit = defineEmits(["upDateShowModal"]);
   const upDateShowModal = (event)=>{
-    console.log("upDateShowModal", event)
     emit("upDateShowModal", event);
   }
   const certificates = ref([]);
   onMounted(()=>{
-    console.log("===========================")
-    console.log(props.sensor);
     SensorService.getSensorCertificates(props.sensor.id, props.sensor.legacy).then((res)=>{
-      console.log("resssssssss", res)
       certificates.value = res.data.data;
     })
   });
