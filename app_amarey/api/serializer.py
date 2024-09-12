@@ -83,7 +83,7 @@ class DatosSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(source="iddatos")
     value = serializers.DecimalField(
         source="temperatura",
-        max_digits=5,
+        max_digits=6,
         decimal_places=2,
         coerce_to_string=False,
     )
