@@ -6,4 +6,4 @@ class OrganizationModelSerializer(serializers.ModelSerializer):
     sites = SiteModelSerializer(many=True, read_only=True)
     class Meta:
         model = Organization
-        fields = ['id', 'name', 'logo', 'city', 'owner', 'members', 'sites']
+        fields = ['id', 'name', 'logo', 'city', 'owner', 'members', 'is_active', 'sites']

@@ -20,6 +20,9 @@ export default defineStore('profile', {
       // console.log(this.sites);
       if (this.currentuser.current_organization) {
         this.current_organization = this.organizations.filter(or => or.id == this.currentuser.current_organization)[0];
+        if(this.current_organization == undefined || !this.current_organization.is_active){
+          window.location.href = "/organizations/0/switch/";
+        }
       }
     }
   }

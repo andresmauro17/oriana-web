@@ -27,7 +27,7 @@
       class="collapse navbar-collapse w-auto h-auto h-100"
     >
       <!-- organization menu -->
-      <ul class="navbar-nav" v-if="profileStore.organizations.length">
+      <ul class="navbar-nav" v-if="activateOrganizations.length">
         <li class="nav-item">
           <a href="#" class="nav-link" :class="{active: showSwitchModal}" aria-controls="dashboardsExamples" role="button" aria-expanded="false" @click="showSwitchModal = true">
             <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
@@ -67,7 +67,7 @@
                 </a>
               </li>
               <!-- iterating sites -->
-              <li class="nav-item " v-for="site in profileStore.current_organization.sites" :key="site.id">
+              <li class="nav-item " v-for="site in activateSites" :key="site.id">
                 <a class="nav-link " :href="`/sites/${site.id}/switch/`">
                   <div v-if="site.id==profileStore.currentuser.current_site" class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
                     <i class="ni ni-check-bold text-success text-sm opacity-10"></i>
@@ -169,10 +169,10 @@
       <Modal :show="showSwitchModal" @update:show="showSwitchModal = $event">
         <template v-slot:header>
           <h6 class="modal-title">
-            Usted tiene <strong class="text-primary"> {{profileStore.organizations.length}} </strong> Organizaciones:
+            Usted tiene <strong class="text-primary"> {{activateOrganizations.length}} </strong> Organizaciones:
           </h6>
         </template>
-        <div class="list-group list-group-flush" v-if="profileStore.organizations">
+        <div class="list-group list-group-flush" v-if="activateOrganizations">
           <!-- Todas -->
           <a :href="`/organizations/0/switch/`" class="list-group-item list-group-item-action">
             <div class="row align-items-center">
@@ -189,7 +189,7 @@
             </div>
           </a>
           <!-- iterating orgs -->
-          <a :href="`/organizations/${organization.id}/switch/`" class="list-group-item list-group-item-action" v-for="organization in profileStore.organizations" :key="organization.id" >
+          <a :href="`/organizations/${organization.id}/switch/`" class="list-group-item list-group-item-action" v-for="organization in activateOrganizations" :key="organization.id" >
             <div class="row align-items-center">
               <div class="col ml--2">
                 <div class="d-flex justify-content-between align-items-center">
@@ -219,7 +219,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import Modal from "@/components/Modals/Modal.vue"
 import useProfileStore from "@/stores/profile.js"
 
@@ -230,6 +230,25 @@ const collapsedSites = ref(false);// thisis the default behivor forsites menu
 const sidebarType=ref("bg-white");//bg-white bg-default;
 
 const profileStore = useProfileStore()
+
+const activateSites = computed(()=>{
+  console.log(profileStore.current_organization)
+  // return [];
+  if(profileStore.current_organization.id){
+    return profileStore.current_organization.sites.filter((site)=>site.is_active);
+  }else{
+    return []
+  }
+})
+
+const activateOrganizations = computed(()=>{
+  if(profileStore.organizations){
+    return profileStore.organizations.filter((org)=>org.is_active);
+  }else{
+    return []
+  }
+})
+
 
 function isActive(paths) {
   return paths.includes(window.location.pathname) ? "active" : "";
