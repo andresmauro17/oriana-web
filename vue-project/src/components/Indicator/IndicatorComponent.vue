@@ -253,7 +253,7 @@ const formatedDatetime = computed(()=>{
   return ""
 })
 
-const hourTreshold = 2;
+const hourTreshold = 0.6;
 const delayedHours = ref(0);
 const setSensor = (data)=>{
 
@@ -261,8 +261,8 @@ const setSensor = (data)=>{
   const lastValueDateTime = new Date(`${data.last_value_date}T${data.last_value_time}`);
   const now = new Date();
   const differenceInMilliseconds = now - lastValueDateTime;
-  delayedHours.value = Math.floor(differenceInMilliseconds / (1000 * 60 * 60));
-
+  delayedHours.value = differenceInMilliseconds / (1000 * 60 * 60);
+  delayedHours.value = delayedHours.value.toFixed(1);
   data.last_value = data.last_value == null ? "--.--" : data.last_value;
   sensor.value = data;
 }

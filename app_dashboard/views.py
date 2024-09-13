@@ -33,7 +33,7 @@ def dashboard(request):
 @login_required
 def dashboardStatus(request):
     """this view renderize an status of all the current sensors"""
-    hour_treshold = 2
+    hour_treshold = 0.6
     user_tz = timezone("America/Bogota")
     current_datetime_utc = datetime.now()
     current_datetime_local = current_datetime_utc.astimezone(user_tz).replace(
@@ -78,7 +78,7 @@ def dashboardStatus(request):
         is_delayed = False
         if sensor.last_value_date_time:
             diff = current_datetime_local - sensor.last_value_date_time
-            hours_delayed = round(diff.total_seconds() / 3600)
+            hours_delayed = round(diff.total_seconds() / 3600, 1)
             if hours_delayed > hour_treshold:
                 is_delayed = True
         sensor.is_delayed = is_delayed
@@ -105,7 +105,7 @@ def dashboardStatus(request):
         is_delayed = False
         if nevera.ultimodatetime:
             diff = current_datetime_local - nevera.ultimodatetime
-            hours_delayed = round(diff.total_seconds() / 3600)
+            hours_delayed = round(diff.total_seconds() / 3600, 1)
             if hours_delayed > hour_treshold:
                 is_delayed = True
         nevera.is_delayed = is_delayed
