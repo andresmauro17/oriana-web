@@ -18,24 +18,47 @@ REST_FRAMEWORK = {
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
-    "root": {"level": "INFO", "handlers": ["file"]},
     "handlers": {
-        "file": {
-            "level": "INFO",
+        # Handler for request logs
+        "requests_file": {
+            "level": "INFO",  # Captures all HTTP requests (change to DEBUG for more details)
             "class": "logging.FileHandler",
-            "filename": "/var/log/django.log",
-            "formatter": "app",
+            "filename": "/var/log/django_requests.log",
+            "formatter": "requests",
+        },
+        # Handler for error logs
+        "errors_file": {
+            "level": "ERROR",  # Captures only errors (HTTP 4xx/5xx, exceptions, etc.)
+            "class": "logging.FileHandler",
+            "filename": "/var/log/django_errors.log",
+            "formatter": "errors",
         },
     },
     "loggers": {
-        "django": {
-            "handlers": ["file"],
+        # Logger for HTTP requests
+        "django.server": {
+            "handlers": ["requests_file"],
             "level": "INFO",
-            "propagate": True
+            "propagate": False,
+        },
+        # Logger for errors
+        "django.request": {
+            "handlers": ["errors_file"],
+            "level": "ERROR",
+            "propagate": False,
         },
     },
     "formatters": {
-        "app": {
+        # Formatter for request logs
+        "requests": {
+            "format": (
+                u"%(asctime)s [%(levelname)-8s] "
+                "(%(module)s.%(funcName)s) %(message)s"
+            ),
+            "datefmt": "%Y-%m-%d %H:%M:%S",
+        },
+        # Formatter for error logs
+        "errors": {
             "format": (
                 u"%(asctime)s [%(levelname)-8s] "
                 "(%(module)s.%(funcName)s) %(message)s"
@@ -44,7 +67,6 @@ LOGGING = {
         },
     },
 }
-
 
 print("-----------prod ------------")
 
