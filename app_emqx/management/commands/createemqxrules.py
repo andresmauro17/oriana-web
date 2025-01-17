@@ -2,10 +2,12 @@ from django.core.management.base import BaseCommand
 import os
 import base64
 import requests
+
+
 class Command(BaseCommand):
     """ 
         this command creates the resources in emqx
-        python manage.py create_curren_data_to_django_rule
+        python manage.py createemqxrules
     """
     help = 'this command creates the resources in emqx'
 
@@ -13,24 +15,25 @@ class Command(BaseCommand):
     AUTH_HEADER = "Basic " + base64.b64encode((os.getenv('EMQX_API_KEY') + ":" + os.getenv('EMQX_API_SECRET')).encode()).decode()
 
     def createCurrenDataToDjangoRule(self):
+        """ createCurrenDataToDjangoRule """
         headers = {
             "Accept": "application/json",
-            "Authorization":self.AUTH_HEADER
+            "Authorization": self.AUTH_HEADER
         }
 
         # creating bridge
-        webhook_name = "current_data_to_django_webhook"
+        webhook_name = "current_data_to_django_webhook_6_1"
         webhook_id = f'webhook:{webhook_name}'
         body = {
             "type": "webhook",
             "name": webhook_name,
             "method": "post",
-            "url": f'{os.getenv("WEBHOOKS_HOST")}/'+"${topic}",
+            "url": f'{os.getenv("WEBHOOKS_HOST")}/'+"${sensor_path}",
             "headers": {
                 "Accept": "application/json",
                 "content-type": "application/json",
             },
-            "body": "${payload.data}",
+            "body": '{"deviceid":"${device_id}","value":${payload.value},"energy":${payload.energy}}',
             "pool_type": "random",
             "pool_size": 8,
             "enable_pipelining": 100,
@@ -68,12 +71,12 @@ class Command(BaseCommand):
         rule_query = """
 SELECT
    payload,
-   topic
+   find(topic, 'sensors/') as sensor_path,
+   substr(topic, 8, 11) as device_id
 FROM
-  "sensors/+/currentdata/"
-WHERE payload.msgtype = 1
+  "devices/+/sensors/+/currentdata/"
         """
-        rule_id = "current_data_to_django"
+        rule_id = "current_device_sensor_data_to_django_6_1"
         body = {
             "id": rule_id,
             "name": rule_id,
