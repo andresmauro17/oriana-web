@@ -13,7 +13,7 @@ from rest_framework.permissions import IsAuthenticated
 
 # Local imports
 from app_data.models import Data
-from app_sensors.models import Sensor, Certificate
+from app_sensors.models import Sensor, Certificate, Device
 from .serializer import (
     CurrentDataSerializer,
     SensorSerializer,
@@ -34,7 +34,6 @@ def sensor_data_view(request, sensor_unique):
     """this endpoint is called by the mqtt broker to store the current data
     request : /api/sensors/fff45524/currentdata/
     {
-        "variable": "TEMPERATURE",
         "deviceid":"gtv51-l001-l002",
         "value":32,
         "energy":1,
@@ -44,19 +43,32 @@ def sensor_data_view(request, sensor_unique):
     serializer = CurrentDataSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
 
+    device = Device.objects.filter(device_id=serializer.validated_data["deviceid"]).first()
+    if not device:
+        device = Device.objects.create(
+            device_id=serializer.validated_data["deviceid"],
+            manufacturing_batch=None,
+            device_version=None,
+            notes=None
+        )
     sensor = Sensor.objects.filter(unique_id=sensor_unique).first()
     if not sensor:
-        Sensor.objects.create(
+        sensor = Sensor.objects.create(
             name="anonymous",
-            sensor_type=serializer.validated_data["variable"],
+            device=device,
+            # sensor_type=serializer.validated_data["variable"],
             last_broker="emqx",
             unique_id=sensor_unique,
             max_threshold=8,
             min_threshold=2,
             is_active=True,
         )
-        content = {"message": "Sensor not found"}
-        return Response(content, status=status.HTTP_404_NOT_FOUND)
+        # content = {"message": "Sensor not found"}
+        # return Response(content, status=status.HTTP_404_NOT_FOUND)
+    else:
+        if sensor.device_id != device.id:
+            sensor.device = device
+
 
     user_tz = timezone("America/Bogota")
     current_datetime_utc = datetime.now()
@@ -77,13 +89,6 @@ def sensor_data_view(request, sensor_unique):
     sensor.last_value = data_created.value
     sensor.last_value_date = data_created.date
     sensor.last_value_time = data_created.time
-
-    if (
-        sensor.sensor_type != serializer.validated_data["variable"]
-        or sensor.device_id != serializer.validated_data["deviceid"]
-    ):
-        sensor.sensor_type = serializer.validated_data["variable"]
-        sensor.device_id = serializer.validated_data["deviceid"]
 
     sensor.save()
     sensor_serialized = SensorSerializer(sensor)

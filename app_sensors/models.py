@@ -15,6 +15,16 @@ from config.utils.models import CustomBaseModel
 from app_utilities.utils import get_filename_ext
 
 
+class Device(CustomBaseModel):
+    """ Device model"""
+    device_id = models.CharField(max_length=100)
+    manufacturing_batch = models.CharField(max_length=100, blank=True, null=True)
+    device_version = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
+    notes = models.TextField(blank=True, null=True)
+    def __str__(self):
+        return f"{self.device_id}"
+
+
 class Sensor(CustomBaseModel):
     """Sensor Model.
     This model is the sensors that take the data
@@ -28,8 +38,9 @@ class Sensor(CustomBaseModel):
         ("TEMPERATURE", "Temperatura"),
         ("HUMIDITY", "Humedad"),
     )
-    sensor_type = models.CharField(max_length=100, choices=VARIABLE_CHOICES)
-
+    sensor_type = models.CharField(
+        max_length=100, choices=VARIABLE_CHOICES, default="TEMPERATURE"
+    )
     BROKER_CHOICES = (
         ("java", "Java Server"),
         ("emqx", "EMQX"),
@@ -50,7 +61,10 @@ class Sensor(CustomBaseModel):
         related_name="sensor",
         on_delete=models.SET_NULL,
     )
-    device_id = models.CharField(max_length=100, blank=True, null=True)
+    device = models.ForeignKey(
+        Device, related_name='data', on_delete=models.SET_NULL, db_index=True,
+        null=True, blank=True
+    )
     last_value = models.DecimalField(
         max_digits=5, decimal_places=2, blank=True, null=True
     )

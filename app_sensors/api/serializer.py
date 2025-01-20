@@ -9,7 +9,7 @@ from app_sensors.models import Certificate
 
 class CurrentDataSerializer(serializers.Serializer):
     """ Serializer to get the sensor current data for mqtt"""
-    variable = serializers.ChoiceField(Sensor.VARIABLE_CHOICES)
+    # variable = serializers.ChoiceField(Sensor.VARIABLE_CHOICES)
     deviceid = serializers.CharField(max_length=100)
     value = serializers.DecimalField(max_digits=5, decimal_places=2)
     energy = serializers.BooleanField()

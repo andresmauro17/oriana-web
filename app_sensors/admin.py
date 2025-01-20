@@ -7,6 +7,7 @@ from django.contrib import admin
 
 # local import
 from .models import Sensor
+from .models import Device
 from .models import SensorUserAlarm
 from .models import Certificate
 
@@ -68,3 +69,19 @@ class SensorAdmin(admin.ModelAdmin):
     search_fields = ["unique_id", "name"]
     ordering = []
     inlines = [SensorUserAlarmInline, CertificatesInline]
+
+
+@admin.register(Device)
+class DeviceAdmin(admin.ModelAdmin):
+    """ Device admin """
+    list_display = [
+        "id",
+        "device_id",
+        "manufacturing_batch",
+        "device_version",
+        "notes",
+    ]
+    list_filter = ["device_version"]
+    search_fields = ["device_id"]
+    ordering = []
+    # inlines = [SensorUserAlarmInline, CertificatesInline]
