@@ -84,4 +84,4 @@ class DeviceAdmin(admin.ModelAdmin):
     list_filter = ["device_version"]
     search_fields = ["device_id"]
     ordering = []
-    # inlines = [SensorUserAlarmInline, CertificatesInline]
+    inlines = [SensorInline]
