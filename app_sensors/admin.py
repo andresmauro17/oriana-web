@@ -1,11 +1,16 @@
 """ Appsensor admin module """
 # django imports
 from django.contrib import admin
+from django.contrib import messages
 
 # other apps
 # from app_data.admin import DataInline
 
 # local import
+from app_emqx.services.sensor_services import (
+    create_sensor_rule, delete_sensor_rule
+)
+
 from .models import Sensor
 from .models import Device
 from .models import SensorUserAlarm
@@ -59,16 +64,42 @@ class SensorAdmin(admin.ModelAdmin):
         "name",
         "unique_id",
         "is_active",
+        "is_unknow",
+        "device",
         "sensor_type",
         "last_broker",
         "site",
     ]
     autocomplete_fields = ["site"]
+    actions = ['update_emqx_rule']
     list_editable = ["name", "unique_id", "sensor_type"]
-    list_filter = ["sensor_type", "last_broker", "site"]
+    list_filter = [
+        "sensor_type",
+        "is_active",
+        "is_unknow",
+        "last_broker",
+        "site",
+        "device"
+    ]
     search_fields = ["unique_id", "name"]
     ordering = []
+    readonly_fields = ("created_at", "updated_at")
     inlines = [SensorUserAlarmInline, CertificatesInline]
+
+    def update_emqx_rule(self, request, sesores_ids):
+        """ update emqxrule action"""
+        sensors = Sensor.objects.filter(id__in=sesores_ids)
+        for sensor in sensors:
+            print(sensor.unique_id)
+            if (
+                sensor.is_active
+                and not sensor.is_unknow
+                and sensor.device
+            ):
+                create_sensor_rule(sensor)
+            else:
+                delete_sensor_rule(sensor)
+        messages.success(request, 'success :) ')
 
 
 @admin.register(Device)

@@ -8,6 +8,7 @@ class Command(BaseCommand):
     """ 
         this command creates the resources in emqx
         python manage.py createemqxrules
+        docker-compose run --rm django python manage.py createemqxrules
     """
     help = 'this command creates the resources in emqx'
 

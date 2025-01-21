@@ -62,6 +62,7 @@ def sensor_data_view(request, sensor_unique):
             max_threshold=8,
             min_threshold=2,
             is_active=True,
+            is_unknown=True,
         )
         # content = {"message": "Sensor not found"}
         # return Response(content, status=status.HTTP_404_NOT_FOUND)
