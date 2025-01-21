@@ -40,7 +40,9 @@ def sensor_data_view(request, sensor_unique):
         "datetime":"23-03-29 03:24:00"
     }
     """
+    print(request.data)
     serializer = CurrentDataSerializer(data=request.data)
+    print(serializer.validated_data["deviceid"])
     serializer.is_valid(raise_exception=True)
 
     device = Device.objects.filter(device_id=serializer.validated_data["deviceid"]).first()
