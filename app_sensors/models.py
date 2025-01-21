@@ -125,7 +125,7 @@ class Sensor(CustomBaseModel):
             else:
                 self.was_modified = True
             
-            if self.name1 != "anonymous":
+            if self.name != "anonymous":
                 self.is_unknow = False
         super(Sensor, self).save(*args, **kwargs)
 
