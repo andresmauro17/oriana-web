@@ -30,7 +30,7 @@ SELECT
    topic
 FROM
   "devices/{sensor.device.device_id}/sensors/{sensor.unique_id}/currentdata/"
-WHERE payload.updated_att != {updated_at_millis} 
+WHERE payload.updated_at != {updated_at_millis} 
 """
     topic_response = (
         f"devices/{sensor.device.device_id}/config/{sensor.unique_id}/"
