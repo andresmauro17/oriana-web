@@ -71,6 +71,7 @@ def sensor_data_view(request, sensor_unique):
     else:
         if sensor.device_id != device.id:
             sensor.device = device
+            sensor.save()
 
 
     user_tz = timezone("America/Bogota")

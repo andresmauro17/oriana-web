@@ -73,7 +73,7 @@ class Command(BaseCommand):
 SELECT
    payload,
    find(topic, 'sensors/') as sensor_path,
-   substr(topic, 8, 11) as device_id
+   substr(topic, 8, 12) as device_id
 FROM
   "devices/+/sensors/+/currentdata/"
         """
