@@ -149,6 +149,8 @@ class Sensor(CustomBaseModel):
 
 
 def update_emqx_rule(sender, instance, *args, **kwargs):
+    if not instance.was_modified:
+        return None
     """update_emqx_rule"""
     if (
         instance.is_active
@@ -160,6 +162,8 @@ def update_emqx_rule(sender, instance, *args, **kwargs):
     else:
         print("delete rule")
         delete_sensor_rule(instance)
+        instance.was_modified = False
+        instance.save()
 
 
 post_save.connect(update_emqx_rule, sender=Sensor)

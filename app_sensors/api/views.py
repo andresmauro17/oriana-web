@@ -42,7 +42,6 @@ def sensor_data_view(request, sensor_unique):
     """
     print(request.data)
     serializer = CurrentDataSerializer(data=request.data)
-    print(serializer.validated_data["deviceid"])
     serializer.is_valid(raise_exception=True)
 
     device = Device.objects.filter(device_id=serializer.validated_data["deviceid"]).first()

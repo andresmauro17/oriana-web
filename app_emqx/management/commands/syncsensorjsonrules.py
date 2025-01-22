@@ -28,12 +28,13 @@ class Command(BaseCommand):
             device__isnull=False
         )
         for sensor in sensors:
-            response = create_sensor_rule(sensor)
-            if response.status_code == 200:
-                self.stdout.write(
-                    self.style.SUCCESS(f'sensor {sensor} ok')
-                )
-        
+            sensor.was_modified = True
+            sensor.save()
+            self.stdout.write(
+                self.style.SUCCESS(f'sensor {sensor} ok')
+            )
+            # response = create_sensor_rule(sensor)
+            # if response.status_code == 200:
         # deleting the sensors that are not active
         self.stdout.write(
             self.style.ERROR("deleting sensors in emqx that are not active")
@@ -44,7 +45,9 @@ class Command(BaseCommand):
             Q(device__isnull=True)
         )
         for sensor in sensors:
-            status_code = delete_sensor_rule(sensor)
+            sensor.was_modified = True
+            sensor.save()
+            # status_code = delete_sensor_rule(sensor)
             self.stdout.write(
-                self.style.ERROR(f'sensor {sensor} ok {status_code}')
+                self.style.ERROR(f'sensor {sensor} ok deleted')
             )

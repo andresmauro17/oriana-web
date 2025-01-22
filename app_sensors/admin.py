@@ -90,16 +90,19 @@ class SensorAdmin(admin.ModelAdmin):
         """ update emqxrule action"""
         sensors = Sensor.objects.filter(id__in=sesores_ids)
         for sensor in sensors:
-            print(sensor.unique_id)
-            if (
-                sensor.is_active
-                and not sensor.is_unknow
-                and sensor.device
-            ):
-                create_sensor_rule(sensor)
-            else:
-                delete_sensor_rule(sensor)
-        messages.success(request, 'success :) ')
+            sensor.was_modified = True
+            sensor.save()
+            messages.success(request, 'success :) ')
+            # print(sensor.unique_id)
+            # if (
+            #     sensor.is_active
+            #     and not sensor.is_unknow
+            #     and sensor.device
+            # ):
+                
+            # else:
+            # delete_sensor_rule(sensor)
+        
 
 
 @admin.register(Device)
