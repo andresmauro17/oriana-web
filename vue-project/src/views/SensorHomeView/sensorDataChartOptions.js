@@ -48,7 +48,7 @@ const sensorDataChartOptions = {
     min:()=>{},// Adjust the min value
     max:()=>{},// Adjust the max value
     axisLabel: {
-      formatter: '{value} °C'
+      formatter: '{value}'
     }
   },
   series: [

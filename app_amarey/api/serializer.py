@@ -99,7 +99,7 @@ class DatosSerializer(serializers.ModelSerializer):
     class Meta:
         """ meta class """
         model = Datos
-        fields = fields = [
+        fields = [
             "id",
             "value",
             "created_at",
@@ -109,11 +109,6 @@ class DatosSerializer(serializers.ModelSerializer):
             "time",
             "sensor",
         ]
-        # fields = fields = [
-        #     'id', 'value', 'created_at', 'updated_at',
-        #     'energy', 'date', 'time', 'sensor'
-        # ]
-
 
 def convert_decimals(data):
     """

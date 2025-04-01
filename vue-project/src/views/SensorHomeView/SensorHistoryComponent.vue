@@ -17,37 +17,42 @@
     </div>
 
     <div class="p-3 card-body">
-      <date-picker
-        v-model:value="dateRange"
-        value-type="format"
-        format="YYYY-MM-DD"
-        :shortcuts="datePickerShortcuts"
-        type="date"
-        range
-        placeholder="Seleccione el rango de fechas"
-      ></date-picker>
-      <a href="javascript:;" @click="getDataByDate" class="mb-0 mx-2 btn btn-md bg-gradient-success">
-        <i class="fas fa-chart-line "></i> 
-        Buscar
-      </a>
-      <input v-if="profileStore.currentuser.is_staff" type="checkbox" id="checkbox" v-model="symbolschecked" />
-      <!-- <label for="checkbox">sym</label> -->
-      <!-- <a
-            class="mt-4 btn btn-sm"
-            :href="actions.route"
-            :class="`bg-gradient-${actions.color}`"
-          >
-            {{ actions.label }}
-          </a> -->
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12 col-md-6 mb-2 text-md-end">
+            <date-picker
+              v-model:value="dateRange"
+              value-type="format"
+              format="YYYY-MM-DD"
+              :shortcuts="datePickerShortcuts"
+              type="date"
+              range
+              placeholder="Seleccione el rango de fechas"
+            ></date-picker>
+          </div>
+          <div class="col-sm-12 col-md-6">
+            <input v-if="profileStore.currentuser.is_staff" type="checkbox" id="checkbox" v-model="symbolschecked" />
+            <a href="javascript:;" @click="getDataByDate" class="mb-0 mx-2 btn btn-md bg-gradient-primary">
+              <i class="fas fa-chart-line "></i> 
+              Buscar
+            </a>
+            <a v-if="showDownloadCsvButton" href="javascript:;" @click="downloadChartDataAsCSV" class="mb-0 mx-2 btn btn-md bg-gradient-success">
+              <i class="fas fa-file-excel "></i>
+              Descargar Excel
+            </a>
+          </div>
+          
+        </div>
+      </div>
       <div class="mt-4">
-        <div id="mainchart"></div>
+        <div v-if="showChart" id="mainchart"></div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-  import { ref, defineProps, onMounted } from 'vue';
+  import { ref, defineProps, onMounted, watch } from 'vue';
   import * as echarts from 'echarts';
   import DatePicker from 'vue-datepicker-next';
   import 'vue-datepicker-next/index.css';
@@ -64,10 +69,16 @@
   const values = ref([]);
   const values_datetime = ref([]);
 
+  let variableText = "";
+  let variableSimbol = "";
   const setInitialOptions = ()=>{
-    let variable = props.sensorData.sensor_type=='TEMPERATURE'?"Temperatura":props.sensorData.sensor_type=="HUMIDITY"?"Humedad":"valor";
-    sensorDataChartOptions.title.text = `${variable}: ${props.sensorData.name}`
-    sensorDataChartOptions.series[0].name = `${variable}`
+    variableText = props.sensorData.sensor_type=='TEMPERATURE'?"Temperatura":props.sensorData.sensor_type=="HUMIDITY"?"Humedad":"valor";
+    variableSimbol = props.sensorData.sensor_type=='TEMPERATURE'?"°C":props.sensorData.sensor_type=="HUMIDITY"?"°C":"";
+    
+    sensorDataChartOptions.yAxis.axisLabel.formatter = `{value} ${variableSimbol}`;
+
+    sensorDataChartOptions.title.text = `${variableText}: ${props.sensorData.name}`
+    sensorDataChartOptions.series[0].name = `${variableText}`
     sensorDataChartOptions.series[0].markLine.data[0].yAxis = props.sensorData.max_threshold
     sensorDataChartOptions.series[0].markLine.data[1].yAxis = props.sensorData.min_threshold
 
@@ -82,12 +93,18 @@
     }
   }
 
+  var sensorChart = null;
   const generateChart = ()=>{
     var chartDom = document.getElementById('mainchart');
-    var sensorChart = echarts.init(chartDom);
+    if (sensorChart) {
+      sensorChart.clear();
+      sensorChart.dispose();
+    }
+    sensorChart = echarts.init(chartDom);
     const chartData = values_datetime.value.map((datetime, index) => [datetime, values.value[index]]);
     sensorDataChartOptions.series[0].data = chartData;
     
+    sensorDataChartOptions.graphic=[]
     if (chartData.length === 0) {
       sensorDataChartOptions.graphic = [
         {
@@ -112,13 +129,65 @@
     sensorChart.setOption(sensorDataChartOptions);
   };
 
+  let rawdata = [];
+  const showDownloadCsvButton = ref(false);
   const getDataByDate = ()=>{
+    showDownloadCsvButton.value = false;
     SensorService.getSensorData(props.sensorData.id, props.sensorData.legacy, dateRange.value[0], dateRange.value[1]).then((res)=>{
-      let rawdata = res.data;
+      rawdata = res.data;
+      if(rawdata.length > 0){
+        showDownloadCsvButton.value = true;
+      }
       values.value = rawdata.map(item => item.value);
       values_datetime.value = rawdata.map(item => new Date(`${item.date}T${item.time}`));
       generateChart();
     })
+  }
+
+  const showChart = ref(true);
+  let timer = null;
+  window.addEventListener("resize", () => {
+    showChart.value = false;
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      showChart.value = true;
+    }, 600);
+  });
+
+  watch(showChart, (newValue) => {
+    if (newValue) {
+      setTimeout(() => {
+        generateChart();
+      }, 600);
+    }
+  });
+
+
+  // ---------- download logic --------------------
+  function downloadChartDataAsCSV() {
+    if (!rawdata.length) {
+        alert("No data available for download!");
+        return;
+    }
+
+    let csvContent = `dato;fecha;valor;hora;energia;unidad;reporte\n`;
+
+    rawdata.forEach(item => {
+        const { id, date, time, value, energy } = item;
+        csvContent += `${id};${date};${value};${time};${energy ? "Si" : "No"};${variableSimbol};\n`;
+    });
+
+    const blob = new Blob([csvContent], { type: "text/csv" });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `reporte_${props.sensorData.name}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    
+    // Cleanup
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
   }
 
   // ---------- Datime picker logic --------------------
@@ -174,11 +243,44 @@
       },
     },
     {
+      text:'semana anterior',
+      onClick() {
+        let date = new Date();
+        let day = date.getDay();
+
+        // Calculate the difference to the nearest Monday
+        let diffToMonday = (day === 0 ? -6 : 1) - day;
+
+        // Calculate the first day of the current week (Monday)
+        let firstDayOfWeek = new Date(date);
+        firstDayOfWeek.setDate(date.getDate() + diffToMonday - 7);
+
+        // Calculate the last day of the current week (Sunday)
+        let lastDayOfWeek = new Date(firstDayOfWeek);
+        lastDayOfWeek.setDate(firstDayOfWeek.getDate() + 6);
+        
+        firstDayOfWeek = formatDate(firstDayOfWeek)
+        lastDayOfWeek = formatDate(lastDayOfWeek)
+        dateRange.value = [firstDayOfWeek, lastDayOfWeek]
+      },
+    }, 
+    {
       text: 'Este mes',
       onClick() {
         let date = new Date();
         let firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
         let lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+        firstDay = formatDate(firstDay)
+        lastDay = formatDate(lastDay)
+        dateRange.value = [firstDay, lastDay]
+      },
+    },
+    {
+      text: 'Mes anterior',
+      onClick() {
+        let date = new Date();
+        let firstDay = new Date(date.getFullYear(), date.getMonth() - 1, 1);
+        let lastDay = new Date(date.getFullYear(), date.getMonth(), 0);
         firstDay = formatDate(firstDay)
         lastDay = formatDate(lastDay)
         dateRange.value = [firstDay, lastDay]
@@ -199,6 +301,18 @@
       },
     },
     {
+      text: 'Trimestre anterior',
+      onClick() {
+        let date = new Date();
+        let quarter = Math.floor(date.getMonth() / 3) + 1;
+        let firstDayOfQuarter = new Date(date.getFullYear(), (quarter - 1) * 3, 1);
+        let lastDayOfQuarter = new Date(date.getFullYear(), quarter * 3, 0);
+        firstDayOfQuarter = formatDate(firstDayOfQuarter)
+        lastDayOfQuarter = formatDate(lastDayOfQuarter)
+        dateRange.value = [firstDayOfQuarter, lastDayOfQuarter]
+      },
+    },
+    {
       text: 'Este año',
       onClick() {
         let date = new Date();
@@ -208,6 +322,17 @@
         lastDay = formatDate(lastDay)
         dateRange.value = [firstDay, lastDay]
         
+      },
+    },
+    {
+      text: 'Año aterior',
+      onClick() {
+        let date = new Date();
+        let firstDay = new Date(date.getFullYear() - 1, 0, 1);
+        let lastDay = new Date(date.getFullYear() - 1, 11, 31);
+        firstDay = formatDate(firstDay)
+        lastDay = formatDate(lastDay)
+        dateRange.value = [firstDay, lastDay]
       },
     },
   ])
