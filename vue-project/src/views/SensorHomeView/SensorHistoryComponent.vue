@@ -18,8 +18,9 @@
 
     <div class="p-3 card-body">
       <div class="container">
-        <div class="row">
-          <div class="col-sm-12 col-md-6 mb-2 text-md-end">
+        <div class="row mt-3">
+          <div class="col-sm-12 col-md-6 mb-2">
+            <h6 class="surtitle">Rango de fechas</h6>
             <date-picker
               v-model:value="dateRange"
               value-type="format"
@@ -30,19 +31,81 @@
               placeholder="Seleccione el rango de fechas"
             ></date-picker>
           </div>
-          <div class="col-sm-12 col-md-6">
+          <div class="col-sm-12 col-md-6 text-end d-flex align-items-end justify-content-end">
             <input v-if="profileStore.currentuser.is_staff" type="checkbox" id="checkbox" v-model="symbolschecked" />
             <a href="javascript:;" @click="getDataByDate" class="mb-0 mx-2 btn btn-md bg-gradient-primary">
               <i class="fas fa-chart-line "></i> 
               Buscar
             </a>
-            <a v-if="showDownloadCsvButton" href="javascript:;" @click="downloadChartDataAsCSV" class="mb-0 mx-2 btn btn-md bg-gradient-success">
+            <a href="javascript:;" @click="downloadChartDataAsCSV" class="mb-0 mx-2 btn btn-md bg-gradient-success">
               <i class="fas fa-file-excel "></i>
-              Descargar Excel
+              Excel
             </a>
           </div>
-          
         </div>
+        <div class="row mt-3">
+          <div class="col-sm-12 text-center">
+            <h6 class="surtitle">Intervalo</h6>
+          </div>
+          <div class="col-sm-12 d-flex justify-content-center gap-2">
+              <argon-radio :checked="interval=='none'" @click="setRadio('none')">Ningunos</argon-radio>
+              <argon-radio :checked="interval=='hourly'" @click="setRadio('hourly')">Por Horas</argon-radio>
+              <argon-radio :checked="interval=='time'" @click="setRadio('time')">Un dato diario</argon-radio>
+              <argon-radio :checked="interval=='time1&time2'" @click="setRadio('time1&time2')">Dos datos diarios</argon-radio>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-sm-16 col-md-3" v-if="interval=='time' || interval=='time1&time2'">
+            <label class="form-label mt-2">Dato 1 (hora)</label>
+            <select
+              id="choices-gender"
+              class="form-control"
+              name="choices-gender"
+              v-model="time1"
+            >
+              <option value="07:00:00">7am</option>
+              <option value="08:00:00">8am</option>
+              <option value="09:00:00">9am</option>
+              <option value="10:00:00">10am</option>
+              <option value="11:00:00">11am</option>
+              <option value="12:00:00">12pm</option>
+              <option value="13:00:00">1pm</option>
+              <option value="14:00:00">2pm</option>
+              <option value="15:00:00">3pm</option>
+              <option value="16:00:00">4pm</option>
+              <option value="17:00:00">5pm</option>
+              <option value="18:00:00">6pm</option>
+            </select>
+          </div>
+          <div class="col-sm-6 col-md-3" v-if="interval=='time1&time2'">
+            <label class="form-label mt-2">Dato 2 (hora)</label>
+            <select
+              id="choices-gender"
+              class="form-control"
+              name="choices-gender"
+              v-model="time2"
+            >
+              <option value="07:00:00">7am</option>
+              <option value="08:00:00">8am</option>
+              <option value="09:00:00">9am</option>
+              <option value="10:00:00">10am</option>
+              <option value="11:00:00">11am</option>
+              <option value="12:00:00">12pm</option>
+              <option value="13:00:00">1pm</option>
+              <option value="14:00:00">2pm</option>
+              <option value="15:00:00">3pm</option>
+              <option value="16:00:00">4pm</option>
+              <option value="17:00:00">5pm</option>
+              <option value="18:00:00">6pm</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6 col-md-3 text-center"><b>Min: </b>{{min_value}}</div>
+        <div class="col-sm-6 col-md-3 text-center"><b>Max: </b>{{max_value}}</div>
+        <div class="col-sm-6 col-md-3 text-center"><b>Promedio :</b>{{average_value}}</div>
+        <div class="col-sm-6 col-md-3 text-center"><b>Cantidad: </b>{{count_value}}</div>
       </div>
       <div class="mt-4">
         <div v-if="showChart" id="mainchart"></div>
@@ -59,6 +122,7 @@
   import sensorDataChartOptions from "./sensorDataChartOptions.js"
   import SensorService from "@/services/sensorservice.js"
   import useProfileStore from "@/stores/profile.js"
+  import ArgonRadio from "@/components/ArgonRadio.vue";
 
   const props = defineProps(["sensorData"])
   const profileStore = useProfileStore()
@@ -129,14 +193,30 @@
     sensorChart.setOption(sensorDataChartOptions);
   };
 
+
+  const min_value = ref(null);
+  const max_value = ref(null);
+  const average_value = ref(null);
+  const count_value = ref(0);
+
   let rawdata = [];
   const showDownloadCsvButton = ref(false);
   const getDataByDate = ()=>{
     showDownloadCsvButton.value = false;
-    SensorService.getSensorData(props.sensorData.id, props.sensorData.legacy, dateRange.value[0], dateRange.value[1]).then((res)=>{
+    console.log("isHourly", isHourly.value)
+    SensorService.getSensorData(props.sensorData.id, props.sensorData.legacy, dateRange.value[0], dateRange.value[1], isHourly.value, time1.value, time2.value).then((res)=>{
       rawdata = res.data;
+      min_value.value = null;
+      max_value.value = null;
+      average_value.value = null;
+      count_value.value = 0;
+      
       if(rawdata.length > 0){
         showDownloadCsvButton.value = true;
+        min_value.value = Math.min(...rawdata.map(item => item.value));
+        max_value.value = Math.max(...rawdata.map(item => item.value));
+        average_value.value = (rawdata.reduce((acc, item) => acc + item.value, 0) / rawdata.length).toFixed(2);
+        count_value.value = rawdata.length;
       }
       values.value = rawdata.map(item => item.value);
       values_datetime.value = rawdata.map(item => new Date(`${item.date}T${item.time}`));
@@ -189,6 +269,32 @@
     window.URL.revokeObjectURL(url);
     document.body.removeChild(a);
   }
+
+  // ---------- times logic --------------------
+
+  let time1 = ref(null);
+  let time2 = ref(null);
+
+  // ---------- radio logic --------------------
+  const interval = ref("none");
+  const isHourly = ref(false);
+  const setRadio = (option)=>{
+    interval.value = option;
+    isHourly.value = false;
+    if (interval.value == "hourly"){
+      isHourly.value = true;
+    }
+  }
+
+  watch(interval, (newValue) => {
+    if (newValue == "time") {
+      time1.value = "07:00:00";
+      time2.value = null;
+    } else if (newValue == "time1&time2") {
+      time1.value = "07:00:00";
+      time2.value = "17:00:00";
+    }
+  });
 
   // ---------- Datime picker logic --------------------
   const currentDate = new Date();
