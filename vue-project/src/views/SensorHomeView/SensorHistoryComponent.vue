@@ -287,6 +287,8 @@
   }
 
   watch(interval, (newValue) => {
+    time1.value = null;
+    time2.value = null;
     if (newValue == "time") {
       time1.value = "07:00:00";
       time2.value = null;
