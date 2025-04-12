@@ -7,6 +7,7 @@ DEBUG = False
 # CELERY_TASK_EAGER_PROPAGATES = True
 
 ALLOWED_HOSTS =['localhost', 'app.gthux.com']
+CSRF_TRUSTED_ORIGINS = ['https://app.gthux.com', 'http://app.gthux.com']
 
 #Rest Framework
 REST_FRAMEWORK = {
